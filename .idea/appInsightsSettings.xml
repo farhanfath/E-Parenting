@@ -8,10 +8,10 @@
             <InsightsFilterSettings>
               <option name="connection">
                 <ConnectionSetting>
-                  <option name="appId" value="PLACEHOLDER" />
-                  <option name="mobileSdkAppId" value="" />
-                  <option name="projectId" value="" />
-                  <option name="projectNumber" value="" />
+                  <option name="appId" value="com.jamali.eparenting" />
+                  <option name="mobileSdkAppId" value="1:596994728221:android:737eadbb612f88a67241f4" />
+                  <option name="projectId" value="e-parenting" />
+                  <option name="projectNumber" value="596994728221" />
                 </ConnectionSetting>
               </option>
               <option name="signal" value="SIGNAL_UNSPECIFIED" />

@@ -3,16 +3,20 @@ package com.jamali.eparenting.ui.auth
 import android.os.Bundle
 import android.view.View
 import android.widget.Toast
+import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import com.jamali.eparenting.FirebaseUtils
 import com.jamali.eparenting.R
-import com.jamali.eparenting.data.User
+import com.jamali.eparenting.data.repository.AppRepository
 import com.jamali.eparenting.databinding.ActivityRegisterBinding
+import com.jamali.eparenting.utils.ViewModelFactory
 
 class RegisterActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityRegisterBinding
 
+    private val viewModel: AuthViewModel by viewModels {
+        ViewModelFactory(AppRepository())
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,28 +46,15 @@ class RegisterActivity : AppCompatActivity() {
             }
             else -> {
                 showLoading(true)
-                FirebaseUtils.auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
-                    if (task.isSuccessful) {
-                        processUserDataToDatabase(username, email)
+                viewModel.registerUser(username, email, password) { result ->
+                    showLoading(false)
+                    if (result.isSuccess) {
+                        Toast.makeText(this, "User registration success", Toast.LENGTH_SHORT).show()
+                        finish()
                     } else {
-                        showLoading(false)
                         Toast.makeText(this, "User registration failed", Toast.LENGTH_SHORT).show()
                     }
-                }
-            }
-        }
-    }
 
-    private fun processUserDataToDatabase(username: String, email: String) {
-        val userData = User(email, username)
-        val userId = FirebaseUtils.auth.currentUser?.uid
-
-        userId?.let {
-            FirebaseUtils.database.child("users").child(it).setValue(userData).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    showLoading(false)
-                    Toast.makeText(this, "User registration success", Toast.LENGTH_SHORT).show()
-                    finish()
                 }
             }
         }
