@@ -10,4 +10,6 @@
     <string name="to_register">Register</string>
     <string name="login">Login</string>
     <string name="required">Tidak Boleh Kosong</string>
+    <string name="title">Judul Postingan</string>
+    <string name="desc">Deskripsi Potingan</string>
 </resources>

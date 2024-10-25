@@ -9,15 +9,13 @@ import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
-import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import com.jamali.eparenting.R
 import com.jamali.eparenting.Utility
 import com.jamali.eparenting.data.entity.CommunityPost
 import com.jamali.eparenting.data.entity.PostType
-import com.jamali.eparenting.data.repository.AppRepository
 import com.jamali.eparenting.databinding.ActivityPostBinding
-import com.jamali.eparenting.ui.auth.AuthViewModel
-import com.jamali.eparenting.utils.ViewModelFactory
+import java.util.UUID
 
 class PostActivity : AppCompatActivity() {
 
@@ -25,10 +23,6 @@ class PostActivity : AppCompatActivity() {
     private var selectedImageUri: Uri? = null
 
     private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
-
-    private val viewModel: PostViewModel by viewModels {
-        ViewModelFactory(AppRepository())
-    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -39,7 +33,7 @@ class PostActivity : AppCompatActivity() {
         setupImagePicker()
         setupSpinner()
 
-        binding.btnSelectImage.setOnClickListener {
+        binding.ivPreview.setOnClickListener {
             selectImage()
         }
 
@@ -77,26 +71,62 @@ class PostActivity : AppCompatActivity() {
     private fun uploadPost() {
         val title = binding.etTitle.text.toString()
         val description = binding.etDescription.text.toString()
-        val type = PostType.valueOf(binding.spinnerType.selectedItem.toString())
-        if (selectedImageUri != null) {
-            showLoading(true)
-            viewModel.uploadPost(title, description, selectedImageUri!!, type)
-            viewModel.uploadStatus.observe(this) { success ->
-                if (success) {
-                    showLoading(false)
-                    Toast.makeText(this, "Post uploaded successfully", Toast.LENGTH_SHORT).show()
-                    finish()
-                } else {
-                    showLoading(false)
-                    Log.d("PostActivity", "Post upload failed")
-                }
+        when {
+            title.isEmpty() -> {
+                binding.etTitle.error = "Title is required"
             }
-            viewModel.errorMessage.observe(this) { errorMessage ->
+            description.isEmpty() -> {
+                binding.etDescription.error = "Description is required"
+            }
+            selectedImageUri == null -> {
+                Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show()
+            }
+            else -> {
+                showLoading(true)
+                uploadImageAndSaveEvent()
+            }
+        }
+    }
+
+    private fun uploadImageAndSaveEvent() {
+        val storageReference = Utility.storage.getReference("event_images/${UUID.randomUUID()}")
+        storageReference.putFile(selectedImageUri!!).addOnSuccessListener { taskSnapshot ->
+            taskSnapshot.storage.downloadUrl.addOnSuccessListener { uri ->
+                val communityPost = CommunityPost(
+                    id = UUID.randomUUID().toString(),
+                    title = binding.etTitle.text.toString(),
+                    thumbnail = uri.toString(),
+                    description = binding.etDescription.text.toString()
+                )
+                saveEventToDatabase(communityPost)
+            }
+        }.addOnFailureListener {
+            showLoading(false)
+            Toast.makeText(this, "Failed to upload image", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun saveEventToDatabase(community: CommunityPost) {
+        val databaseReference = Utility.database.getReference("communityposts")
+        databaseReference.child(community.id).setValue(community).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Toast.makeText(this, "Post added successfully", Toast.LENGTH_SHORT).show()
                 showLoading(false)
-                Toast.makeText(this, errorMessage, Toast.LENGTH_SHORT).show()
+                finish()
+                resetInputData()
+            } else {
+                Toast.makeText(this, "Failed to add Post", Toast.LENGTH_SHORT).show()
+                showLoading(false)
             }
-        } else {
-            Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show()
+        }
+    }
+
+    private fun resetInputData() {
+        with(binding) {
+            etTitle.text?.clear()
+            etDescription.text?.clear()
+            selectedImageUri = null
+            ivPreview.setImageResource(R.drawable.ic_placeholder)
         }
     }
 

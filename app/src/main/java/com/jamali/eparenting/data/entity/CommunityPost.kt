@@ -5,6 +5,7 @@ enum class PostType {
 }
 
 data class CommunityPost(
+    val id: String = "",
     val title: String = "",
     val description: String = "",
     val thumbnail: String = "",
