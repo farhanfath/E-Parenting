@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.jamali.eparenting.R
 import com.jamali.eparenting.data.repository.AppRepository
 import com.jamali.eparenting.databinding.ActivityLoginBinding
-import com.jamali.eparenting.ui.MainActivity
+import com.jamali.eparenting.ui.home.MainActivity
 import com.jamali.eparenting.utils.ViewModelFactory
 
 class LoginActivity : AppCompatActivity() {
