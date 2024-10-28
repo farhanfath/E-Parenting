@@ -1,13 +1,15 @@
 <resources>
     <string name="app_name">EParenting</string>
-    <string name="email">Email Address</string>
+    <string name="email">Email</string>
     <string name="username">Username</string>
-    <string name="password">Password</string>
+    <string name="password">Kata Sandi</string>
     <string name="register">Register</string>
     <string name="have_account">Already Have Account?</string>
-    <string name="to_login">Login</string>
-    <string name="not_account">No Account yet?</string>
-    <string name="to_register">Register</string>
+    <string name="to_login"><u>Register</u></string>
+    <string name="not_account">Sudah memiliki akun?</string>
+    <string name="to_register"><u>Masuk</u></string>
+    <string name="title_register">Registrasi</string>
+    <string name="title_login">Masuk</string>
     <string name="login">Login</string>
     <string name="required">Tidak Boleh Kosong</string>
     <string name="title">Judul Postingan</string>
