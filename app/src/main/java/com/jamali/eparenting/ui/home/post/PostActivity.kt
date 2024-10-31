@@ -89,7 +89,7 @@ class PostActivity : AppCompatActivity() {
     }
 
     private fun uploadImageAndSaveEvent() {
-        val storageReference = Utility.storage.getReference("event_images/${UUID.randomUUID()}")
+        val storageReference = Utility.storage.getReference("thumbnails/${UUID.randomUUID()}")
         storageReference.putFile(selectedImageUri!!).addOnSuccessListener { taskSnapshot ->
             taskSnapshot.storage.downloadUrl.addOnSuccessListener { uri ->
                 val communityPost = CommunityPost(
