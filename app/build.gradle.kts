@@ -49,7 +49,9 @@ dependencies {
     implementation(libs.firebase.auth)
     implementation(libs.firebase.database)
     implementation(libs.firebase.storage)
-    implementation(libs.androidx.navigation.fragment)
+
+    implementation(libs.androidx.navigation.fragment.ktx)
+    implementation(libs.androidx.navigation.ui.ktx)
     testImplementation(libs.junit)
     androidTestImplementation(libs.androidx.junit)
     androidTestImplementation(libs.androidx.espresso.core)
@@ -62,5 +64,11 @@ dependencies {
     implementation ("com.github.bumptech.glide:glide:4.16.0")
     annotationProcessor ("com.github.bumptech.glide:compiler:4.16.0")
 
+    // circle image
     implementation("de.hdodenhof:circleimageview:3.1.0")
+    // navbar bottom
+    implementation ("com.github.ismaeldivita:chip-navigation-bar:1.4.0")
+
+    // stylish dialog
+    implementation ("com.github.MarsadMaqsood:StylishDialogs:1.0.0")
 }

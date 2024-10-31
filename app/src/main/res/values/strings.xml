@@ -15,11 +15,15 @@
     <string name="title">Judul Postingan</string>
     <string name="desc">Deskripsi Potingan</string>
 
-
     <string name="menu_home">Beranda</string>
     <string name="menu_forum">Forum</string>
     <string name="menu_consultation">Message</string>
     <string name="menu_profile">Profile</string>
     <string name="title_profile">Profil</string>
     <string name="title_consultation_activity">Pesan</string>
+    <string name="profileTxt">Profile</string>
+    <string name="chatTxt">Chat</string>
+    <string name="communityTxt">Community</string>
+    <string name="homeTxt">Home</string>
+
 </resources>

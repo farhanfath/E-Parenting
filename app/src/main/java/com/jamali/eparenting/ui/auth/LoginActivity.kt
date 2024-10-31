@@ -9,6 +9,7 @@ import com.jamali.eparenting.R
 import com.jamali.eparenting.Utility
 import com.jamali.eparenting.databinding.ActivityLoginBinding
 import com.jamali.eparenting.ui.home.MainActivity
+import com.jamali.eparenting.ui.home.dashboard.HomeActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -41,7 +42,7 @@ class LoginActivity : AppCompatActivity() {
                 Utility.auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
                         showLoading(false)
-                        startActivity(Intent(this, MainActivity::class.java))
+                        startActivity(Intent(this, HomeActivity::class.java))
                         finish()
                     } else {
                         showLoading(false)
