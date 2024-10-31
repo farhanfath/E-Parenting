@@ -14,4 +14,11 @@
     <string name="required">Tidak Boleh Kosong</string>
     <string name="title">Judul Postingan</string>
     <string name="desc">Deskripsi Potingan</string>
+    <string name="profileTxt">Profile</string>
+    <string name="chatTxt">Chat</string>
+    <string name="communityTxt">Community</string>
+    <string name="homeTxt">Home</string>
+    <string name="title_activity_home">HomeActivity</string>
+    <!-- TODO: Remove or change this placeholder text -->
+    <string name="hello_blank_fragment">Hello blank fragment</string>
 </resources>
