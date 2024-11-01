@@ -1,0 +1,161 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <TextView
+        android:id="@+id/tv_title_upload"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="20dp"
+        android:fontFamily="@font/dm_sans"
+        android:text="@string/title_upload_new_forum"
+        android:textSize="20sp"
+        android:textStyle="bold"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <ImageView
+        android:id="@+id/iv_preview_image_upload"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_marginTop="50dp"
+        android:src="@drawable/images_upload_icon"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_upload" />
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/container_cv_add_images_gallery"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:background="@color/white"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="@id/iv_preview_image_upload"
+        app:layout_constraintStart_toStartOf="@id/iv_preview_image_upload"
+        app:layout_constraintTop_toBottomOf="@id/iv_preview_image_upload"
+        app:strokeColor="#CCCCCC">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/iv_icon_add_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:src="@drawable/ic_image_plus" />
+
+            <TextView
+                android:id="@+id/tv_title_add_photo"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="20dp"
+                android:text="Tambahkan Gambar" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <com.google.android.material.card.MaterialCardView
+        android:id="@+id/container_cv_take_picture"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="20dp"
+        android:background="@color/white"
+        app:cardCornerRadius="10dp"
+        app:layout_constraintEnd_toEndOf="@id/container_cv_add_images_gallery"
+        app:layout_constraintStart_toStartOf="@+id/container_cv_add_images_gallery"
+        app:layout_constraintTop_toBottomOf="@+id/container_cv_add_images_gallery"
+        app:strokeColor="#CCCCCC">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:background="@color/white"
+            android:gravity="center"
+            android:orientation="horizontal"
+            android:padding="10dp">
+
+            <ImageView
+                android:id="@+id/iv_icon_take_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:padding="10dp"
+                android:src="@drawable/ic_take_picture" />
+
+            <TextView
+                android:id="@+id/tv_title_take_picture"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingEnd="20dp"
+                android:text="Ambil Gambar Baru" />
+        </LinearLayout>
+    </com.google.android.material.card.MaterialCardView>
+
+    <TextView
+        android:id="@+id/tv_title_add_caption"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Tambahkan Keterangan"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toTopOf="@id/tl_desc_upload_forum"
+        app:layout_constraintStart_toStartOf="@id/tl_desc_upload_forum"
+        app:layout_constraintTop_toBottomOf="@id/container_cv_take_picture" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/tl_desc_upload_forum"
+        style="@style/Widget.MaterialComponents.TextInputLayout.OutlinedBox"
+        android:layout_width="0dp"
+        android:layout_height="100dp"
+        android:layout_marginHorizontal="10dp"
+        android:layout_marginTop="4dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_add_caption">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/edt_add_desc_story"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:ems="10"
+            android:inputType="textMultiLine"
+            tools:ignore="SpeakableTextPresentCheck" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_accept_posting"
+        android:layout_width="wrap_content"
+        android:layout_marginTop="4dp"
+        app:cornerRadius="12dp"
+        android:layout_height="wrap_content"
+        android:text="Upload Forum"
+        android:backgroundTint="#58ad93"
+        android:paddingHorizontal="100dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tl_desc_upload_forum" />
+
+    <com.google.android.material.button.MaterialButton
+        android:id="@+id/btn_cancel_posting"
+        android:layout_width="wrap_content"
+        app:cornerRadius="12dp"
+        android:layout_height="wrap_content"
+        android:text="Batal"
+        android:paddingHorizontal="130dp"
+        android:backgroundTint="#FF2424"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/btn_accept_posting" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>
