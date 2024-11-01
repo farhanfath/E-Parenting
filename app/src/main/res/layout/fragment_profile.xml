@@ -40,6 +40,21 @@
                 android:layout_height="106dp"
                 tools:src="@tools:sample/avatars" />
 
+            <com.facebook.shimmer.ShimmerFrameLayout
+                android:id="@+id/shimmer_view_container"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center"
+                android:layout_marginTop="10dp"
+                app:shimmer_auto_start="true">
+
+                <TextView
+                    android:layout_width="120dp"
+                    android:layout_height="wrap_content"
+                    android:background="@color/light_gray"
+                    android:textSize="18sp"/>
+            </com.facebook.shimmer.ShimmerFrameLayout>
+
             <TextView
                 android:id="@+id/tv_username"
                 android:layout_width="wrap_content"
@@ -49,6 +64,7 @@
                 android:text="Nama Pengguna"
                 android:textColor="@color/black"
                 android:textSize="18sp"
+                android:visibility="gone"
                 android:textStyle="bold" />
         </LinearLayout>
 
@@ -172,13 +188,14 @@
         </com.google.android.material.card.MaterialCardView>
 
         <Button
+            android:id="@+id/btn_logout"
             style="@style/Widget.Material3.Button.ElevatedButton.Icon"
             android:layout_width="match_parent"
             android:layout_height="0dp"
             android:layout_marginHorizontal="30dp"
             android:layout_marginTop="40dp"
             android:backgroundTint="#FF373A"
-            android:drawableLeft="@drawable/round_logout_24"
+            android:drawableLeft="@drawable/ic_logout"
             android:drawablePadding="100dp"
             android:padding="10dp"
             android:text="KELUAR"

@@ -25,5 +25,6 @@
     <string name="chatTxt">Chat</string>
     <string name="communityTxt">Community</string>
     <string name="homeTxt">Home</string>
+    <string name="failed_get_name">Gagal memuat nama pengguna</string>
 
 </resources>

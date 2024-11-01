@@ -29,9 +29,6 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.btnMain.setOnClickListener {
-            startActivity(Intent(requireContext(), MainActivity::class.java))
-        }
     }
 
     override fun onDestroyView() {
