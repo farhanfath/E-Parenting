@@ -1,4 +1,4 @@
-package com.jamali.eparenting.ui.home.dashboard
+package com.jamali.eparenting.ui.home
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity

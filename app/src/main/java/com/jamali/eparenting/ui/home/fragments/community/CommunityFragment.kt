@@ -1,4 +1,4 @@
-package com.jamali.eparenting.ui.home.dashboard.ui.community
+package com.jamali.eparenting.ui.home.fragments.community
 
 import android.content.Intent
 import android.os.Bundle

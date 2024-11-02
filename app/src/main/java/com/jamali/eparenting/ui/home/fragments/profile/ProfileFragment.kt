@@ -1,4 +1,4 @@
-package com.jamali.eparenting.ui.home.dashboard.ui.profile
+package com.jamali.eparenting.ui.home.fragments.profile
 
 import android.content.Intent
 import android.os.Bundle

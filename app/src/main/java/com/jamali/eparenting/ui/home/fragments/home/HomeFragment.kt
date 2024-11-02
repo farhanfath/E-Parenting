@@ -1,6 +1,5 @@
-package com.jamali.eparenting.ui.home.dashboard.ui.home
+package com.jamali.eparenting.ui.home.fragments.home
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View

@@ -46,7 +46,9 @@ class RegisterActivity : AppCompatActivity() {
                     if (task.isSuccessful) {
                         showLoading(false)
                         val userId = Utility.auth.currentUser?.uid
-                        val user = User(email, username)
+                        val user = userId?.let { uid ->
+                            User(uid, email, username)
+                        }
                         userId?.let {
                             Utility.database.reference.child("users").child(it).setValue(user).addOnCompleteListener { userTask ->
                                 if (userTask.isSuccessful) {
