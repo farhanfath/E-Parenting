@@ -60,65 +60,65 @@ class ChatFragment : Fragment() {
         /**
          * chat consultation only show the user with online status
          */
-        userRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                userList.clear()
-                var onlineUserFound = false
-
-                for (document in snapshot.children) {
-                    val user = document.getValue(User::class.java)
-                    if (user != null && user.uid != currentUserId) {
-                        val statusRef = db.getReference("users").child(user.uid).child("status")
-                        statusRef.addListenerForSingleValueEvent(object : ValueEventListener {
-                            override fun onDataChange(statusSnapshot: DataSnapshot) {
-                                val status = statusSnapshot.getValue(String::class.java)
-                                // Hanya tambahkan pengguna yang berstatus online
-                                if (status == "online") {
-                                    userList.add(user)
-                                    onlineUserFound = true
-                                }
-
-                                adapter.notifyDataSetChanged()
-                                updateNoOnlineView(onlineUserFound)
-                            }
-
-                            override fun onCancelled(error: DatabaseError) {
-                                Log.w("MainActivity", "Failed to read user status", error.toException())
-                            }
-                        })
-                    }
-                }
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Log.w("MainActivity", "Error getting documents.", error.toException())
-                Toast.makeText(requireContext(), "Error getting documents: ${error.message}", Toast.LENGTH_LONG).show()
-            }
-        })
-
-        /**
-         * chat recyclerview without online status
-         */
 //        userRef.addValueEventListener(object : ValueEventListener {
 //            override fun onDataChange(snapshot: DataSnapshot) {
 //                userList.clear()
+//                var onlineUserFound = false
+//
 //                for (document in snapshot.children) {
 //                    val user = document.getValue(User::class.java)
-//                    // Filter pengguna selain pengguna yang sedang login
 //                    if (user != null && user.uid != currentUserId) {
-//                        userList.add(user)
+//                        val statusRef = db.getReference("users").child(user.uid).child("status")
+//                        statusRef.addListenerForSingleValueEvent(object : ValueEventListener {
+//                            override fun onDataChange(statusSnapshot: DataSnapshot) {
+//                                val status = statusSnapshot.getValue(String::class.java)
+//                                // Hanya tambahkan pengguna yang berstatus online
+//                                if (status == "online" || status =="busy") {
+//                                    userList.add(user)
+//                                    onlineUserFound = true
+//                                }
+//
+//                                adapter.notifyDataSetChanged()
+//                                updateNoOnlineView(onlineUserFound)
+//                            }
+//
+//                            override fun onCancelled(error: DatabaseError) {
+//                                Log.w("MainActivity", "Failed to read user status", error.toException())
+//                            }
+//                        })
 //                    }
 //                }
-//                adapter.notifyDataSetChanged()
-////                showLoading(false)
 //            }
 //
 //            override fun onCancelled(error: DatabaseError) {
-////                showLoading(false)
 //                Log.w("MainActivity", "Error getting documents.", error.toException())
 //                Toast.makeText(requireContext(), "Error getting documents: ${error.message}", Toast.LENGTH_LONG).show()
 //            }
 //        })
+
+        /**
+         * chat recyclerview without online status
+         */
+        userRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                userList.clear()
+                for (document in snapshot.children) {
+                    val user = document.getValue(User::class.java)
+                    // Filter pengguna selain pengguna yang sedang login
+                    if (user != null && user.uid != currentUserId) {
+                        userList.add(user)
+                    }
+                }
+                adapter.notifyDataSetChanged()
+//                showLoading(false)
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+//                showLoading(false)
+                Log.w("MainActivity", "Error getting documents.", error.toException())
+                Toast.makeText(requireContext(), "Error getting documents: ${error.message}", Toast.LENGTH_LONG).show()
+            }
+        })
     }
 
     private fun updateNoOnlineView(isOnline: Boolean) {
@@ -132,22 +132,6 @@ class ChatFragment : Fragment() {
 //    private fun showLoading(onLoading: Boolean) {
 //        binding.progressBar.visibility = if (onLoading) View.VISIBLE else View.GONE
 //    }
-
-    override fun onResume() {
-        super.onResume()
-        setUserStatus("online")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        setUserStatus("offline")
-    }
-
-    private fun setUserStatus(status: String) {
-        val currentUserId = Utility.auth.currentUser?.uid ?: return
-        val userRef = Utility.database.getReference("users").child(currentUserId).child("status")
-        userRef.setValue(status)
-    }
 
     override fun onDestroyView() {
         super.onDestroyView()

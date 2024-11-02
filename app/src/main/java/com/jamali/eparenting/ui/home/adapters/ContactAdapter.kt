@@ -33,10 +33,10 @@ class ContactAdapter(private val userList: List<User>) : RecyclerView.Adapter<Co
             statusRef.addValueEventListener(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val status = snapshot.getValue(String::class.java)
-                    if (status == "online") {
-                        userStatus.setImageResource(R.drawable.ic_online)
-                    } else {
-                        userStatus.setImageResource(R.drawable.ic_offline)
+                    when(status) {
+                        "online" -> userStatus.setImageResource(R.drawable.ic_online)
+                        "busy" -> userStatus.setImageResource(R.drawable.ic_busy)
+                        "offline" -> userStatus.setImageResource(R.drawable.ic_offline)
                     }
                 }
 

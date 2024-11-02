@@ -25,6 +25,7 @@
             android:id="@+id/no_user_online"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:visibility="gone"
             android:text="maaf tidak ada Konsultan yang online"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintBottom_toBottomOf="parent"

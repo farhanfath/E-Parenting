@@ -72,12 +72,19 @@ class ProfileFragment : Fragment() {
             .setContentText("Anda akan keluar dari akun Anda!")
             .setConfirmText("Ya, keluar")
             .setConfirmClickListener {
+                setOfflineStatus()
                 Utility.auth.signOut()
                 startActivity(Intent(requireContext(), LoginActivity::class.java))
                 requireActivity().finish()
             }
             .setCancelButton("Batal",StylishAlertDialog::dismissWithAnimation)
             .show()
+    }
+
+    private fun setOfflineStatus() {
+        val currentUserId = Utility.auth.currentUser?.uid ?: return
+        val userRef = Utility.database.getReference("users").child(currentUserId).child("status")
+        userRef.setValue("offline")
     }
 
     override fun onDestroyView() {
