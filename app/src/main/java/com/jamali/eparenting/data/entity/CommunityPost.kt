@@ -1,13 +1,12 @@
 package com.jamali.eparenting.data.entity
 
 enum class PostType {
-    BALITA, PRANIKAH, REMAJA
+    BALITA, PRANIKAH, REMAJA, UMUM
 }
 
 data class CommunityPost(
     val id: String = "",
-    val title: String = "",
     val description: String = "",
     val thumbnail: String = "",
-    val type: PostType = PostType.BALITA
+    val type: PostType = PostType.UMUM
 )

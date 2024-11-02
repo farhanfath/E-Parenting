@@ -21,85 +21,108 @@
 
     <ImageView
         android:id="@+id/iv_preview_image_upload"
-        android:layout_width="200dp"
+        android:layout_width="match_parent"
         android:layout_height="200dp"
         android:layout_marginTop="50dp"
         android:src="@drawable/images_upload_icon"
+        android:scaleType="center"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tv_title_upload" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/container_cv_add_images_gallery"
-        android:layout_width="wrap_content"
+    <TextView
+        android:id="@+id/tv_optional"
+        android:layout_width="0dp"
         android:layout_height="wrap_content"
         android:layout_marginTop="10dp"
-        android:background="@color/white"
-        app:cardCornerRadius="10dp"
+        android:text="Opsional"
+        android:layout_marginStart="10dp"
+        android:textStyle="bold"
+        app:layout_constraintTop_toBottomOf="@id/iv_preview_image_upload"
+        app:layout_constraintStart_toStartOf="@id/iv_preview_image_upload"/>
+
+    <LinearLayout
+        android:id="@+id/post_layout"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:orientation="horizontal"
         app:layout_constraintEnd_toEndOf="@id/iv_preview_image_upload"
         app:layout_constraintStart_toStartOf="@id/iv_preview_image_upload"
-        app:layout_constraintTop_toBottomOf="@id/iv_preview_image_upload"
-        app:strokeColor="#CCCCCC">
+        app:layout_constraintTop_toBottomOf="@id/tv_optional">
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/container_cv_add_images_gallery"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginStart="10dp"
+            android:layout_marginEnd="5dp"
+            android:layout_marginTop="10dp"
             android:background="@color/white"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            app:cardCornerRadius="10dp"
+            app:strokeColor="#CCCCCC">
 
-            <ImageView
-                android:id="@+id/iv_icon_add_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:src="@drawable/ic_image_plus" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-            <TextView
-                android:id="@+id/tv_title_add_photo"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="20dp"
-                android:text="Tambahkan Gambar" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+                <ImageView
+                    android:id="@+id/iv_icon_add_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_image_plus" />
 
-    <com.google.android.material.card.MaterialCardView
-        android:id="@+id/container_cv_take_picture"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_marginTop="20dp"
-        android:background="@color/white"
-        app:cardCornerRadius="10dp"
-        app:layout_constraintEnd_toEndOf="@id/container_cv_add_images_gallery"
-        app:layout_constraintStart_toStartOf="@+id/container_cv_add_images_gallery"
-        app:layout_constraintTop_toBottomOf="@+id/container_cv_add_images_gallery"
-        app:strokeColor="#CCCCCC">
+                <TextView
+                    android:id="@+id/tv_title_add_photo"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="20dp"
+                    android:text="Tambahkan Gambar" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
 
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
+        <com.google.android.material.card.MaterialCardView
+            android:id="@+id/container_cv_take_picture"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_weight="1"
+            android:layout_marginTop="10dp"
+            android:layout_marginStart="5dp"
+            android:layout_marginEnd="10dp"
             android:background="@color/white"
-            android:gravity="center"
-            android:orientation="horizontal"
-            android:padding="10dp">
+            app:cardCornerRadius="10dp"
+            app:strokeColor="#CCCCCC">
 
-            <ImageView
-                android:id="@+id/iv_icon_take_picture"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:padding="10dp"
-                android:src="@drawable/ic_take_picture" />
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:background="@color/white"
+                android:gravity="center"
+                android:orientation="horizontal"
+                android:padding="10dp">
 
-            <TextView
-                android:id="@+id/tv_title_take_picture"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:paddingEnd="20dp"
-                android:text="Ambil Gambar Baru" />
-        </LinearLayout>
-    </com.google.android.material.card.MaterialCardView>
+                <ImageView
+                    android:id="@+id/iv_icon_take_picture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:padding="10dp"
+                    android:src="@drawable/ic_take_picture" />
+
+                <TextView
+                    android:id="@+id/tv_title_take_picture"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:paddingEnd="20dp"
+                    android:text="Ambil Gambar Baru" />
+            </LinearLayout>
+        </com.google.android.material.card.MaterialCardView>
+    </LinearLayout>
+
 
     <TextView
         android:id="@+id/tv_title_add_caption"
@@ -110,7 +133,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/tl_desc_upload_forum"
         app:layout_constraintStart_toStartOf="@id/tl_desc_upload_forum"
-        app:layout_constraintTop_toBottomOf="@id/container_cv_take_picture" />
+        app:layout_constraintTop_toBottomOf="@id/post_layout" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tl_desc_upload_forum"
@@ -128,6 +151,7 @@
             android:layout_width="match_parent"
             android:layout_height="match_parent"
             android:ems="10"
+            android:minLines="5"
             android:inputType="textMultiLine"
             tools:ignore="SpeakableTextPresentCheck" />
 
@@ -135,27 +159,44 @@
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_accept_posting"
-        android:layout_width="wrap_content"
-        android:layout_marginTop="4dp"
+        android:layout_width="300dp"
+        android:layout_marginTop="10dp"
         app:cornerRadius="12dp"
         android:layout_height="wrap_content"
         android:text="Upload Forum"
         android:backgroundTint="#58ad93"
-        android:paddingHorizontal="100dp"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/tl_desc_upload_forum" />
 
     <com.google.android.material.button.MaterialButton
         android:id="@+id/btn_cancel_posting"
-        android:layout_width="wrap_content"
+        android:layout_width="300dp"
         app:cornerRadius="12dp"
         android:layout_height="wrap_content"
         android:text="Batal"
-        android:paddingHorizontal="130dp"
         android:backgroundTint="#FF2424"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@id/btn_accept_posting" />
+
+    <FrameLayout
+        android:id="@+id/progressFrame"
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:background="@color/dark_transparent"
+        android:visibility="gone"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        tools:visibility="visible">
+
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_gravity="center" />
+    </FrameLayout>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

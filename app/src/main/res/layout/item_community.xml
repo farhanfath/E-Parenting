@@ -4,7 +4,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="5dp"
-    android:layout_marginHorizontal="20dp"
+    android:layout_marginHorizontal="25dp"
     android:layout_marginTop="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
@@ -14,19 +14,11 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/titleTv"
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:textSize="18sp"
-            tools:text="title"
-            android:padding="10dp"/>
-
         <ImageView
             android:id="@+id/thumbnailIv"
             android:layout_width="match_parent"
             android:layout_height="180dp"
-            android:scaleType="fitXY"
+            android:scaleType="center"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
@@ -49,7 +41,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:background="@drawable/bg_post_tools"
+                android:background="@drawable/bg_post_tools_left"
                 android:paddingVertical="5dp"
                 android:orientation="horizontal">
 
@@ -70,7 +62,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:background="@drawable/bg_post_tools"
+                android:background="@drawable/bg_post_tools_middle"
                 android:paddingVertical="5dp"
                 android:orientation="horizontal">
 
@@ -91,7 +83,7 @@
                 android:layout_weight="1"
                 android:layout_height="wrap_content"
                 android:gravity="center"
-                android:background="@drawable/bg_post_tools"
+                android:background="@drawable/bg_post_tools_right"
                 android:paddingVertical="5dp"
                 android:orientation="horizontal">
 

@@ -1,7 +1,9 @@
 package com.jamali.eparenting.ui.home.post
 
+import android.annotation.SuppressLint
 import android.net.Uri
 import android.os.Bundle
+import android.os.Environment
 import android.util.Log
 import android.view.View
 import android.widget.ArrayAdapter
@@ -10,43 +12,88 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.FileProvider
 import com.jamali.eparenting.R
 import com.jamali.eparenting.Utility
 import com.jamali.eparenting.data.entity.CommunityPost
 import com.jamali.eparenting.data.entity.PostType
-import com.jamali.eparenting.databinding.ActivityPostBinding
+import com.jamali.eparenting.databinding.ActivityUploadPhotoBinding
+import java.io.File
+import java.text.SimpleDateFormat
+import java.util.Date
 import java.util.UUID
 
 class PostActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityPostBinding
+    private lateinit var binding: ActivityUploadPhotoBinding
     private var selectedImageUri: Uri? = null
 
     private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityPostBinding.inflate(layoutInflater)
+        binding = ActivityUploadPhotoBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         // Set up the image picker
         setupImagePicker()
         setupSpinner()
 
-        binding.ivPreview.setOnClickListener {
+        binding.containerCvAddImagesGallery.setOnClickListener {
             selectImage()
         }
 
-        binding.btnPost.setOnClickListener {
+        binding.containerCvTakePicture.setOnClickListener {
+            openCamera()
+        }
+
+        binding.btnAcceptPosting.setOnClickListener {
             uploadPost()
         }
+
+        binding.btnCancelPosting.setOnClickListener {
+            finish()
+        }
+    }
+
+    private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
+        if (success && selectedImageUri != null) {
+            binding.ivPreviewImageUpload.setImageURI(selectedImageUri)
+        } else {
+            // Handle jika gambar tidak berhasil diambil atau photoUri null
+            Log.e("CameraIntent", "Gagal menampilkan gambar, URI tidak valid atau proses gagal.")
+        }
+    }
+
+    private fun openCamera() {
+        // Buat file untuk menyimpan gambar
+        val photoFile = createImageFile()
+        selectedImageUri = FileProvider.getUriForFile(this, "${packageName}.provider", photoFile)
+
+        selectedImageUri?.let { uri ->
+            takePictureLauncher.launch(uri)
+        } ?: run {
+            Log.e("CameraIntent", "Gagal membuat URI untuk gambar.")
+        }
+    }
+
+    // Membuat file untuk menyimpan gambar yang diambil
+    @SuppressLint("SimpleDateFormat")
+    private fun createImageFile(): File {
+        val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
+        val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
+        return File.createTempFile(
+            "JPEG_${timeStamp}_", /* prefix */
+            ".jpg", /* suffix */
+            storageDir /* directory */
+        )
     }
 
     private fun setupSpinner() {
         val types = PostType.entries.map { it.name }
         val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, types)
         adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-        binding.spinnerType.adapter = adapter
+//        binding.spinnerType.adapter = adapter
     }
 
     private fun setupImagePicker() {
@@ -57,7 +104,7 @@ class PostActivity : AppCompatActivity() {
                  * handle selected image to be previewed
                  */
                 selectedImageUri = uri
-                binding.ivPreview.setImageURI(uri)
+                binding.ivPreviewImageUpload.setImageURI(uri)
             } else {
                 Log.d("PhotoPicker", "No media selected")
             }
@@ -69,34 +116,36 @@ class PostActivity : AppCompatActivity() {
     }
 
     private fun uploadPost() {
-        val title = binding.etTitle.text.toString()
-        val description = binding.etDescription.text.toString()
-        when {
-            title.isEmpty() -> {
-                binding.etTitle.error = "Title is required"
-            }
-            description.isEmpty() -> {
-                binding.etDescription.error = "Description is required"
-            }
-            selectedImageUri == null -> {
-                Toast.makeText(this, "Please select an image", Toast.LENGTH_SHORT).show()
-            }
-            else -> {
-                showLoading(true)
-                uploadImageAndSaveEvent()
-            }
+        val description = binding.edtAddDescStory.text.toString()
+        if (description.isEmpty()) {
+            binding.edtAddDescStory.error = "Description is required"
+            return
+        }
+
+        showLoading(true)
+
+        if (selectedImageUri == null) {
+            // Jika tidak ada gambar, langsung simpan deskripsi saja
+            val communityPost = CommunityPost(
+                id = UUID.randomUUID().toString(),
+                thumbnail = "",
+                description = description
+            )
+            saveEventToDatabase(communityPost)
+        } else {
+            // Jika ada gambar, unggah gambar dan simpan posting
+            uploadImageAndSaveEvent(description)
         }
     }
 
-    private fun uploadImageAndSaveEvent() {
+    private fun uploadImageAndSaveEvent(description: String) {
         val storageReference = Utility.storage.getReference("thumbnails/${UUID.randomUUID()}")
         storageReference.putFile(selectedImageUri!!).addOnSuccessListener { taskSnapshot ->
             taskSnapshot.storage.downloadUrl.addOnSuccessListener { uri ->
                 val communityPost = CommunityPost(
                     id = UUID.randomUUID().toString(),
-                    title = binding.etTitle.text.toString(),
                     thumbnail = uri.toString(),
-                    description = binding.etDescription.text.toString()
+                    description = description
                 )
                 saveEventToDatabase(communityPost)
             }
@@ -123,14 +172,13 @@ class PostActivity : AppCompatActivity() {
 
     private fun resetInputData() {
         with(binding) {
-            etTitle.text?.clear()
-            etDescription.text?.clear()
+            edtAddDescStory.text?.clear()
             selectedImageUri = null
-            ivPreview.setImageResource(R.drawable.ic_placeholder)
+            ivPreviewImageUpload.setImageResource(R.drawable.images_upload_icon)
         }
     }
 
     private fun showLoading(state: Boolean) {
-        binding.progressBar.visibility = if (state) View.VISIBLE else View.GONE
+        binding.progressFrame.visibility = if (state) View.VISIBLE else View.GONE
     }
 }

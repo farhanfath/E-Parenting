@@ -5,7 +5,6 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import com.jamali.eparenting.ui.home.MainActivity
 import com.jamali.eparenting.ui.auth.LoginActivity
 import com.jamali.eparenting.ui.home.dashboard.HomeActivity
 import kotlinx.coroutines.MainScope

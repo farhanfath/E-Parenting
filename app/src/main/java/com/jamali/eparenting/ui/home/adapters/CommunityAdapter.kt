@@ -1,6 +1,7 @@
 package com.jamali.eparenting.ui.home.adapters
 
 import android.view.LayoutInflater
+import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
@@ -19,11 +20,18 @@ class CommunityAdapter(private val communityList: List<CommunityPost>) : Recycle
     override fun onBindViewHolder(holder: CommunityViewHolder, position: Int) {
         val community = communityList[position]
         with(holder.binding) {
-            titleTv.text = community.title
             descTv.text = community.description
-            Glide.with(holder.itemView.context)
-                .load(community.thumbnail)
-                .into(thumbnailIv)
+
+            if (community.thumbnail.isEmpty()) {
+                // Sembunyikan thumbnail jika kosong
+                thumbnailIv.visibility = View.GONE
+            } else {
+                // Tampilkan thumbnail jika tidak kosong
+                thumbnailIv.visibility = View.VISIBLE
+                Glide.with(holder.itemView.context)
+                    .load(community.thumbnail)
+                    .into(thumbnailIv)
+            }
         }
 
     }

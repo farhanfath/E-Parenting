@@ -7,7 +7,6 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.jamali.eparenting.databinding.FragmentHomeBinding
-import com.jamali.eparenting.ui.home.MainActivity
 
 class HomeFragment : Fragment() {
 

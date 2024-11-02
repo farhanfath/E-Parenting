@@ -8,7 +8,6 @@ import androidx.appcompat.app.AppCompatActivity
 import com.jamali.eparenting.R
 import com.jamali.eparenting.Utility
 import com.jamali.eparenting.databinding.ActivityLoginBinding
-import com.jamali.eparenting.ui.home.MainActivity
 import com.jamali.eparenting.ui.home.dashboard.HomeActivity
 
 class LoginActivity : AppCompatActivity() {
