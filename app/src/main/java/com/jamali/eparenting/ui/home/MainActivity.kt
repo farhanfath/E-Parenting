@@ -5,17 +5,16 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.findNavController
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.jamali.eparenting.R
-import com.jamali.eparenting.Utility
-import com.jamali.eparenting.databinding.ActivityHomeBinding
+import com.jamali.eparenting.databinding.ActivityMainBinding
 
-class HomeActivity : AppCompatActivity() {
+class MainActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityHomeBinding
+    private lateinit var binding: ActivityMainBinding
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
 
-        binding = ActivityHomeBinding.inflate(layoutInflater)
+        binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
         setupBottomNav()
@@ -44,21 +43,5 @@ class HomeActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    override fun onResume() {
-        super.onResume()
-        setUserStatus("online")
-    }
-
-    override fun onPause() {
-        super.onPause()
-        setUserStatus("busy")
-    }
-
-    private fun setUserStatus(status: String) {
-        val currentUserId = Utility.auth.currentUser?.uid ?: return
-        val userRef = Utility.database.getReference("users").child(currentUserId).child("status")
-        userRef.setValue(status)
     }
 }

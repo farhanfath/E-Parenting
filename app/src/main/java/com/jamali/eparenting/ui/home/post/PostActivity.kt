@@ -1,6 +1,7 @@
 package com.jamali.eparenting.ui.home.post
 
 import android.annotation.SuppressLint
+import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
@@ -13,6 +14,9 @@ import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.FileProvider
+import com.google.firebase.database.DataSnapshot
+import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.R
 import com.jamali.eparenting.Utility
 import com.jamali.eparenting.data.entity.CommunityPost
@@ -56,6 +60,15 @@ class PostActivity : AppCompatActivity() {
         }
     }
 
+    private val requestCameraPermissionLauncher =
+        registerForActivityResult(ActivityResultContracts.RequestPermission()) { isGranted ->
+            if (isGranted) {
+                openCamera()
+            } else {
+                Toast.makeText(this, "Camera permission is required to take pictures.", Toast.LENGTH_SHORT).show()
+            }
+        }
+
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
         if (success && selectedImageUri != null) {
             binding.ivPreviewImageUpload.setImageURI(selectedImageUri)
@@ -66,14 +79,18 @@ class PostActivity : AppCompatActivity() {
     }
 
     private fun openCamera() {
-        // Buat file untuk menyimpan gambar
-        val photoFile = createImageFile()
-        selectedImageUri = FileProvider.getUriForFile(this, "${packageName}.provider", photoFile)
-
-        selectedImageUri?.let { uri ->
-            takePictureLauncher.launch(uri)
-        } ?: run {
-            Log.e("CameraIntent", "Gagal membuat URI untuk gambar.")
+        if (checkSelfPermission(android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
+            // Permission is granted, open camera
+            val photoFile = createImageFile()
+            selectedImageUri = FileProvider.getUriForFile(this, "${packageName}.provider", photoFile)
+            selectedImageUri?.let { uri ->
+                takePictureLauncher.launch(uri)
+            } ?: run {
+                Log.e("CameraIntent", "Failed to create URI for image.")
+            }
+        } else {
+            // Request camera permission
+            requestCameraPermissionLauncher.launch(android.Manifest.permission.CAMERA)
         }
     }
 
@@ -122,35 +139,59 @@ class PostActivity : AppCompatActivity() {
             return
         }
 
-        showLoading(true)
+        Utility.showLoading(binding.progressFrame,true)
 
+        val uid = Utility.auth.currentUser?.uid
         if (selectedImageUri == null) {
-            // Jika tidak ada gambar, langsung simpan deskripsi saja
-            val communityPost = CommunityPost(
-                id = UUID.randomUUID().toString(),
-                thumbnail = "",
-                description = description
-            )
-            saveEventToDatabase(communityPost)
+            uid?.let {
+                Utility.database.getReference("users").child(it).child("username")
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val username = snapshot.getValue(String::class.java) ?: "Anonymous"
+                            val communityPost = CommunityPost(
+                                id = UUID.randomUUID().toString(),
+                                username = username,
+                                thumbnail = "",
+                                description = description
+                            )
+                            saveEventToDatabase(communityPost)
+                        }
+                        override fun onCancelled(error: DatabaseError) {
+                            Log.e("UsernameError", "Failed to fetch username", error.toException())
+                        }
+                    })
+            }
         } else {
             // Jika ada gambar, unggah gambar dan simpan posting
-            uploadImageAndSaveEvent(description)
+            uid?.let {
+                Utility.database.getReference("users").child(it).child("username")
+                    .addListenerForSingleValueEvent(object : ValueEventListener {
+                        override fun onDataChange(snapshot: DataSnapshot) {
+                            val username = snapshot.getValue(String::class.java) ?: "Anonymous"
+                            uploadImageAndSaveEvent(description, username)
+                        }
+                        override fun onCancelled(error: DatabaseError) {
+                            Log.e("UsernameError", "Failed to fetch username", error.toException())
+                        }
+                    })
+            }
         }
     }
 
-    private fun uploadImageAndSaveEvent(description: String) {
+    private fun uploadImageAndSaveEvent(description: String, username: String) {
         val storageReference = Utility.storage.getReference("thumbnails/${UUID.randomUUID()}")
         storageReference.putFile(selectedImageUri!!).addOnSuccessListener { taskSnapshot ->
             taskSnapshot.storage.downloadUrl.addOnSuccessListener { uri ->
                 val communityPost = CommunityPost(
                     id = UUID.randomUUID().toString(),
+                    username = username,
                     thumbnail = uri.toString(),
                     description = description
                 )
                 saveEventToDatabase(communityPost)
             }
         }.addOnFailureListener {
-            showLoading(false)
+            Utility.showLoading(binding.progressFrame,false)
             Toast.makeText(this, "Failed to upload image", Toast.LENGTH_SHORT).show()
         }
     }
@@ -160,12 +201,12 @@ class PostActivity : AppCompatActivity() {
         databaseReference.child(community.id).setValue(community).addOnCompleteListener { task ->
             if (task.isSuccessful) {
                 Toast.makeText(this, "Post added successfully", Toast.LENGTH_SHORT).show()
-                showLoading(false)
+                Utility.showLoading(binding.progressFrame,false)
                 finish()
                 resetInputData()
             } else {
                 Toast.makeText(this, "Failed to add Post", Toast.LENGTH_SHORT).show()
-                showLoading(false)
+                Utility.showLoading(binding.progressFrame,false)
             }
         }
     }
@@ -176,9 +217,5 @@ class PostActivity : AppCompatActivity() {
             selectedImageUri = null
             ivPreviewImageUpload.setImageResource(R.drawable.images_upload_icon)
         }
-    }
-
-    private fun showLoading(state: Boolean) {
-        binding.progressFrame.visibility = if (state) View.VISIBLE else View.GONE
     }
 }

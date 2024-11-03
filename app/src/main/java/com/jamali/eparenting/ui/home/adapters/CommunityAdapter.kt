@@ -21,6 +21,7 @@ class CommunityAdapter(private val communityList: List<CommunityPost>) : Recycle
         val community = communityList[position]
         with(holder.binding) {
             descTv.text = community.description
+            usernameTv.text = community.username
 
             if (community.thumbnail.isEmpty()) {
                 // Sembunyikan thumbnail jika kosong

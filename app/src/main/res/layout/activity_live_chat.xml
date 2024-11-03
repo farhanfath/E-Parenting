@@ -50,10 +50,10 @@
                     android:textColor="@color/white"/>
 
                 <TextView
-                    android:id="@+id/userEmail"
+                    android:id="@+id/status"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
-                    tools:text="email"
+                    tools:text="online"
                     android:textColor="@color/white"/>
             </LinearLayout>
 
@@ -125,22 +125,6 @@
                         android:layout_height="wrap_content"/>
 
                 </LinearLayout>
-
-                <ImageView
-                    android:id="@+id/attachBtn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="10dp"
-                    android:src="@drawable/ic_attachment"
-                    app:tint="@color/green_500" />
-
-                <ImageView
-                    android:id="@+id/cameraBtn"
-                    android:layout_width="24dp"
-                    android:layout_height="24dp"
-                    android:layout_marginEnd="6dp"
-                    android:src="@drawable/ic_take_picture"
-                    app:tint="@color/green_500" />
 
             </LinearLayout>
 

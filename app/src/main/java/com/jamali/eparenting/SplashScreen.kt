@@ -6,7 +6,7 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.jamali.eparenting.ui.auth.LoginActivity
-import com.jamali.eparenting.ui.home.HomeActivity
+import com.jamali.eparenting.ui.home.MainActivity
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
 
@@ -21,7 +21,7 @@ class SplashScreen : AppCompatActivity() {
             val currentUser = Utility.auth.currentUser
             MainScope().launch {
                 if (currentUser != null) {
-                    startActivity(Intent(this@SplashScreen, HomeActivity::class.java))
+                    startActivity(Intent(this@SplashScreen, MainActivity::class.java))
                     finish()
                 } else {
                     startActivity(Intent(this@SplashScreen, LoginActivity::class.java))

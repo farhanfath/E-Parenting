@@ -1,7 +1,12 @@
 package com.jamali.eparenting.ui.home.fragments.consultation.livechat
 
 import android.app.ProgressDialog
+import android.content.Intent
 import android.os.Bundle
+import android.os.Handler
+import android.text.Editable
+import android.text.TextWatcher
+import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
@@ -38,10 +43,8 @@ class LiveChatActivity : AppCompatActivity() {
         messages = ArrayList()
 
         val name = intent.getStringExtra("name")
-        val email = intent.getStringExtra("email")
         receiverUid = intent.getStringExtra("uid")
         binding.userName.text = name
-        binding.userEmail.text = email
 
         binding.backBtn.setOnClickListener { finish() }
 
@@ -102,21 +105,22 @@ class LiveChatActivity : AppCompatActivity() {
                 }
             }
         }
-    }
 
-    override fun onResume() {
-        super.onResume()
-        setUserStatus("busy")
-    }
+        Utility.database.getReference("users")
+            .child(receiverUid!!)
+            .child("status")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    // Mendapatkan nilai status dari Presence
+                    val presenceStatus = snapshot.getValue(String::class.java)
+                    // Mengubah text di status sesuai dengan isi dari Presence
+                    binding.status.text = presenceStatus
+                }
 
-    override fun onStop() {
-        super.onStop()
-        setUserStatus("online")
-    }
-
-    private fun setUserStatus(status: String) {
-        val currentUserId = Utility.auth.currentUser?.uid ?: return
-        val userRef = Utility.database.getReference("users").child(currentUserId).child("status")
-        userRef.setValue(status)
+                override fun onCancelled(error: DatabaseError) {
+                    // Tangani error jika diperlukan
+                    Log.e("PresenceListener", "Failed to read presence status", error.toException())
+                }
+            })
     }
 }

@@ -41,10 +41,10 @@ class RegisterActivity : AppCompatActivity() {
                 binding.passEtLayout.error = getString(R.string.required)
             }
             else -> {
-                showLoading(true)
+                Utility.showLoading(binding.loadingBar,true)
                 Utility.auth.createUserWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        showLoading(false)
+                        Utility.showLoading(binding.loadingBar,false)
                         val userId = Utility.auth.currentUser?.uid
                         val user = userId?.let { uid ->
                             User(uid, email, username)
@@ -61,15 +61,11 @@ class RegisterActivity : AppCompatActivity() {
                             }
                         }
                     } else {
-                        showLoading(false)
+                        Utility.showLoading(binding.loadingBar,false)
                         Toast.makeText(this, "Registration failed", Toast.LENGTH_SHORT).show()
                     }
                 }
             }
         }
-    }
-
-    private fun showLoading(state: Boolean) {
-        binding.loadingBar.visibility = if (state) View.VISIBLE else View.GONE
     }
 }

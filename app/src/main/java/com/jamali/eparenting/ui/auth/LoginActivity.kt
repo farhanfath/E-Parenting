@@ -2,13 +2,12 @@ package com.jamali.eparenting.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.jamali.eparenting.R
 import com.jamali.eparenting.Utility
 import com.jamali.eparenting.databinding.ActivityLoginBinding
-import com.jamali.eparenting.ui.home.HomeActivity
+import com.jamali.eparenting.ui.home.MainActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -37,14 +36,14 @@ class LoginActivity : AppCompatActivity() {
                 binding.passEtLayout.error = getString(R.string.required)
             }
             else -> {
-                showLoading(true)
+                Utility.showLoading(binding.loadingBar, true)
                 Utility.auth.signInWithEmailAndPassword(email, password).addOnCompleteListener { task ->
                     if (task.isSuccessful) {
-                        showLoading(false)
-                        startActivity(Intent(this, HomeActivity::class.java))
+                        Utility.showLoading(binding.loadingBar, false)
+                        startActivity(Intent(this, MainActivity::class.java))
                         finish()
                     } else {
-                        showLoading(false)
+                        Utility.showLoading(binding.loadingBar, false)
                         Toast.makeText(this, "Status: {${task.exception}}", Toast.LENGTH_LONG).show()
                     }
                 }
@@ -52,7 +51,5 @@ class LoginActivity : AppCompatActivity() {
         }
     }
 
-    private fun showLoading(state: Boolean) {
-        binding.loadingBar.visibility = if (state) View.VISIBLE else View.GONE
-    }
+
 }

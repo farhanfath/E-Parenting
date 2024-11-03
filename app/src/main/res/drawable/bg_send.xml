@@ -16,7 +16,7 @@
         android:left="2dp"
         android:top="4dp">
         <shape>
-            <solid android:color="#A8AEEC"/>
+            <solid android:color="@color/green_500"/>
             <corners
                 android:bottomLeftRadius="45dp"
                 android:topLeftRadius="45dp"

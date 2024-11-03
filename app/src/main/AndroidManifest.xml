@@ -12,6 +12,7 @@
         android:maxSdkVersion="28" />
 
     <application
+        android:name=".App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -25,7 +26,7 @@
             android:name=".ui.home.fragments.consultation.livechat.LiveChatActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.home.HomeActivity"
+            android:name=".ui.home.MainActivity"
             android:exported="true" />
         <activity
             android:name=".ui.home.post.PostActivity"

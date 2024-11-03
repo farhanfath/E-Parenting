@@ -121,18 +121,6 @@ class ChatFragment : Fragment() {
         })
     }
 
-    private fun updateNoOnlineView(isOnline: Boolean) {
-        if (isOnline) {
-            binding.noUserOnline.visibility = View.GONE
-        } else {
-            binding.noUserOnline.visibility = View.VISIBLE
-        }
-    }
-
-//    private fun showLoading(onLoading: Boolean) {
-//        binding.progressBar.visibility = if (onLoading) View.VISIBLE else View.GONE
-//    }
-
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
