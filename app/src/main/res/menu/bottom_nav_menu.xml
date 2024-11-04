@@ -9,9 +9,9 @@
         app:cnb_iconColor="@color/green_500"/>
 
     <item
-        android:id="@+id/navigation_community"
-        android:icon="@drawable/ic_community"
-        android:title="@string/communityTxt"
+        android:id="@+id/navigation_forum"
+        android:icon="@drawable/ic_forum"
+        android:title="@string/forumTxt"
         app:cnb_iconColor="@color/green_500"/>
 
     <item

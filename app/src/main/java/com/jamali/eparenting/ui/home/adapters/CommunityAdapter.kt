@@ -6,14 +6,14 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jamali.eparenting.data.entity.CommunityPost
-import com.jamali.eparenting.databinding.ItemCommunityBinding
+import com.jamali.eparenting.databinding.ItemForumPersonalBinding
 
 class CommunityAdapter(private val communityList: List<CommunityPost>) : RecyclerView.Adapter<CommunityAdapter.CommunityViewHolder>() {
 
-    class CommunityViewHolder(val binding: ItemCommunityBinding) : RecyclerView.ViewHolder(binding.root)
+    class CommunityViewHolder(val binding: ItemForumPersonalBinding) : RecyclerView.ViewHolder(binding.root)
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): CommunityViewHolder {
-        val binding = ItemCommunityBinding.inflate(LayoutInflater.from(parent.context), parent, false)
+        val binding = ItemForumPersonalBinding.inflate(LayoutInflater.from(parent.context), parent, false)
         return CommunityViewHolder(binding)
     }
 

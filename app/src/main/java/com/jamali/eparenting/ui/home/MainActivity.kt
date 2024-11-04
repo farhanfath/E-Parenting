@@ -32,8 +32,8 @@ class MainActivity : AppCompatActivity() {
                 R.id.navigation_home -> {
                     navController.navigate(R.id.navigation_home)
                 }
-                R.id.navigation_community -> {
-                    navController.navigate(R.id.navigation_community)
+                R.id.navigation_forum -> {
+                    navController.navigate(R.id.navigation_forum)
                 }
                 R.id.navigation_chat -> {
                     navController.navigate(R.id.navigation_chat)

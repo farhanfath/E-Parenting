@@ -1,4 +1,4 @@
-package com.jamali.eparenting.ui.home.fragments.community
+package com.jamali.eparenting.ui.home.fragments.forum.personal
 
 import android.content.Intent
 import android.os.Bundle
@@ -13,16 +13,13 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.Utility
 import com.jamali.eparenting.data.entity.CommunityPost
-import com.jamali.eparenting.databinding.FragmentCommunityBinding
+import com.jamali.eparenting.databinding.FragmentSubForumPersonalBinding
 import com.jamali.eparenting.ui.home.adapters.CommunityAdapter
 import com.jamali.eparenting.ui.home.post.PostActivity
 
-class CommunityFragment : Fragment() {
+class PersonalFragment : Fragment() {
 
-    private var _binding: FragmentCommunityBinding? = null
-
-    // This property is only valid between onCreateView and
-    // onDestroyView.
+    private var _binding: FragmentSubForumPersonalBinding? = null
     private val binding get() = _binding!!
 
     private lateinit var adapter: CommunityAdapter
@@ -34,7 +31,7 @@ class CommunityFragment : Fragment() {
         savedInstanceState: Bundle?
     ): View {
 
-        _binding = FragmentCommunityBinding.inflate(inflater, container, false)
+        _binding = FragmentSubForumPersonalBinding.inflate(inflater, container, false)
         val root: View = binding.root
 
         return root
@@ -43,13 +40,13 @@ class CommunityFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.postFab.setOnClickListener {
+        binding.btnMakePost.setOnClickListener {
             startActivity(Intent(requireContext(), PostActivity::class.java))
         }
 
         adapter = CommunityAdapter(communityList)
-        binding.communityPostRv.layoutManager = LinearLayoutManager(requireContext())
-        binding.communityPostRv.adapter = adapter
+        binding.rvPersonalPost.layoutManager = LinearLayoutManager(requireContext())
+        binding.rvPersonalPost.adapter = adapter
 
         loadCommunityPosts()
     }
