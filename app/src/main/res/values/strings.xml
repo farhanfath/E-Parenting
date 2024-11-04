@@ -27,4 +27,7 @@
     <string name="homeTxt">Home</string>
     <string name="failed_get_name">Gagal memuat nama pengguna</string>
     <string name="title_upload_new_forum">Upload New Forum</string>
+    <string name="tab_1">Personal</string>
+    <string name="tab_2">Komunitas</string>
+    <string name="dummy_desc_detail">Program parenting adalah program pendidikan yang diberikan kepada orang tua agar pengetahuan yang dimiliki orang tua menjadi bertambah tentang tumbuh kembang anak serta agar pendidikan yang diperoleh anak selaras antara dirumah dan disekolah</string>
 </resources>
