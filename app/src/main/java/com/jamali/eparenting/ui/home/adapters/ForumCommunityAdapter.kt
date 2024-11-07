@@ -25,7 +25,7 @@ class ForumCommunityAdapter(private val forumCommunityTypeList: List<ForumCommun
             ivCardCommunityForum.setImageResource(communityType.imageResId)
         }
         holder.binding.root.setOnClickListener {
-
+            // TODO: Handle item click
         }
     }
 }

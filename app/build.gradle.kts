@@ -2,6 +2,7 @@ plugins {
     alias(libs.plugins.android.application)
     alias(libs.plugins.jetbrains.kotlin.android)
     alias(libs.plugins.google.gms.google.services)
+    id("kotlin-parcelize")
 }
 
 android {
@@ -76,4 +77,9 @@ dependencies {
 
     // shimmer
     implementation ("com.facebook.shimmer:shimmer:0.5.0")
+
+    // retrofit
+    implementation ("com.squareup.retrofit2:retrofit:2.11.0")
+    // gson converter
+    implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
 }
