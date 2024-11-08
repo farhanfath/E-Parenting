@@ -23,7 +23,7 @@
         android:id="@+id/iv_preview_image_upload"
         android:layout_width="match_parent"
         android:layout_height="200dp"
-        android:layout_marginTop="50dp"
+        android:layout_marginTop="30dp"
         android:src="@drawable/images_upload_icon"
         android:scaleType="center"
         app:layout_constraintEnd_toEndOf="parent"
@@ -123,6 +123,37 @@
         </com.google.android.material.card.MaterialCardView>
     </LinearLayout>
 
+    <TextView
+        android:id="@+id/tv_title_type_forum"
+        app:layout_constraintTop_toBottomOf="@id/post_layout"
+        app:layout_constraintStart_toStartOf="@id/dropdown_type_forum"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="6dp"
+        android:text="Pilih Jenis Forum"
+        android:textStyle="bold" />
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/dropdown_type_forum"
+        style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_margin="8dp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_title_type_forum">
+
+        <AutoCompleteTextView
+            android:id="@+id/insertTypeItem"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:hint="Jenis Forum"
+            android:inputType="none"
+            android:padding="12dp"
+            android:textSize="18sp"
+            app:simpleItems="@array/type_forum"
+            tools:ignore="SpeakableTextPresentCheck" />
+    </com.google.android.material.textfield.TextInputLayout>
 
     <TextView
         android:id="@+id/tv_title_add_caption"
@@ -133,7 +164,7 @@
         android:textStyle="bold"
         app:layout_constraintBottom_toTopOf="@id/tl_desc_upload_forum"
         app:layout_constraintStart_toStartOf="@id/tl_desc_upload_forum"
-        app:layout_constraintTop_toBottomOf="@id/post_layout" />
+        app:layout_constraintTop_toBottomOf="@id/dropdown_type_forum" />
 
     <com.google.android.material.textfield.TextInputLayout
         android:id="@+id/tl_desc_upload_forum"
