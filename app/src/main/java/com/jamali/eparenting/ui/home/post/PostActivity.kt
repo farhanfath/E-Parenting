@@ -6,7 +6,6 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
-import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -18,7 +17,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.R
-import com.jamali.eparenting.Utility
+import com.jamali.eparenting.application.Utility
 import com.jamali.eparenting.data.entity.CommunityPost
 import com.jamali.eparenting.data.entity.PostType
 import com.jamali.eparenting.databinding.ActivityUploadPhotoBinding

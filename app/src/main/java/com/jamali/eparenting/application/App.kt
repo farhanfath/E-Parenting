@@ -1,4 +1,4 @@
-package com.jamali.eparenting
+package com.jamali.eparenting.application
 
 import android.app.Activity
 import android.app.Application

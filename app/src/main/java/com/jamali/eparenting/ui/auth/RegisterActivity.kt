@@ -2,11 +2,10 @@ package com.jamali.eparenting.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
-import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.jamali.eparenting.R
-import com.jamali.eparenting.Utility
+import com.jamali.eparenting.application.Utility
 import com.jamali.eparenting.data.entity.User
 import com.jamali.eparenting.databinding.ActivityRegisterBinding
 

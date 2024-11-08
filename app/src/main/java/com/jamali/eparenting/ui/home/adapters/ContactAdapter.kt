@@ -9,7 +9,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.R
-import com.jamali.eparenting.Utility
+import com.jamali.eparenting.application.Utility
 import com.jamali.eparenting.data.entity.User
 import com.jamali.eparenting.databinding.ItemListMessageBinding
 import com.jamali.eparenting.ui.home.fragments.consultation.livechat.LiveChatActivity

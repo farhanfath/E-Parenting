@@ -7,7 +7,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.jamali.eparenting.R
-import com.jamali.eparenting.Utility
+import com.jamali.eparenting.application.Utility
 import com.jamali.eparenting.databinding.FragmentProfileBinding
 import com.jamali.eparenting.ui.auth.LoginActivity
 import com.marsad.stylishdialogs.StylishAlertDialog

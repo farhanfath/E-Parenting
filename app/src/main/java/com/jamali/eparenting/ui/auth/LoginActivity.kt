@@ -5,7 +5,7 @@ import android.os.Bundle
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.jamali.eparenting.R
-import com.jamali.eparenting.Utility
+import com.jamali.eparenting.application.Utility
 import com.jamali.eparenting.databinding.ActivityLoginBinding
 import com.jamali.eparenting.ui.home.MainActivity
 

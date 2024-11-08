@@ -1,10 +1,11 @@
-package com.jamali.eparenting
+package com.jamali.eparenting.application
 
 import android.annotation.SuppressLint
 import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.jamali.eparenting.R
 import com.jamali.eparenting.ui.auth.LoginActivity
 import com.jamali.eparenting.ui.home.MainActivity
 import kotlinx.coroutines.MainScope

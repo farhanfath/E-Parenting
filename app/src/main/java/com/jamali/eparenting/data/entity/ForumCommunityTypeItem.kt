@@ -1,23 +1,11 @@
 package com.jamali.eparenting.data.entity
 
-import android.os.Parcelable
 import com.jamali.eparenting.R
-import kotlinx.parcelize.Parcelize
 
-@Parcelize
 data class ForumCommunityTypeItem(
     val title: String,
     val imageResId: Int,
-    val forumFormAPI : ForumDataAPI? = null
-) : Parcelable
-
-@Parcelize
-data class ForumDataAPI (
-    val title: String,
-    val link: String,
-    val description: String,
-    val type: String
-) : Parcelable
+)
 
 object ForumCommunityData {
     val forumItems = listOf(

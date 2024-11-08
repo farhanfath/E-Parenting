@@ -1,11 +1,7 @@
 package com.jamali.eparenting.ui.home.fragments.consultation.livechat
 
 import android.app.ProgressDialog
-import android.content.Intent
 import android.os.Bundle
-import android.os.Handler
-import android.text.Editable
-import android.text.TextWatcher
 import android.util.Log
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -14,7 +10,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.database.ValueEventListener
-import com.jamali.eparenting.Utility
+import com.jamali.eparenting.application.Utility
 import com.jamali.eparenting.data.entity.Message
 import com.jamali.eparenting.databinding.ActivityLiveChatBinding
 import com.jamali.eparenting.ui.home.adapters.MessagesAdapter

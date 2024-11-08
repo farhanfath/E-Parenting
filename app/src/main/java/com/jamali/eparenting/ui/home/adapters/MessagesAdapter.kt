@@ -8,7 +8,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jamali.eparenting.R
-import com.jamali.eparenting.Utility
+import com.jamali.eparenting.application.Utility
 import com.jamali.eparenting.data.entity.Message
 import com.jamali.eparenting.databinding.DeleteLayoutBinding
 import com.jamali.eparenting.databinding.ReceiveMsgBinding

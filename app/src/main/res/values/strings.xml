@@ -30,4 +30,8 @@
     <string name="tab_1">Personal</string>
     <string name="tab_2">Komunitas</string>
     <string name="dummy_desc_detail">Program parenting adalah program pendidikan yang diberikan kepada orang tua agar pengetahuan yang dimiliki orang tua menjadi bertambah tentang tumbuh kembang anak serta agar pendidikan yang diperoleh anak selaras antara dirumah dan disekolah</string>
+    <string name="error_no_network">Tidak Ada Jaringan Sinyal Saat Ini</string>
+    <string name="error_timeout">Permintaan melebihi batas waktu, harap coba lagi</string>
+    <string name="error_network">Terkendala koneksi, harap periksa jaringan anda</string>
+    <string name="error_general">Terjadi Error</string>
 </resources>
