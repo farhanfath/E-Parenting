@@ -19,9 +19,9 @@
 
     <fragment
         android:id="@+id/navigation_chat"
-        android:name="com.jamali.eparenting.ui.home.fragments.consultation.ChatFragment"
+        android:name="com.jamali.eparenting.ui.home.fragments.consultation.TawkToFragment"
         android:label="@string/chatTxt"
-        tools:layout="@layout/fragment_consultation" />
+        tools:layout="@layout/fragment_tawk_to" />
 
     <fragment
         android:id="@+id/navigation_profile"
