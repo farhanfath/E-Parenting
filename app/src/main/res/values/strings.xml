@@ -40,14 +40,6 @@
     <string name="post">Kirim Komentar</string>
     <string name="head_topic">Pembahasan</string>
     <string name="comment">Komentar</string>
-    
-    <string-array name="type_forum">
-        <item>Pra Nikah</item>
-        <item>Balita</item>
-        <item>Sekolah Dasar</item>
-        <item>SMP</item>
-        <item>SMA</item>
-    </string-array>
 
     <string name="insert_comment">Tambahkan sebuah komentar</string>
 </resources>

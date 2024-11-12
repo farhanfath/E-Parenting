@@ -4,7 +4,7 @@ import android.os.Parcelable
 import kotlinx.parcelize.Parcelize
 
 enum class PostType {
-    BALITA, PRANIKAH, REMAJA, UMUM
+    BALITA, PRANIKAH, REMAJA,SMA, SMP, UMUM
 }
 
 @Parcelize

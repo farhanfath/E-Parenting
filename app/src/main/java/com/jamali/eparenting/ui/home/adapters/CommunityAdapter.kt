@@ -10,7 +10,9 @@ import com.jamali.eparenting.data.entity.CommunityPost
 import com.jamali.eparenting.databinding.ItemForumPersonalBinding
 import com.jamali.eparenting.ui.home.fragments.forum.detailforum.DetailForumActivity
 
-class CommunityAdapter(private val communityList: List<CommunityPost>) : RecyclerView.Adapter<CommunityAdapter.CommunityViewHolder>() {
+class CommunityAdapter(
+    private val communityList: List<CommunityPost>
+) : RecyclerView.Adapter<CommunityAdapter.CommunityViewHolder>() {
 
     class CommunityViewHolder(val binding: ItemForumPersonalBinding) : RecyclerView.ViewHolder(binding.root)
 

@@ -5,13 +5,13 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import android.widget.Toast
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.application.Utility
+import com.jamali.eparenting.data.entity.Comment
 import com.jamali.eparenting.data.entity.CommunityPost
 import com.jamali.eparenting.databinding.FragmentSubForumPersonalBinding
 import com.jamali.eparenting.ui.home.adapters.CommunityAdapter
@@ -45,6 +45,7 @@ class PersonalFragment : Fragment() {
         }
 
         adapter = CommunityAdapter(communityList)
+
         binding.rvPersonalPost.layoutManager = LinearLayoutManager(requireContext())
         binding.rvPersonalPost.adapter = adapter
 
@@ -66,7 +67,7 @@ class PersonalFragment : Fragment() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                Toast.makeText(requireContext(), error.message, Toast.LENGTH_SHORT).show()
+                Utility.showToast(requireContext(), error.message)
             }
         })
     }

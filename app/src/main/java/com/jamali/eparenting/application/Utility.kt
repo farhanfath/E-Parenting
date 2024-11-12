@@ -5,6 +5,7 @@ import android.net.ConnectivityManager
 import android.net.NetworkCapabilities
 import android.view.View
 import android.widget.Toast
+import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
@@ -16,14 +17,12 @@ object Utility {
     val database = FirebaseDatabase.getInstance()
     val storage = FirebaseStorage.getInstance()
 
-    fun setUserStatus(status: String) {
-        val currentUserId = auth.currentUser?.uid ?: return
-        val userRef = database.getReference("users").child(currentUserId).child("status")
-        userRef.setValue(status)
-    }
-
     fun showLoading(loadingBar: View, state: Boolean) {
         loadingBar.visibility = if (state) View.VISIBLE else View.GONE
+    }
+
+    fun showSnackBar(view: View, message: String, duration: Int = Snackbar.LENGTH_SHORT) {
+        Snackbar.make(view, message, duration).show()
     }
 
     fun provideRepository(context: Context): AppRepository {

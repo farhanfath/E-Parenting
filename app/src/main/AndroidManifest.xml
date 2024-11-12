@@ -13,9 +13,7 @@
     <uses-permission android:name="android.permission.READ_EXTERNAL_STORAGE"
         android:maxSdkVersion="32" />
 
-
     <application
-        android:name=".application.App"
         android:allowBackup="true"
         android:dataExtractionRules="@xml/data_extraction_rules"
         android:fullBackupContent="@xml/backup_rules"
@@ -35,15 +33,12 @@
             android:name=".ui.home.modul.ModulActivity"
             android:exported="false" />
         <activity
-            android:name=".ui.home.fragments.consultation.livechat.LiveChatActivity"
-            android:exported="false" />
-        <activity
             android:name=".ui.home.MainActivity"
             android:exported="true" />
         <activity
             android:name=".ui.home.post.PostActivity"
             android:exported="false"
-            android:windowSoftInputMode="adjustResize" />
+            android:windowSoftInputMode="adjustResize"/>
         <activity
             android:name=".ui.auth.RegisterActivity"
             android:exported="false" />

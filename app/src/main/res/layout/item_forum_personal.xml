@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     app:cardCornerRadius="5dp"
     android:layout_marginHorizontal="25dp"
-    android:layout_marginTop="10dp"
+    android:layout_marginVertical="10dp"
     android:layout_width="match_parent"
     android:layout_height="wrap_content">
 
@@ -14,12 +14,30 @@
         android:layout_height="match_parent"
         android:orientation="vertical">
 
-        <TextView
-            android:id="@+id/usernameTv"
+        <LinearLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:padding="10dp"
-            tools:text="lorem ipsum dolor sit amet"/>
+            android:orientation="horizontal">
+
+            <de.hdodenhof.circleimageview.CircleImageView
+                android:id="@+id/civ_profile_person_comment_psot_forum"
+                android:layout_width="30dp"
+                android:layout_margin="10dp"
+                android:layout_height="30dp"
+                android:scaleType="centerCrop"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"
+                android:src="@drawable/avatar_profile" />
+
+            <TextView
+                android:id="@+id/usernameTv"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_gravity="center_vertical"
+                android:padding="10dp"
+                tools:text="Nama User"/>
+
+        </LinearLayout>
 
         <ImageView
             android:id="@+id/thumbnailIv"
@@ -37,79 +55,6 @@
             android:layout_height="wrap_content"
             android:padding="10dp"
             tools:text="lorem ipsum dolor sit amet"/>
-
-        <LinearLayout
-            android:layout_width="match_parent"
-            android:layout_height="wrap_content"
-            android:orientation="horizontal">
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:background="@drawable/bg_post_tools_left"
-                android:paddingVertical="5dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="19dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="6dp"
-                    android:src="@drawable/ic_like"/>
-                <TextView
-                    android:textSize="12sp"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="suka" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:background="@drawable/bg_post_tools_middle"
-                android:paddingVertical="5dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="19dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="6dp"
-                    android:src="@drawable/ic_comment"/>
-                <TextView
-                    android:textSize="12sp"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="komentar" />
-            </LinearLayout>
-
-            <LinearLayout
-                android:layout_width="0dp"
-                android:layout_weight="1"
-                android:layout_height="wrap_content"
-                android:gravity="center"
-                android:background="@drawable/bg_post_tools_right"
-                android:paddingVertical="5dp"
-                android:orientation="horizontal">
-
-                <ImageView
-                    android:layout_width="19dp"
-                    android:layout_height="20dp"
-                    android:layout_marginEnd="6dp"
-                    android:src="@drawable/ic_more"/>
-                <TextView
-                    android:textSize="12sp"
-                    android:layout_height="wrap_content"
-                    android:layout_width="wrap_content"
-                    android:text="lainnya" />
-            </LinearLayout>
-
-        </LinearLayout>
-
-
-
 
     </LinearLayout>
 

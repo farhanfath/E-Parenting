@@ -6,6 +6,7 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
+import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -30,6 +31,8 @@ class PostActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUploadPhotoBinding
     private var selectedImageUri: Uri? = null
+
+    private var selectedPostType: PostType = PostType.UMUM
 
     private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
 
@@ -106,10 +109,13 @@ class PostActivity : AppCompatActivity() {
     }
 
     private fun setupSpinner() {
-        val types = PostType.entries.map { it.name }
-        val adapter = ArrayAdapter(this, android.R.layout.simple_spinner_item, types)
-        adapter.setDropDownViewResource(android.R.layout.simple_spinner_dropdown_item)
-//        binding.spinnerType.adapter = adapter
+        val types = PostType.entries.map { it.name }.toTypedArray()
+        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, types)
+        binding.insertTypeItem.setAdapter(adapter)
+        binding.insertTypeItem.setOnItemClickListener { _, _, position, _ ->
+            val selectedTypes = types[position]
+            selectedPostType = PostType.valueOf(selectedTypes)
+        }
     }
 
     private fun setupImagePicker() {
@@ -151,7 +157,8 @@ class PostActivity : AppCompatActivity() {
                                 id = UUID.randomUUID().toString(),
                                 username = username,
                                 thumbnail = "",
-                                description = description
+                                description = description,
+                                type = selectedPostType
                             )
                             saveEventToDatabase(communityPost)
                         }
@@ -185,7 +192,8 @@ class PostActivity : AppCompatActivity() {
                     id = UUID.randomUUID().toString(),
                     username = username,
                     thumbnail = uri.toString(),
-                    description = description
+                    description = description,
+                    type = selectedPostType
                 )
                 saveEventToDatabase(communityPost)
             }
