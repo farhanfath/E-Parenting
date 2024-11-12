@@ -1,0 +1,158 @@
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.constraintlayout.widget.ConstraintLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@color/white">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/iv_photo_detail_post_forum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginHorizontal="8dp"
+        android:scaleType="centerCrop"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="@+id/imb_back_detail_post_forum"
+        app:shapeAppearanceOverlay="@style/roundImageview"
+        tools:src="@tools:sample/avatars" />
+
+    <ImageButton
+        android:id="@+id/imb_back_detail_post_forum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="30dp"
+        android:layout_marginTop="30dp"
+        android:background="@drawable/circle_background_back"
+        android:src="@drawable/ic_arrow_back"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent" />
+
+    <TextView
+        android:id="@+id/tv_headline_topic_detail_post_forum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:text="Headline Topic"
+        android:textSize="16sp"
+        android:textStyle="bold"
+        app:layout_constraintBottom_toBottomOf="@id/imb_back_detail_post_forum"
+        app:layout_constraintStart_toEndOf="@id/imb_back_detail_post_forum"
+        app:layout_constraintTop_toTopOf="@id/imb_back_detail_post_forum" />
+
+    <TextView
+        android:id="@+id/tv_desc_detail_post_forum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:layout_marginEnd="10dp"
+        android:gravity="start"
+        android:text="Deskripsi Postingan Forum"
+        android:textSize="12sp"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="@+id/imb_back_detail_post_forum"
+        app:layout_constraintTop_toBottomOf="@+id/iv_photo_detail_post_forum" />
+
+    <LinearLayout
+        android:id="@+id/container_layout_info_like_detal_post_forum"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/imb_back_detail_post_forum"
+        app:layout_constraintTop_toBottomOf="@id/tv_desc_detail_post_forum"
+        tools:layout_editor_absoluteY="158dp">
+
+        <ImageButton
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:background="@android:color/transparent"
+            android:src="@drawable/ic_like" />
+
+        <TextView
+            android:id="@+id/tv_counted_like_detail_post_forum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="2dp"
+            android:text="120"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <LinearLayout
+        android:id="@+id/container_layout_info_user_forum_detail"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="10dp"
+        android:gravity="center"
+        android:orientation="horizontal"
+        app:layout_constraintStart_toStartOf="@id/container_layout_info_like_detal_post_forum"
+        app:layout_constraintTop_toBottomOf="@+id/container_layout_info_like_detal_post_forum">
+
+        <de.hdodenhof.circleimageview.CircleImageView
+            android:id="@+id/civ_profile_detail_post_forum"
+            android:layout_width="40dp"
+            android:layout_height="40dp"
+            android:scaleType="centerCrop"
+            tools:src="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/tv_username_detail_post_forum"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="8dp"
+            android:text="Username"
+            android:textSize="12sp"
+            android:textStyle="bold" />
+    </LinearLayout>
+
+    <com.google.android.material.textfield.TextInputLayout
+        android:id="@+id/edt_insert_comment_detail_post_forum"
+        android:layout_width="0dp"
+        android:layout_height="wrap_content"
+        android:layout_marginStart="20dp"
+        android:layout_marginTop="8dp"
+        app:boxCornerRadiusBottomEnd="20dp"
+        app:boxCornerRadiusBottomStart="20dp"
+        app:boxCornerRadiusTopEnd="20dp"
+        app:boxCornerRadiusTopStart="20dp"
+        app:layout_constraintEnd_toStartOf="@id/btn_send_comment"
+        app:layout_constraintStart_toStartOf="@+id/container_layout_info_user_forum_detail"
+        app:layout_constraintTop_toBottomOf="@id/container_layout_info_user_forum_detail">
+
+        <com.google.android.material.textfield.TextInputEditText
+            android:id="@+id/input_comment_detail_post_forum"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:hint="@string/insert_comment" />
+
+    </com.google.android.material.textfield.TextInputLayout>
+
+    <Button
+        android:id="@+id/btn_send_comment"
+        style="?attr/materialIconButtonStyle"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_marginEnd="20dp"
+        app:icon="@drawable/ic_send_comment_forum"
+        app:layout_constraintBottom_toBottomOf="@+id/edt_insert_comment_detail_post_forum"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toEndOf="@id/edt_insert_comment_detail_post_forum"
+        app:layout_constraintTop_toTopOf="@+id/edt_insert_comment_detail_post_forum" />
+
+    <androidx.recyclerview.widget.RecyclerView
+        android:id="@+id/rv_detail_post_forum"
+        android:layout_width="0dp"
+        android:layout_height="0dp"
+        android:layout_marginHorizontal="18dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginBottom="10dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/edt_insert_comment_detail_post_forum"
+        tools:listitem="@layout/item_comment_detail_post_forum" />
+
+</androidx.constraintlayout.widget.ConstraintLayout>

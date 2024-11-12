@@ -38,4 +38,6 @@
         <item>SMP</item>
         <item>SMA</item>
     </string-array>
+
+    <string name="insert_comment">Tambahkan sebuah komentar</string>
 </resources>
