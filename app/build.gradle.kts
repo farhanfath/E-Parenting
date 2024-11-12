@@ -18,7 +18,7 @@ android {
 
         testInstrumentationRunner = "androidx.test.runner.AndroidJUnitRunner"
 
-        buildConfigField("String", "TAWKTO_URL", "\"https://tawk.to/db9623f29191add3b7748014bd00f691d3f4edfe\"")
+        buildConfigField("String", "TAWKTO_URL", "\"https://farhanfath.github.io/Jamali-Parenting-Livechat/\"")
     }
 
     buildTypes {

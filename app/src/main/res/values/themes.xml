@@ -5,7 +5,8 @@
     <!-- uncomment jika ingin mengubah transisi ke fade in fade out -->
     <!--<item name="android:windowAnimationStyle">@style/ActivityFadeTransition</item>-->
 
-        <item name="android:statusBarColor">@color/statusBar</item>
+        <item name="android:statusBarColor">@color/green_500</item>
+        <item name="android:windowBackground">@color/white</item>
 
         <!-- Warna latar belakang tombol -->
         <item name="android:colorButtonNormal">@color/green_500</item>

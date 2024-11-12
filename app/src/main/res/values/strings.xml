@@ -34,4 +34,9 @@
     <string name="error_timeout">Permintaan melebihi batas waktu, harap coba lagi</string>
     <string name="error_network">Terkendala koneksi, harap periksa jaringan anda</string>
     <string name="error_general">Terjadi Error</string>
+    <string name="lorem_ipsum">Lorem ipsum dolor sit amet, consectetur adipiscing elit. Integer dolor augue, varius quis dolor et, ornare ullamcorper diam. Pellentesque eu enim ac neque vestibulum tristique ac in lacus. Pellentesque eros magna, porta volutpat purus non</string>
+    <string name="leave_a_comment">Berikan Komentar</string>
+    <string name="post">Kirim Komentar</string>
+    <string name="head_topic">Pembahasan</string>
+    <string name="comment">Komentar</string>
 </resources>

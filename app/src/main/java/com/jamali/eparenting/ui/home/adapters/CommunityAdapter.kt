@@ -1,5 +1,6 @@
 package com.jamali.eparenting.ui.home.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -7,6 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jamali.eparenting.data.entity.CommunityPost
 import com.jamali.eparenting.databinding.ItemForumPersonalBinding
+import com.jamali.eparenting.ui.home.fragments.forum.detailforum.DetailForumActivity
 
 class CommunityAdapter(private val communityList: List<CommunityPost>) : RecyclerView.Adapter<CommunityAdapter.CommunityViewHolder>() {
 
@@ -34,7 +36,12 @@ class CommunityAdapter(private val communityList: List<CommunityPost>) : Recycle
                     .into(thumbnailIv)
             }
         }
-
+        holder.binding.root.setOnClickListener {
+            val context = holder.itemView.context
+            val intent = Intent(holder.itemView.context, DetailForumActivity::class.java)
+            intent.putExtra("community_post", community)
+            context.startActivity(intent)
+        }
     }
 
     override fun getItemCount() = communityList.size
