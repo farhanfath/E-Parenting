@@ -15,7 +15,7 @@ object ModulTemplateData {
     val forumItems = listOf(
         ModulDataType("Pra Nikah", R.drawable.pranikah_community_forum, "Pranikah"),
         ModulDataType("Balita", R.drawable.balita_community_forum, "Balita"),
-        ModulDataType("Remaja", R.drawable.sd_community_forum, "Remaja"),
+        ModulDataType("SD", R.drawable.sd_community_forum, "SD"),
         ModulDataType("SMP", R.drawable.smp_community_forum, "SMP"),
         ModulDataType("SMA", R.drawable.sma_community_forum, "SMA")
     )

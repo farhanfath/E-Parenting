@@ -13,4 +13,7 @@
 
     <color name="dark_transparent">#80000000</color>
     <color name="transparent">#00000000</color>
+    <color name="transparent_bg">#4DC7C9D0</color>
+
+    <color name="transparent_bg_dark">#80B0B0B0</color>
 </resources>

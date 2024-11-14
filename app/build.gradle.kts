@@ -86,4 +86,7 @@ dependencies {
     // gson converter
     implementation ("com.squareup.retrofit2:converter-gson:2.11.0")
     implementation ("com.squareup.okhttp3:logging-interceptor:4.12.0")
+
+    // pdf viewer
+    implementation ("com.github.DImuthuUpe:AndroidPdfViewer:3.1.0-beta.1")
 }

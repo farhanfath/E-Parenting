@@ -1,9 +1,14 @@
 package com.jamali.eparenting.ui.home.modul
 
 import android.os.Bundle
+import android.view.View
+import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener
+import com.github.barteksc.pdfviewer.listener.OnPageErrorListener
 import com.jamali.eparenting.application.ResultData
 import com.jamali.eparenting.application.Utility
 import com.jamali.eparenting.application.ViewModelFactory
@@ -33,7 +38,31 @@ class ModulActivity : AppCompatActivity() {
         val type = intent.getStringExtra("type").toString()
         binding.tvTitleListMaterial.text = modulData?.title
 
-        getModulListData(type)
+        setPdfModulByType(type)
+
+//        getModulListData(type)
+    }
+
+    private fun setPdfModulByType(type: String) {
+        val pdfUrl = when (type) {
+            "Pranikah" -> "MODUL_PRA_NIKAH.pdf"
+            "Balita" -> "MODUL_BALITA.pdf"
+            "SD" -> "MODUL_SEKOLAH_DASAR.pdf"
+            "SMP" -> "MODUL_SEKOLAH_MENENGAH_PERTAMA.pdf"
+            "SMA" -> "MODUL_SEKOLAH_MENENGAH_ATAS.pdf"
+            else -> ""
+        }
+
+        binding.pdfViewer.fromAsset(pdfUrl)
+            .onLoad(OnLoadCompleteListener {
+                binding.progressBar.visibility = View.GONE
+            })
+            .onPageError(OnPageErrorListener { page, _ ->
+                // Sembunyikan ProgressBar jika ada kesalahan
+                binding.progressBar.visibility = View.GONE
+                Toast.makeText(this, "Error loading page $page", Toast.LENGTH_SHORT).show()
+            })
+            .load()
     }
 
     private fun getModulListData(type: String) {
@@ -58,8 +87,8 @@ class ModulActivity : AppCompatActivity() {
             Utility.showToast(this, "Tidak Ada Data Modul")
         } else {
             val adapter = ModulTypeListAdapter(modul)
-            binding.rvListMaterial.layoutManager = LinearLayoutManager(this)
-            binding.rvListMaterial.adapter = adapter
+//            binding.rvListMaterial.layoutManager = LinearLayoutManager(this)
+//            binding.rvListMaterial.adapter = adapter
         }
     }
 }
