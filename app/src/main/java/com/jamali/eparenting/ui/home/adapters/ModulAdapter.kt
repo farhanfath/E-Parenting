@@ -23,8 +23,11 @@ class ModulAdapter(private val modulDataList: List<ModulDataType>) :
     override fun onBindViewHolder(holder: ModulViewHolder, position: Int) {
         val communityType = modulDataList[position]
         with(holder.binding) {
-            tvTitleModul.text = communityType.title
-            ivMateriModul.setImageResource(communityType.imageResId)
+            moduleTitle.text = communityType.title
+            moduleDescription.text = communityType.description
+            moduleIcon.setImageResource(communityType.imageResId)
+            cardViewModul.setCardBackgroundColor(holder.itemView.context.getColor(communityType.backgroundColor))
+            cardViewModul.strokeColor = holder.itemView.context.getColor(communityType.strokeColor)
         }
         holder.binding.root.setOnClickListener {
             val context = holder.itemView.context

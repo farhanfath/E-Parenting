@@ -5,8 +5,6 @@ import android.view.View
 import android.widget.Toast
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.lifecycle.lifecycleScope
-import androidx.recyclerview.widget.LinearLayoutManager
 import com.github.barteksc.pdfviewer.listener.OnLoadCompleteListener
 import com.github.barteksc.pdfviewer.listener.OnPageErrorListener
 import com.jamali.eparenting.application.ResultData
@@ -54,14 +52,14 @@ class ModulActivity : AppCompatActivity() {
         }
 
         binding.pdfViewer.fromAsset(pdfUrl)
-            .onLoad(OnLoadCompleteListener {
+            .onLoad {
                 binding.progressBar.visibility = View.GONE
-            })
-            .onPageError(OnPageErrorListener { page, _ ->
+            }
+            .onPageError { page, _ ->
                 // Sembunyikan ProgressBar jika ada kesalahan
                 binding.progressBar.visibility = View.GONE
                 Toast.makeText(this, "Error loading page $page", Toast.LENGTH_SHORT).show()
-            })
+            }
             .load()
     }
 

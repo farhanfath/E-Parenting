@@ -75,9 +75,6 @@ dependencies {
     // navbar bottom
     implementation ("com.github.ismaeldivita:chip-navigation-bar:1.4.0")
 
-    // stylish dialog
-    implementation ("com.github.MarsadMaqsood:StylishDialogs:1.0.0")
-
     // shimmer
     implementation ("com.facebook.shimmer:shimmer:0.5.0")
 

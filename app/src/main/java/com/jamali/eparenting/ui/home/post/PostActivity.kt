@@ -158,7 +158,8 @@ class PostActivity : AppCompatActivity() {
                                 username = username,
                                 thumbnail = "",
                                 description = description,
-                                type = selectedPostType
+                                type = selectedPostType,
+                                timestamp = System.currentTimeMillis()
                             )
                             saveEventToDatabase(communityPost)
                         }
@@ -193,7 +194,8 @@ class PostActivity : AppCompatActivity() {
                     username = username,
                     thumbnail = uri.toString(),
                     description = description,
-                    type = selectedPostType
+                    type = selectedPostType,
+                    timestamp = System.currentTimeMillis()
                 )
                 saveEventToDatabase(communityPost)
             }

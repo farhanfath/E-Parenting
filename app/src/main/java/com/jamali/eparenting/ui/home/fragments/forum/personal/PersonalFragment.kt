@@ -11,7 +11,6 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.application.Utility
-import com.jamali.eparenting.data.entity.Comment
 import com.jamali.eparenting.data.entity.CommunityPost
 import com.jamali.eparenting.databinding.FragmentSubForumPersonalBinding
 import com.jamali.eparenting.ui.home.adapters.CommunityAdapter
@@ -44,7 +43,7 @@ class PersonalFragment : Fragment() {
             startActivity(Intent(requireContext(), PostActivity::class.java))
         }
 
-        adapter = CommunityAdapter(communityList)
+        adapter = CommunityAdapter(communityList, childFragmentManager)
 
         binding.rvPersonalPost.layoutManager = LinearLayoutManager(requireContext())
         binding.rvPersonalPost.adapter = adapter

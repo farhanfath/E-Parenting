@@ -22,7 +22,7 @@ class CommentAdapter(private val comments: MutableList<Comment>) :
         val commentList = comments[position]
         holder.binding.apply {
             tvProfileUsernameDetailPostForum.text = commentList.username
-            tvDescCommentUserPostForum.text = commentList.comment
+            tvDescCommentUserPostForum.text = commentList.text
         }
     }
 }

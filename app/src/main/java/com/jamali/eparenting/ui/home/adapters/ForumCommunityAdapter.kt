@@ -1,10 +1,12 @@
 package com.jamali.eparenting.ui.home.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jamali.eparenting.data.entity.ForumCommunityTypeItem
 import com.jamali.eparenting.databinding.ItemForumCommunityBinding
+import com.jamali.eparenting.ui.home.fragments.forum.community.DetailCommunityActivity
 
 class ForumCommunityAdapter(private val forumCommunityTypeList: List<ForumCommunityTypeItem>) :
     RecyclerView.Adapter<ForumCommunityAdapter.ForumCommunityViewHolder>(){
@@ -25,7 +27,11 @@ class ForumCommunityAdapter(private val forumCommunityTypeList: List<ForumCommun
             ivCardCommunityForum.setImageResource(communityType.imageResId)
         }
         holder.binding.root.setOnClickListener {
-            // TODO: Handle item click
+            val context = holder.itemView.context
+            val intent = Intent(context, DetailCommunityActivity::class.java)
+            intent.putExtra("forum_post_type", communityType.type)
+            intent.putExtra("forum_post_title", communityType.title)
+            context.startActivity(intent)
         }
     }
 }

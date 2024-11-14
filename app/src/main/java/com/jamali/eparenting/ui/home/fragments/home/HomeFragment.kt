@@ -5,7 +5,8 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.recyclerview.widget.GridLayoutManager
+import androidx.recyclerview.widget.LinearLayoutManager
+import androidx.recyclerview.widget.RecyclerView
 import com.jamali.eparenting.data.entity.ModulTemplateData
 import com.jamali.eparenting.databinding.FragmentHomeBinding
 import com.jamali.eparenting.ui.home.adapters.ModulAdapter
@@ -30,8 +31,20 @@ class HomeFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
-        binding.rvModul.adapter = ModulAdapter(ModulTemplateData.forumItems)
-        binding.rvModul.layoutManager = GridLayoutManager(requireContext(), 2)
+        binding.rvModul.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = ModulAdapter(ModulTemplateData.forumItems)
+            addItemDecoration(object : RecyclerView.ItemDecoration() {
+                override fun getItemOffsets(
+                    outRect: android.graphics.Rect,
+                    view: View,
+                    parent: RecyclerView,
+                    state: RecyclerView.State
+                ) {
+                    outRect.set(8, 8, 8, 8)
+                }
+            })
+        }
     }
 
     override fun onDestroyView() {

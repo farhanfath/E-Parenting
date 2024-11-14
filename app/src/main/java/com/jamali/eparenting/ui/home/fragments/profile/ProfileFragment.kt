@@ -1,6 +1,5 @@
 package com.jamali.eparenting.ui.home.fragments.profile
 
-import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
@@ -9,8 +8,6 @@ import androidx.fragment.app.Fragment
 import com.jamali.eparenting.R
 import com.jamali.eparenting.application.Utility
 import com.jamali.eparenting.databinding.FragmentProfileBinding
-import com.jamali.eparenting.ui.auth.LoginActivity
-import com.marsad.stylishdialogs.StylishAlertDialog
 
 class ProfileFragment : Fragment() {
 
@@ -33,7 +30,8 @@ class ProfileFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         binding.btnLogout.setOnClickListener {
-            logoutHandler()
+            val logoutFragment = LogOutFragment()
+            logoutFragment.show(childFragmentManager, logoutFragment.tag)
         }
 
         showUserProfile()
@@ -64,20 +62,6 @@ class ProfileFragment : Fragment() {
             binding.shimmerViewContainer.visibility = View.GONE
             binding.tvUsername.visibility = View.VISIBLE
         }
-    }
-
-    private fun logoutHandler() {
-        StylishAlertDialog(requireContext(), StylishAlertDialog.WARNING)
-            .setTitleText("Apakah Anda yakin?")
-            .setContentText("Anda akan keluar dari akun Anda!")
-            .setConfirmText("Ya, keluar")
-            .setConfirmClickListener {
-                Utility.auth.signOut()
-                startActivity(Intent(requireContext(), LoginActivity::class.java))
-                requireActivity().finish()
-            }
-            .setCancelButton("Batal",StylishAlertDialog::dismissWithAnimation)
-            .show()
     }
 
     override fun onDestroyView() {

@@ -16,4 +16,23 @@
     <color name="transparent_bg">#4DC7C9D0</color>
 
     <color name="transparent_bg_dark">#80B0B0B0</color>
+
+    <!--    module type color-->
+    <color name="background">#FAFAFA</color>
+    <color name="text_primary">#212121</color>
+    <color name="text_secondary">#757575</color>
+
+    <!-- Module Colors -->
+    <color name="module_pra_nikah">#FFEBEE</color>
+    <color name="module_balita">#E3F2FD</color>
+    <color name="module_sd">#E8F5E9</color>
+    <color name="module_smp">#F3E5F5</color>
+    <color name="module_sma">#FFF3E0</color>
+
+    <color name="module_pra_nikah_stroke">#FFCDD2</color>
+    <color name="module_balita_stroke">#BBDEFB</color>
+    <color name="module_sd_stroke">#C8E6C9</color>
+    <color name="module_smp_stroke">#E1BEE7</color>
+    <color name="module_sma_stroke">#FFE0B2</color>
+    <color name="gray_100">#F5F5F5</color>
 </resources>
