@@ -1,10 +1,13 @@
 package com.jamali.eparenting.ui.home.adapters
 
+import android.os.Handler
+import android.os.Looper
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.jamali.eparenting.data.entity.Comment
 import com.jamali.eparenting.databinding.ItemCommentDetailPostForumBinding
+import com.jamali.eparenting.utils.TimeUtils
 
 class CommentAdapter(private val comments: MutableList<Comment>) :
     RecyclerView.Adapter<CommentAdapter.CommentViewHolder>() {
@@ -21,8 +24,25 @@ class CommentAdapter(private val comments: MutableList<Comment>) :
     override fun onBindViewHolder(holder: CommentViewHolder, position: Int) {
         val commentList = comments[position]
         holder.binding.apply {
-            tvProfileUsernameDetailPostForum.text = commentList.username
-            tvDescCommentUserPostForum.text = commentList.text
+            tvUsername.text = commentList.username
+            tvComment.text = commentList.text
+            tvTimestamp.text = TimeUtils.getTimeAgo(commentList.timestamp)
         }
+    }
+
+    private val handler = Handler(Looper.getMainLooper())
+    private val updateTimeRunnable = object : Runnable {
+        override fun run() {
+            notifyDataSetChanged()
+            handler.postDelayed(this, 60000)
+        }
+    }
+
+    fun startUpdatingTime() {
+        handler.post(updateTimeRunnable)
+    }
+
+    fun stopUpdatingTime() {
+        handler.removeCallbacks(updateTimeRunnable)
     }
 }

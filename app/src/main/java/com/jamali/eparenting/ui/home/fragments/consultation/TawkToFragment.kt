@@ -75,7 +75,7 @@ class TawkToFragment : Fragment() {
             }
         }
 
-        // Load the Tawk.to URL
+        // Load the tawk.to URL
         tawkToWebView.loadUrl(BuildConfig.TAWKTO_URL)
     }
 

@@ -9,16 +9,16 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.ServerValue
 import com.google.firebase.database.ValueEventListener
+import com.jamali.eparenting.R
 import com.jamali.eparenting.application.Utility
 import com.jamali.eparenting.data.entity.Comment
 import com.jamali.eparenting.data.entity.CommunityPost
 import com.jamali.eparenting.data.entity.PostType
 import com.jamali.eparenting.databinding.ItemForumPersonalBinding
 import com.jamali.eparenting.ui.home.fragments.forum.comment.CommentFragment
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import com.jamali.eparenting.utils.TimeUtils
 
 class CommunityAdapter(
     private val communityList: List<CommunityPost>,
@@ -26,6 +26,8 @@ class CommunityAdapter(
 ) : RecyclerView.Adapter<CommunityAdapter.CommunityViewHolder>() {
 
     private val commentList = mutableListOf<Comment>()
+
+    private var currentCommentListener: ValueEventListener? = null
 
     class CommunityViewHolder(val binding: ItemForumPersonalBinding) : RecyclerView.ViewHolder(binding.root)
 
@@ -36,6 +38,7 @@ class CommunityAdapter(
 
     override fun onBindViewHolder(holder: CommunityViewHolder, position: Int) {
         val community = communityList[position]
+
         with(holder.binding) {
             tvPostContent.text = community.description
             tvAuthorName.text = community.username
@@ -44,9 +47,7 @@ class CommunityAdapter(
             tvDislikes.text = community.dislikeCount.toString()
             tvComments.text = community.commentCount.toString()
 
-            val dateFormat = SimpleDateFormat("dd/MM/yyyy", Locale.getDefault())
-            val date = Date(community.timestamp)
-            tvPostDate.text = dateFormat.format(date)
+            tvPostDate.text = TimeUtils.getTimeAgo(community.timestamp)
 
             if (community.thumbnail.isEmpty()) {
                 ivPostImage.visibility = View.GONE
@@ -56,9 +57,27 @@ class CommunityAdapter(
                     .load(community.thumbnail)
                     .into(ivPostImage)
             }
+
+            val currentUserId = Utility.auth.currentUser?.uid
+            if (currentUserId != null) {
+                // Set initial like button state
+                ivLike.setImageResource(
+                    if (currentUserId in community.likedBy) R.drawable.ic_like_true
+                    else R.drawable.ic_like
+                )
+
+                // Set initial dislike button state
+                ivDislike.setImageResource(
+                    if (currentUserId in community.dislikedBy) R.drawable.ic_dislike_true
+                    else R.drawable.ic_dislike
+                )
+            }
         }
 
         holder.binding.ivComment.setOnClickListener {
+            /**
+             * inisiasi bottom sheet comment dengan function add comment
+             */
             val commentFragment = CommentFragment(community.id, commentList) { newCommentText ->
                 addComment(newCommentText, community, holder)
             }
@@ -66,39 +85,78 @@ class CommunityAdapter(
         }
 
         holder.binding.ivLike.setOnClickListener {
-            val currentUserId = Utility.auth.currentUser?.uid ?: return@setOnClickListener
+            val userId = Utility.auth.currentUser?.uid ?: return@setOnClickListener
             val post = communityList[holder.adapterPosition]
 
-            if (currentUserId !in post.likedBy) {
-                // User has not liked the post yet
-                post.likeCount++
-                post.likedBy.add(currentUserId)
-                updatePostInRealtime(post)
-            } else {
-                post.likeCount--
-                post.likedBy.remove(currentUserId)
-                updatePostInRealtime(post)
-            }
+            holder.binding.ivLike.animate()
+                .scaleX(0.8f)
+                .scaleY(0.8f)
+                .setDuration(100)
+                .withEndAction {
+                    holder.binding.ivLike.animate()
+                        .scaleX(1f)
+                        .scaleY(1f)
+                        .setDuration(100)
+                        .start()
 
-            notifyItemChanged(holder.adapterPosition)
+                    if (userId !in post.likedBy) {
+                        // Add like
+                        post.likeCount++
+                        post.likedBy.add(userId)
+
+                        // Remove dislike if exists
+                        if (userId in post.dislikedBy) {
+                            post.dislikeCount--
+                            post.dislikedBy.remove(userId)
+                            holder.binding.ivDislike.setImageResource(R.drawable.ic_dislike)
+                        }
+
+                        holder.binding.ivLike.setImageResource(R.drawable.ic_like_true)
+                    } else {
+                        // Remove like
+                        post.likeCount--
+                        post.likedBy.remove(userId)
+                        holder.binding.ivLike.setImageResource(R.drawable.ic_like)
+                    }
+
+                    // Update UI
+                    holder.binding.tvLikes.text = post.likeCount.toString()
+                    holder.binding.tvDislikes.text = post.dislikeCount.toString()
+
+                    updatePostInRealtime(post)
+                }
+                .start()
         }
 
         holder.binding.ivDislike.setOnClickListener {
-            val currentUserId = Utility.auth.currentUser?.uid ?: return@setOnClickListener
+            val userId = Utility.auth.currentUser?.uid ?: return@setOnClickListener
             val post = communityList[holder.adapterPosition]
 
-            if (currentUserId !in post.dislikedBy) {
-                // User has not liked the post yet
+            if (userId !in post.dislikedBy) {
+                // Add dislike
                 post.dislikeCount++
-                post.dislikedBy.add(currentUserId)
-                updatePostInRealtime(post)
+                post.dislikedBy.add(userId)
+
+                // Remove like if exists
+                if (userId in post.likedBy) {
+                    post.likeCount--
+                    post.likedBy.remove(userId)
+                    holder.binding.ivLike.setImageResource(R.drawable.ic_like)
+                }
+
+                holder.binding.ivDislike.setImageResource(R.drawable.ic_dislike_true)
             } else {
+                // Remove dislike
                 post.dislikeCount--
-                post.dislikedBy.remove(currentUserId)
-                updatePostInRealtime(post)
+                post.dislikedBy.remove(userId)
+                holder.binding.ivDislike.setImageResource(R.drawable.ic_dislike)
             }
 
-            notifyItemChanged(holder.adapterPosition)
+            // Update UI
+            holder.binding.tvLikes.text = post.likeCount.toString()
+            holder.binding.tvDislikes.text = post.dislikeCount.toString()
+
+            updatePostInRealtime(post)
         }
     }
 
@@ -124,9 +182,12 @@ class CommunityAdapter(
             userRef.addListenerForSingleValueEvent(object : ValueEventListener {
                 override fun onDataChange(snapshot: DataSnapshot) {
                     val username = snapshot.getValue(String::class.java) ?: "unknown"
+
                     val commentRef = postRef.child("comments").push()
+                    val commentId = commentRef.key ?: return
 
                     val comment = Comment(
+                        id = commentId,
                         idCommunity = community.id,
                         userId = uid,
                         username = username,
@@ -134,27 +195,19 @@ class CommunityAdapter(
                         timestamp = System.currentTimeMillis()
                     )
 
-                    val currentUserId = Utility.auth.currentUser?.uid ?: return
-                    val post = communityList[holder.adapterPosition]
+                    val updates = hashMapOf(
+                        "/communityposts/${community.id}/comments/$commentId" to comment,
+                        "/communityposts/${community.id}/commentCount" to ServerValue.increment(1)
+                    )
 
-                    if (currentUserId !in post.commentBy) {
-                        post.commentCount++
-                        post.commentBy.add(currentUserId)
-                        updatePostInRealtime(post)
-                    } else {
-                        post.commentCount--
-                        post.commentBy.remove(currentUserId)
-                        updatePostInRealtime(post)
-                    }
-
-                    commentRef.setValue(comment).addOnCompleteListener { task ->
-                        if (task.isSuccessful) {
-                            Utility.showToast(holder.itemView.context, "Comment added successfully")
-                            loadComments(community.id, holder)
-                        } else {
-                            Log.e("CommunityAdapter", "Error adding comment", task.exception)
+                    Utility.database.reference.updateChildren(updates)
+                        .addOnCompleteListener { task ->
+                            if (task.isSuccessful) {
+                                Utility.showToast(holder.itemView.context, "Comment added successfully")
+                            } else {
+                                Log.e("CommunityAdapter", "Error adding comment", task.exception)
+                            }
                         }
-                    }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
@@ -166,29 +219,24 @@ class CommunityAdapter(
         }
     }
 
-    private fun loadComments(communityId: String, holder: CommunityViewHolder) {
-        val commentsRef = Utility.database.getReference("communityposts/$communityId/comments")
-        commentsRef.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                commentList.clear()
-                for (data in snapshot.children) {
-                    val comment = data.getValue(Comment::class.java)
-                    if (comment != null) {
-                        commentList.add(comment)
-                    }
-                }
-                // Update the adapter or UI component for displaying comments
-                notifyDataSetChanged()
-            }
-
-            override fun onCancelled(error: DatabaseError) {
-                Utility.showToast(holder.itemView.context, error.message)
-            }
-        })
-    }
-
+    /**
+     * untuk update perubahan pada post ke realtime database
+     */
     private fun updatePostInRealtime(post: CommunityPost) {
         val database = Utility.database.getReference("communityposts")
-        database.child(post.id).setValue(post)
+        val updates = hashMapOf(
+            "likeCount" to post.likeCount,
+            "dislikeCount" to post.dislikeCount,
+            "likedBy" to post.likedBy,
+            "dislikedBy" to post.dislikedBy
+        )
+        database.child(post.id).updateChildren(updates)
+    }
+
+    fun cleanup() {
+        currentCommentListener?.let { listener ->
+            Utility.database.getReference("communityposts")
+                .removeEventListener(listener)
+        }
     }
 }

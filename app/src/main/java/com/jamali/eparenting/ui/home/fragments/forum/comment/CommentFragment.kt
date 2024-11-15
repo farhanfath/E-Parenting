@@ -65,7 +65,10 @@ class CommentFragment(
 
     private fun loadComments() {
         val commentsRef = Utility.database.getReference("communityposts/$communityId/comments")
-        commentsRef.addValueEventListener(object : ValueEventListener {
+        /**
+         * ditampilkan berdasarkan timestamp
+         */
+        commentsRef.orderByChild("timestamp").addValueEventListener(object : ValueEventListener {
             override fun onDataChange(snapshot: DataSnapshot) {
                 comments.clear()
                 for (data in snapshot.children) {
@@ -74,6 +77,10 @@ class CommentFragment(
                         comments.add(comment)
                     }
                 }
+                /**
+                 * ditampilkan dengan urutan terbaru
+                 */
+                comments.sortByDescending { it.timestamp }
                 commentAdapter.notifyDataSetChanged()
                 emptyCommentSetup()
             }
@@ -96,6 +103,12 @@ class CommentFragment(
 
     override fun onResume() {
         super.onResume()
+        commentAdapter.startUpdatingTime()
         commentAdapter.notifyDataSetChanged()
+    }
+
+    override fun onPause() {
+        super.onPause()
+        commentAdapter.stopUpdatingTime()
     }
 }

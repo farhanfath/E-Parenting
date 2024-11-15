@@ -9,7 +9,6 @@ import androidx.navigation.findNavController
 import com.ismaeldivita.chipnavigation.ChipNavigationBar
 import com.jamali.eparenting.R
 import com.jamali.eparenting.databinding.ActivityMainBinding
-import com.marsad.stylishdialogs.StylishAlertDialog
 
 class MainActivity : AppCompatActivity() {
 
@@ -25,7 +24,8 @@ class MainActivity : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                showExitConfirmationDialog()
+                // TODO: Buat alert dialog sebelum keluar aplikasi
+                finish()
             }
         })
     }
@@ -59,17 +59,5 @@ class MainActivity : AppCompatActivity() {
                 }
             }
         }
-    }
-
-    private fun showExitConfirmationDialog() {
-        StylishAlertDialog(this, StylishAlertDialog.WARNING)
-            .setTitleText("Konfirmasi Keluar")
-            .setContentText("Apakah Anda yakin ingin keluar dari aplikasi?")
-            .setConfirmText("Ya, keluar")
-            .setConfirmClickListener {
-                finish()
-            }
-            .setCancelButton("Tidak", StylishAlertDialog::dismissWithAnimation)
-            .show()
     }
 }

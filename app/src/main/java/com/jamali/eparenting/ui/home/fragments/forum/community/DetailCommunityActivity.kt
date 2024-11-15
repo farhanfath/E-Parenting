@@ -67,4 +67,9 @@ class DetailCommunityActivity : AppCompatActivity() {
             }
         })
     }
+
+    override fun onDestroy() {
+        super.onDestroy()
+        adapter.cleanup()
+    }
 }

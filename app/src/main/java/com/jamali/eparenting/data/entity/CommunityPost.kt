@@ -19,6 +19,5 @@ data class CommunityPost(
     var dislikeCount: Int = 0,
     var commentCount: Int = 0,
     var likedBy: MutableList<String> = mutableListOf(),
-    var dislikedBy: MutableList<String> = mutableListOf(),
-    var commentBy: MutableList<String> = mutableListOf()
+    var dislikedBy: MutableList<String> = mutableListOf()
 ): Parcelable

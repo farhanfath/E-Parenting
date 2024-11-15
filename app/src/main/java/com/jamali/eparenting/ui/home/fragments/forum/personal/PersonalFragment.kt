@@ -74,5 +74,6 @@ class PersonalFragment : Fragment() {
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+        adapter.cleanup()
     }
 }
