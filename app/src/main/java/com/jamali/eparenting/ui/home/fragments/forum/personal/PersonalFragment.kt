@@ -1,10 +1,13 @@
 package com.jamali.eparenting.ui.home.fragments.forum.personal
 
+import android.app.Activity
 import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -25,6 +28,9 @@ class PersonalFragment : Fragment() {
     private lateinit var adapter: CommunityAdapter
     private val communityList = mutableListOf<CommunityPost>()
 
+    private lateinit var postActivityResultLauncher: ActivityResultLauncher<Intent>
+
+
     override fun onCreateView(
         inflater: LayoutInflater,
         container: ViewGroup?,
@@ -37,13 +43,22 @@ class PersonalFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        postActivityResultLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+            if (result.resultCode == Activity.RESULT_OK) {
+                binding.rvPersonalPost.scrollToPosition(0)
+            }
+        }
+
         binding.btnMakePost.setOnClickListener {
-            startActivity(Intent(requireContext(), PostActivity::class.java))
+            val intent = Intent(requireContext(), PostActivity::class.java)
+            postActivityResultLauncher.launch(intent)
         }
 
         setupRecyclerView()
         loadCommunityPosts()
     }
+
+
 
     private fun setupRecyclerView() {
         adapter = CommunityAdapter(communityList, childFragmentManager)
@@ -81,9 +96,6 @@ class PersonalFragment : Fragment() {
                     // Memperbarui UI di main thread
                     binding.rvPersonalPost.post {
                         adapter.notifyDataSetChanged()
-
-                        // Optional: Scroll ke posisi teratas untuk post terbaru
-                        binding.rvPersonalPost.scrollToPosition(0)
                     }
                 }
 
@@ -98,7 +110,7 @@ class PersonalFragment : Fragment() {
 
     override fun onDestroyView() {
         super.onDestroyView()
-        _binding = null
+//        _binding = null
         adapter.cleanup()
     }
 }

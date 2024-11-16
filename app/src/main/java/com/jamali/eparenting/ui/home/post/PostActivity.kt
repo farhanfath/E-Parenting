@@ -1,6 +1,7 @@
 package com.jamali.eparenting.ui.home.post
 
 import android.annotation.SuppressLint
+import android.app.Activity
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
@@ -250,6 +251,7 @@ class PostActivity : AppCompatActivity() {
             if (task.isSuccessful) {
                 Toast.makeText(this, "Post added successfully", Toast.LENGTH_SHORT).show()
                 Utility.showLoading(binding.progressFrame,false)
+                setResult(Activity.RESULT_OK)
                 finish()
                 resetInputData()
             } else {
