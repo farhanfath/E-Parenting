@@ -65,6 +65,7 @@
                 android:id="@+id/emailEt"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:inputType="textEmailAddress"
                 android:hint="@string/email" />
 
         </com.google.android.material.textfield.TextInputLayout>
@@ -83,6 +84,16 @@
                 android:hint="@string/password"
                 android:inputType="textPassword" />
         </com.google.android.material.textfield.TextInputLayout>
+
+        <TextView
+            android:id="@+id/to_forget_pass"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:fontFamily="@font/dm_sans"
+            android:text="@string/forget_pass"
+            android:layout_marginTop="4dp"
+            android:layout_gravity="end"
+            android:textSize="16sp" />
 
         <Button
             android:id="@+id/loginBtn"

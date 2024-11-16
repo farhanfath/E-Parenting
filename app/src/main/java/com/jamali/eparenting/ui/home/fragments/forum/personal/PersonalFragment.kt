@@ -6,6 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -29,11 +30,8 @@ class PersonalFragment : Fragment() {
         container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-
         _binding = FragmentSubForumPersonalBinding.inflate(inflater, container, false)
-        val root: View = binding.root
-
-        return root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -43,32 +41,59 @@ class PersonalFragment : Fragment() {
             startActivity(Intent(requireContext(), PostActivity::class.java))
         }
 
-        adapter = CommunityAdapter(communityList, childFragmentManager)
-
-        binding.rvPersonalPost.layoutManager = LinearLayoutManager(requireContext())
-        binding.rvPersonalPost.adapter = adapter
-
+        setupRecyclerView()
         loadCommunityPosts()
+    }
+
+    private fun setupRecyclerView() {
+        adapter = CommunityAdapter(communityList, childFragmentManager)
+        binding.rvPersonalPost.apply {
+            layoutManager = LinearLayoutManager(requireContext())
+            adapter = this@PersonalFragment.adapter
+            // Optional: Add item decoration if needed
+            addItemDecoration(DividerItemDecoration(context, LinearLayoutManager.VERTICAL))
+        }
     }
 
     private fun loadCommunityPosts() {
         val databaseReference = Utility.database.getReference("communityposts")
-        databaseReference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                communityList.clear()
-                for (data in snapshot.children) {
-                    val event = data.getValue(CommunityPost::class.java)
-                    if (event != null) {
-                        communityList.add(event)
+
+        // Query dengan orderByChild untuk timestamp
+        databaseReference
+            .orderByChild("timestamp")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    communityList.clear()
+
+                    // Menggunakan temporary list untuk menampung data
+                    val tempList = mutableListOf<CommunityPost>()
+
+                    for (data in snapshot.children) {
+                        val post = data.getValue(CommunityPost::class.java)
+                        post?.let {
+                            tempList.add(it)
+                        }
+                    }
+
+                    // Mengurutkan dari yang terbaru (descending)
+                    communityList.addAll(tempList.reversed())
+
+                    // Memperbarui UI di main thread
+                    binding.rvPersonalPost.post {
+                        adapter.notifyDataSetChanged()
+
+                        // Optional: Scroll ke posisi teratas untuk post terbaru
+                        binding.rvPersonalPost.scrollToPosition(0)
                     }
                 }
-                adapter.notifyDataSetChanged()
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Utility.showToast(requireContext(), error.message)
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    // Handle error di main thread
+                    activity?.runOnUiThread {
+                        Utility.showToast(requireContext(), error.message)
+                    }
+                }
+            })
     }
 
     override fun onDestroyView() {

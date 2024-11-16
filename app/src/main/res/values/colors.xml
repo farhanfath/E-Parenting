@@ -11,7 +11,6 @@
 
     <color name="light_gray">#D3D3D3</color>
 
-    <color name="dark_transparent">#80000000</color>
     <color name="transparent">#00000000</color>
     <color name="transparent_bg">#4DC7C9D0</color>
 
@@ -35,4 +34,7 @@
     <color name="module_smp_stroke">#E1BEE7</color>
     <color name="module_sma_stroke">#FFE0B2</color>
     <color name="gray_100">#F5F5F5</color>
+
+    <color name="gray_600">#757575</color>
+    <color name="dark_transparent">#99000000</color>
 </resources>

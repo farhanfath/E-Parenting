@@ -11,6 +11,7 @@ enum class PostType {
 data class CommunityPost(
     val id: String = "",
     val username: String = "",
+    val userId: String = "",
     val description: String = "",
     val thumbnail: String = "",
     val type: PostType = PostType.UMUM,

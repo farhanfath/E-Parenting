@@ -24,9 +24,9 @@
     <string name="profileTxt">Profile</string>
     <string name="chatTxt">Chat</string>
     <string name="forumTxt">Forum</string>
-    <string name="homeTxt">Home</string>
+    <string name="homeTxt">Modul</string>
     <string name="failed_get_name">Gagal memuat nama pengguna</string>
-    <string name="title_upload_new_forum">Upload New Forum</string>
+    <string name="title_upload_new_forum">Unggah Forum Baru</string>
     <string name="tab_1">Personal</string>
     <string name="tab_2">Komunitas</string>
     <string name="dummy_desc_detail">Program parenting adalah program pendidikan yang diberikan kepada orang tua agar pengetahuan yang dimiliki orang tua menjadi bertambah tentang tumbuh kembang anak serta agar pendidikan yang diperoleh anak selaras antara dirumah dan disekolah</string>
@@ -42,4 +42,8 @@
     <string name="comment">Komentar</string>
 
     <string name="insert_comment">Tambahkan sebuah komentar</string>
+    <string name="changeProfile">Ubah Profile</string>
+    <string name="changePassword">Ganti Kata Sandi</string>
+    <string name="forgetPassword">Lupa Kata Sandi</string>
+    <string name="forget_pass">Lupa Kata Sandi?</string>
 </resources>

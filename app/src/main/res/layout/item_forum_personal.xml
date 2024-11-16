@@ -28,7 +28,7 @@
                 android:layout_alignParentStart="true"
                 android:layout_centerVertical="true"
                 android:contentDescription="Author Avatar"
-                android:src="@drawable/avatar_profile" />
+                android:src="@drawable/ic_avatar" />
 
             <LinearLayout
                 android:layout_width="wrap_content"

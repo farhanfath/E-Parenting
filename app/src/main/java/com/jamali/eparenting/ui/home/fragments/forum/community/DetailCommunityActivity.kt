@@ -1,7 +1,9 @@
 package com.jamali.eparenting.ui.home.fragments.forum.community
 
 import android.os.Bundle
+import android.view.View
 import androidx.appcompat.app.AppCompatActivity
+import androidx.recyclerview.widget.DividerItemDecoration
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -37,8 +39,12 @@ class DetailCommunityActivity : AppCompatActivity() {
         }
 
         adapter = CommunityAdapter(communityList, supportFragmentManager)
-        binding.rvPersonalPost.layoutManager = LinearLayoutManager(this)
-        binding.rvPersonalPost.adapter = adapter
+        binding.rvPersonalPost.apply {
+            layoutManager = LinearLayoutManager(this@DetailCommunityActivity)
+            adapter = this@DetailCommunityActivity.adapter
+            addItemDecoration(DividerItemDecoration(this@DetailCommunityActivity, LinearLayoutManager.VERTICAL))
+        }
+
 
         binding.tvTitleListMaterial.text = communityPostTitle
         binding.btnBack.setOnClickListener {
@@ -50,22 +56,50 @@ class DetailCommunityActivity : AppCompatActivity() {
 
     private fun loadCommunityPosts(typeFilter: PostType) {
         val databaseReference = Utility.database.getReference("communityposts")
-        databaseReference.addValueEventListener(object : ValueEventListener {
-            override fun onDataChange(snapshot: DataSnapshot) {
-                communityList.clear()
-                for (data in snapshot.children) {
-                    val event = data.getValue(CommunityPost::class.java)
-                    if (event != null && event.type == typeFilter) {
-                        communityList.add(event)
+        databaseReference
+            .orderByChild("timestamp")
+            .addValueEventListener(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    communityList.clear()
+
+                    // Gunakan temporary list untuk menampung data sebelum difilter dan diurutkan
+                    val tempList = mutableListOf<CommunityPost>()
+
+                    // Iterasi snapshot dan filter berdasarkan type
+                    for (data in snapshot.children) {
+                        val post = data.getValue(CommunityPost::class.java)
+                        if (post != null && post.type == typeFilter) {
+                            tempList.add(post)
+                        }
+                    }
+
+                    // Urutkan dari yang terbaru (descending) dan tambahkan ke communityList
+                    communityList.addAll(tempList.reversed())
+
+                    // Update UI di main thread
+                    runOnUiThread {
+                        adapter.notifyDataSetChanged()
+
+                        // Optional: Tambahkan indikator jika list kosong
+                        if (communityList.isEmpty()) {
+                            // Tampilkan empty state jika ada
+                             binding.noPostState.visibility = View.VISIBLE
+                        } else {
+                            // Sembunyikan empty state jika ada
+                             binding.noPostState.visibility = View.GONE
+
+                            // Optional: Scroll ke posisi teratas untuk post terbaru
+                            binding.rvPersonalPost.scrollToPosition(0)
+                        }
                     }
                 }
-                adapter.notifyDataSetChanged()
-            }
 
-            override fun onCancelled(error: DatabaseError) {
-                Utility.showToast(this@DetailCommunityActivity, error.message)
-            }
-        })
+                override fun onCancelled(error: DatabaseError) {
+                    runOnUiThread {
+                        Utility.showToast(this@DetailCommunityActivity, error.message)
+                    }
+                }
+            })
     }
 
     override fun onDestroy() {

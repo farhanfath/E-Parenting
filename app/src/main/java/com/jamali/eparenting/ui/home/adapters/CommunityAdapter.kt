@@ -9,6 +9,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ServerValue
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.R
@@ -16,6 +17,7 @@ import com.jamali.eparenting.application.Utility
 import com.jamali.eparenting.data.entity.Comment
 import com.jamali.eparenting.data.entity.CommunityPost
 import com.jamali.eparenting.data.entity.PostType
+import com.jamali.eparenting.data.entity.User
 import com.jamali.eparenting.databinding.ItemForumPersonalBinding
 import com.jamali.eparenting.ui.home.fragments.forum.comment.CommentFragment
 import com.jamali.eparenting.utils.TimeUtils
@@ -36,8 +38,15 @@ class CommunityAdapter(
         return CommunityViewHolder(binding)
     }
 
+    private val userCache = mutableMapOf<String, User>()
+
     override fun onBindViewHolder(holder: CommunityViewHolder, position: Int) {
         val community = communityList[position]
+
+        /**
+         * untuk  mengambil gambar profile dari firebase storage
+         */
+        val userRef = Utility.database.getReference("users").child(community.userId)
 
         with(holder.binding) {
             tvPostContent.text = community.description
@@ -48,6 +57,8 @@ class CommunityAdapter(
             tvComments.text = community.commentCount.toString()
 
             tvPostDate.text = TimeUtils.getTimeAgo(community.timestamp)
+
+            setupUserProfileImg(userRef, community, holder)
 
             if (community.thumbnail.isEmpty()) {
                 ivPostImage.visibility = View.GONE
@@ -158,6 +169,41 @@ class CommunityAdapter(
 
             updatePostInRealtime(post)
         }
+    }
+
+    private fun setupUserProfileImg(userRef: DatabaseReference, community: CommunityPost, holder: CommunityViewHolder) {
+        // Cek cache terlebih dahulu
+        userCache[community.userId]?.let { user ->
+            Glide.with(holder.itemView.context)
+                .load(user.profile)
+                .placeholder(R.drawable.ic_avatar)
+                .error(R.drawable.ic_avatar)
+                .circleCrop()
+                .into(holder.binding.ivAuthorAvatar)
+            return
+        }
+
+        // Jika tidak ada di cache, ambil dari database
+        userRef.addListenerForSingleValueEvent(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                val user = snapshot.getValue(User::class.java)
+                user?.let {
+                    // Simpan ke cache
+                    userCache[community.userId] = it
+
+                    Glide.with(holder.itemView.context)
+                        .load(it.profile)
+                        .placeholder(R.drawable.ic_avatar)
+                        .error(R.drawable.ic_avatar)
+                        .circleCrop()
+                        .into(holder.binding.ivAuthorAvatar)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("CommentAdapter", "Error loading user data: ${error.message}")
+            }
+        })
     }
 
     override fun getItemCount() = communityList.size

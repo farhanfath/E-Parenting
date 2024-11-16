@@ -86,4 +86,7 @@ dependencies {
 
     // pdf viewer
     implementation ("com.github.DImuthuUpe:AndroidPdfViewer:3.1.0-beta.1")
+
+    // UCrop
+    implementation ("com.github.yalantis:ucrop:2.2.9")
 }

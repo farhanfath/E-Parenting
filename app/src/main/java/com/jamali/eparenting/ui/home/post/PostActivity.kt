@@ -6,13 +6,13 @@ import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
 import android.util.Log
-import android.view.WindowManager
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.PickVisualMediaRequest
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
+import androidx.core.content.ContextCompat
 import androidx.core.content.FileProvider
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
@@ -21,7 +21,9 @@ import com.jamali.eparenting.R
 import com.jamali.eparenting.application.Utility
 import com.jamali.eparenting.data.entity.CommunityPost
 import com.jamali.eparenting.data.entity.PostType
+import com.jamali.eparenting.data.entity.User
 import com.jamali.eparenting.databinding.ActivityUploadPhotoBinding
+import com.yalantis.ucrop.UCrop
 import java.io.File
 import java.text.SimpleDateFormat
 import java.util.Date
@@ -31,10 +33,22 @@ class PostActivity : AppCompatActivity() {
 
     private lateinit var binding: ActivityUploadPhotoBinding
     private var selectedImageUri: Uri? = null
-
     private var selectedPostType: PostType = PostType.UMUM
-
     private lateinit var pickMedia: ActivityResultLauncher<PickVisualMediaRequest>
+
+    // Tambahkan launcher untuk UCrop
+    private val cropLauncher = registerForActivityResult(ActivityResultContracts.StartActivityForResult()) { result ->
+        if (result.resultCode == RESULT_OK) {
+            val resultUri = UCrop.getOutput(result.data!!)
+            if (resultUri != null) {
+                selectedImageUri = resultUri
+                binding.ivPreviewImageUpload.setImageURI(resultUri)
+            }
+        } else if (result.resultCode == UCrop.RESULT_ERROR) {
+            val cropError = UCrop.getError(result.data!!)
+            Toast.makeText(this, "Error cropping image: ${cropError?.message}", Toast.LENGTH_SHORT).show()
+        }
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -45,11 +59,15 @@ class PostActivity : AppCompatActivity() {
         setupImagePicker()
         setupSpinner()
 
-        binding.containerCvAddImagesGallery.setOnClickListener {
+        binding.btnGallery.setOnClickListener {
             selectImage()
         }
 
-        binding.containerCvTakePicture.setOnClickListener {
+        binding.ivBack.setOnClickListener {
+            finish()
+        }
+
+        binding.btnCamera.setOnClickListener {
             openCamera()
         }
 
@@ -59,6 +77,30 @@ class PostActivity : AppCompatActivity() {
 
         binding.btnCancelPosting.setOnClickListener {
             finish()
+        }
+    }
+
+    private fun startCrop(sourceUri: Uri) {
+        val destinationUri = Uri.fromFile(File(cacheDir, "cropped_${System.currentTimeMillis()}.jpg"))
+
+        val uCrop = UCrop.of(sourceUri, destinationUri)
+            .withAspectRatio(1f, 1f) // Untuk membuat crop square
+            .withMaxResultSize(1080, 1080) // Max resolution
+
+        uCrop.withOptions(UCrop.Options().apply {
+            setCompressionQuality(80) // Compression quality
+            setHideBottomControls(false)
+            setFreeStyleCropEnabled(true)
+            setToolbarColor(ContextCompat.getColor(this@PostActivity, R.color.green_500))
+            setStatusBarColor(ContextCompat.getColor(this@PostActivity, R.color.green_500))
+            setToolbarWidgetColor(ContextCompat.getColor(this@PostActivity, R.color.white))
+        })
+
+        try {
+            cropLauncher.launch(uCrop.getIntent(this))
+        } catch (e: Exception) {
+            e.printStackTrace()
+            Toast.makeText(this, "Error starting crop: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -73,16 +115,14 @@ class PostActivity : AppCompatActivity() {
 
     private val takePictureLauncher = registerForActivityResult(ActivityResultContracts.TakePicture()) { success ->
         if (success && selectedImageUri != null) {
-            binding.ivPreviewImageUpload.setImageURI(selectedImageUri)
+            startCrop(selectedImageUri!!)
         } else {
-            // Handle jika gambar tidak berhasil diambil atau photoUri null
             Log.e("CameraIntent", "Gagal menampilkan gambar, URI tidak valid atau proses gagal.")
         }
     }
 
     private fun openCamera() {
         if (checkSelfPermission(android.Manifest.permission.CAMERA) == PackageManager.PERMISSION_GRANTED) {
-            // Permission is granted, open camera
             val photoFile = createImageFile()
             selectedImageUri = FileProvider.getUriForFile(this, "${packageName}.provider", photoFile)
             selectedImageUri?.let { uri ->
@@ -91,26 +131,25 @@ class PostActivity : AppCompatActivity() {
                 Log.e("CameraIntent", "Failed to create URI for image.")
             }
         } else {
-            // Request camera permission
             requestCameraPermissionLauncher.launch(android.Manifest.permission.CAMERA)
         }
     }
 
-    // Membuat file untuk menyimpan gambar yang diambil
+//    // Membuat file untuk menyimpan gambar yang diambil
     @SuppressLint("SimpleDateFormat")
     private fun createImageFile(): File {
         val timeStamp: String = SimpleDateFormat("yyyyMMdd_HHmmss").format(Date())
         val storageDir: File? = getExternalFilesDir(Environment.DIRECTORY_PICTURES)
         return File.createTempFile(
-            "JPEG_${timeStamp}_", /* prefix */
-            ".jpg", /* suffix */
-            storageDir /* directory */
+            "JPEG_${timeStamp}_",
+            ".jpg",
+            storageDir
         )
     }
 
     private fun setupSpinner() {
         val types = PostType.entries.map { it.name }.toTypedArray()
-        val adapter = ArrayAdapter(this, android.R.layout.simple_list_item_1, types)
+        val adapter = ArrayAdapter(this, R.layout.item_forum_type, types)
         binding.insertTypeItem.setAdapter(adapter)
         binding.insertTypeItem.setOnItemClickListener { _, _, position, _ ->
             val selectedTypes = types[position]
@@ -121,12 +160,7 @@ class PostActivity : AppCompatActivity() {
     private fun setupImagePicker() {
         pickMedia = registerForActivityResult(ActivityResultContracts.PickVisualMedia()) { uri ->
             if (uri != null) {
-                Log.d("PhotoPicker", "Selected URI: $uri")
-                /**
-                 * handle selected image to be previewed
-                 */
-                selectedImageUri = uri
-                binding.ivPreviewImageUpload.setImageURI(uri)
+                startCrop(uri)
             } else {
                 Log.d("PhotoPicker", "No media selected")
             }
@@ -144,54 +178,59 @@ class PostActivity : AppCompatActivity() {
             return
         }
 
-        Utility.showLoading(binding.progressFrame,true)
+        Utility.showLoading(binding.progressFrame, true)
 
-        val uid = Utility.auth.currentUser?.uid
-        if (selectedImageUri == null) {
-            uid?.let {
-                Utility.database.getReference("users").child(it).child("username")
-                    .addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            val username = snapshot.getValue(String::class.java) ?: "Anonymous"
+        val currentUid = Utility.auth.currentUser?.uid
+        if (currentUid == null) {
+            Utility.showLoading(binding.progressFrame, false)
+            Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show()
+            return
+        }
+
+        // Mengambil data user (username dan userId) dari database
+        Utility.database.getReference("users").child(currentUid)
+            .addListenerForSingleValueEvent(object : ValueEventListener {
+                override fun onDataChange(snapshot: DataSnapshot) {
+                    val user = snapshot.getValue(User::class.java)
+                    if (user != null) {
+                        if (selectedImageUri == null) {
+                            // Post tanpa gambar
                             val communityPost = CommunityPost(
                                 id = UUID.randomUUID().toString(),
-                                username = username,
+                                username = user.username,
+                                userId = user.uid,
                                 thumbnail = "",
                                 description = description,
                                 type = selectedPostType,
                                 timestamp = System.currentTimeMillis()
                             )
                             saveEventToDatabase(communityPost)
+                        } else {
+                            // Post dengan gambar
+                            uploadImageAndSaveEvent(description, user.username, user.uid)
                         }
-                        override fun onCancelled(error: DatabaseError) {
-                            Log.e("UsernameError", "Failed to fetch username", error.toException())
-                        }
-                    })
-            }
-        } else {
-            // Jika ada gambar, unggah gambar dan simpan posting
-            uid?.let {
-                Utility.database.getReference("users").child(it).child("username")
-                    .addListenerForSingleValueEvent(object : ValueEventListener {
-                        override fun onDataChange(snapshot: DataSnapshot) {
-                            val username = snapshot.getValue(String::class.java) ?: "Anonymous"
-                            uploadImageAndSaveEvent(description, username)
-                        }
-                        override fun onCancelled(error: DatabaseError) {
-                            Log.e("UsernameError", "Failed to fetch username", error.toException())
-                        }
-                    })
-            }
-        }
+                    } else {
+                        Utility.showLoading(binding.progressFrame, false)
+                        Toast.makeText(baseContext, "Failed to get user data", Toast.LENGTH_SHORT).show()
+                    }
+                }
+
+                override fun onCancelled(error: DatabaseError) {
+                    Utility.showLoading(binding.progressFrame, false)
+                    Toast.makeText(baseContext, "Failed to get user data: ${error.message}", Toast.LENGTH_SHORT).show()
+                    Log.e("UserDataError", "Failed to fetch user data", error.toException())
+                }
+            })
     }
 
-    private fun uploadImageAndSaveEvent(description: String, username: String) {
+    private fun uploadImageAndSaveEvent(description: String, username: String, userId: String) {
         val storageReference = Utility.storage.getReference("thumbnails/${UUID.randomUUID()}")
         storageReference.putFile(selectedImageUri!!).addOnSuccessListener { taskSnapshot ->
             taskSnapshot.storage.downloadUrl.addOnSuccessListener { uri ->
                 val communityPost = CommunityPost(
                     id = UUID.randomUUID().toString(),
                     username = username,
+                    userId = userId,
                     thumbnail = uri.toString(),
                     description = description,
                     type = selectedPostType,
@@ -224,7 +263,7 @@ class PostActivity : AppCompatActivity() {
         with(binding) {
             edtAddDescStory.text?.clear()
             selectedImageUri = null
-            ivPreviewImageUpload.setImageResource(R.drawable.images_upload_icon)
+            ivPreviewImageUpload.setImageResource(R.drawable.img_placeholder)
         }
     }
 }

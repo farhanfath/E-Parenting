@@ -1,10 +1,12 @@
 package com.jamali.eparenting.ui.home.fragments.profile
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import com.bumptech.glide.Glide
 import com.jamali.eparenting.R
 import com.jamali.eparenting.application.Utility
 import com.jamali.eparenting.databinding.FragmentProfileBinding
@@ -34,6 +36,16 @@ class ProfileFragment : Fragment() {
             logoutFragment.show(childFragmentManager, logoutFragment.tag)
         }
 
+        binding.containerLayoutEditProfile.setOnClickListener{
+            val intent = Intent(requireContext(), UpdateProfileActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.containerLayoutEditPassword.setOnClickListener {
+            val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
+            startActivity(intent)
+        }
+
         showUserProfile()
     }
 
@@ -46,6 +58,14 @@ class ProfileFragment : Fragment() {
         userRef.get().addOnSuccessListener { data ->
             showLoading(false)
             binding.tvUsername.text = data.child("username").value.toString()
+            val userProfile = data.child("profile").value.toString()
+            if (userProfile.isNotEmpty()) {
+                Glide.with(this)
+                    .load(userProfile)
+                    .placeholder(R.drawable.ic_avatar)
+                    .error(R.drawable.ic_avatar)
+                    .into(binding.ivProfilePicture)
+            }
         }.addOnFailureListener {
             showLoading(false)
             binding.tvUsername.text = getString(R.string.failed_get_name)
@@ -62,6 +82,11 @@ class ProfileFragment : Fragment() {
             binding.shimmerViewContainer.visibility = View.GONE
             binding.tvUsername.visibility = View.VISIBLE
         }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        showUserProfile()
     }
 
     override fun onDestroyView() {

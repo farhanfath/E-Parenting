@@ -61,16 +61,15 @@
                 android:layout_weight="1"
                 android:text="Batal"
                 android:textSize="18sp"
+                android:textColor="@color/black"
                 android:layout_marginEnd="10dp"
                 android:layout_height="wrap_content"/>
-
-
 
             <Button
                 android:id="@+id/logout_btn"
                 android:layout_width="0dp"
                 android:layout_weight="1"
-                android:backgroundTint="@color/green_500"
+                android:backgroundTint="@color/red"
                 android:text="Ya, Keluar"
                 android:textColor="@color/white"
                 android:textSize="18sp"

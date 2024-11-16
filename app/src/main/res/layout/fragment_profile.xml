@@ -37,7 +37,7 @@
                 android:id="@+id/iv_profile_picture"
                 android:layout_width="106dp"
                 android:layout_height="106dp"
-                android:src="@drawable/avatar_profile"/>
+                android:src="@drawable/ic_avatar"/>
 
             <com.facebook.shimmer.ShimmerFrameLayout
                 android:id="@+id/shimmer_view_container"
