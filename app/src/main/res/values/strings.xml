@@ -18,7 +18,7 @@
     <string name="menu_home">Beranda</string>
     <string name="menu_forum">Forum</string>
     <string name="menu_consultation">Message</string>
-    <string name="menu_profile">Profile</string>
+    <string name="menu_profile">Profil</string>
     <string name="title_profile">Profil</string>
     <string name="title_consultation_activity">Pesan</string>
     <string name="profileTxt">Profile</string>
@@ -42,7 +42,7 @@
     <string name="comment">Komentar</string>
 
     <string name="insert_comment">Tambahkan sebuah komentar</string>
-    <string name="changeProfile">Ubah Profile</string>
+    <string name="changeProfile">Ubah Profil</string>
     <string name="changePassword">Ganti Kata Sandi</string>
     <string name="forgetPassword">Lupa Kata Sandi</string>
     <string name="forget_pass">Lupa Kata Sandi?</string>
