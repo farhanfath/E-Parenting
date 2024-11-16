@@ -4,7 +4,7 @@ import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.jamali.eparenting.data.entity.ForumCommunityTypeItem
+import com.jamali.eparenting.data.ForumCommunityTypeItem
 import com.jamali.eparenting.databinding.ItemForumCommunityBinding
 import com.jamali.eparenting.ui.home.fragments.forum.community.DetailCommunityActivity
 

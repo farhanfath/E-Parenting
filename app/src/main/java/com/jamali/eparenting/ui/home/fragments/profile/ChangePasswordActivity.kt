@@ -6,8 +6,8 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.EmailAuthProvider
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthWeakPasswordException
-import com.jamali.eparenting.application.Utility
-import com.jamali.eparenting.application.Utility.auth
+import com.jamali.eparenting.utils.Utility
+import com.jamali.eparenting.utils.Utility.auth
 import com.jamali.eparenting.databinding.ActivityChangePasswordBinding
 
 class ChangePasswordActivity : AppCompatActivity() {

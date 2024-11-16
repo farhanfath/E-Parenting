@@ -1,4 +1,4 @@
-package com.jamali.eparenting.application
+package com.jamali.eparenting.utils
 
 import android.content.Context
 import android.net.ConnectivityManager
@@ -9,8 +9,6 @@ import com.google.android.material.snackbar.Snackbar
 import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.FirebaseDatabase
 import com.google.firebase.storage.FirebaseStorage
-import com.jamali.eparenting.data.api.ApiConfig
-import com.jamali.eparenting.data.api.AppRepository
 
 object Utility {
     val auth = FirebaseAuth.getInstance()
@@ -23,11 +21,6 @@ object Utility {
 
     fun showSnackBar(view: View, message: String, duration: Int = Snackbar.LENGTH_SHORT) {
         Snackbar.make(view, message, duration).show()
-    }
-
-    fun provideRepository(context: Context): AppRepository {
-        val apiService = ApiConfig().getApiService()
-        return AppRepository.getInstance(apiService, context)
     }
 
     fun isNetworkAvailable(context: Context): Boolean {

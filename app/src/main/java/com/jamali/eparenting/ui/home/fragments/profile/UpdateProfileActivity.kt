@@ -9,12 +9,12 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.R
-import com.jamali.eparenting.application.Utility.auth
-import com.jamali.eparenting.application.Utility.database
-import com.jamali.eparenting.application.Utility.showLoading
-import com.jamali.eparenting.application.Utility.showToast
-import com.jamali.eparenting.application.Utility.storage
-import com.jamali.eparenting.data.entity.User
+import com.jamali.eparenting.utils.Utility.auth
+import com.jamali.eparenting.utils.Utility.database
+import com.jamali.eparenting.utils.Utility.showLoading
+import com.jamali.eparenting.utils.Utility.showToast
+import com.jamali.eparenting.utils.Utility.storage
+import com.jamali.eparenting.data.User
 import com.jamali.eparenting.databinding.ActivityUpdateProfileBinding
 
 class UpdateProfileActivity : AppCompatActivity() {

@@ -8,7 +8,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
 import com.jamali.eparenting.R
-import com.jamali.eparenting.application.Utility
+import com.jamali.eparenting.utils.Utility
 import com.jamali.eparenting.databinding.FragmentProfileBinding
 
 class ProfileFragment : Fragment() {

@@ -13,11 +13,11 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ServerValue
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.R
-import com.jamali.eparenting.application.Utility
-import com.jamali.eparenting.data.entity.Comment
-import com.jamali.eparenting.data.entity.CommunityPost
-import com.jamali.eparenting.data.entity.PostType
-import com.jamali.eparenting.data.entity.User
+import com.jamali.eparenting.utils.Utility
+import com.jamali.eparenting.data.Comment
+import com.jamali.eparenting.data.CommunityPost
+import com.jamali.eparenting.data.PostType
+import com.jamali.eparenting.data.User
 import com.jamali.eparenting.databinding.ItemForumPersonalBinding
 import com.jamali.eparenting.ui.home.fragments.forum.comment.CommentFragment
 import com.jamali.eparenting.utils.TimeUtils

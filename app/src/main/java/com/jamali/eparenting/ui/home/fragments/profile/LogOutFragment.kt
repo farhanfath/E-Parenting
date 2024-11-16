@@ -6,7 +6,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
-import com.jamali.eparenting.application.Utility
+import com.jamali.eparenting.utils.Utility
 import com.jamali.eparenting.databinding.LayoutLogoutDialogBinding
 import com.jamali.eparenting.ui.auth.LoginActivity
 

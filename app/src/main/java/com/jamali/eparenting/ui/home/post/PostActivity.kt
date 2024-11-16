@@ -19,10 +19,10 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.R
-import com.jamali.eparenting.application.Utility
-import com.jamali.eparenting.data.entity.CommunityPost
-import com.jamali.eparenting.data.entity.PostType
-import com.jamali.eparenting.data.entity.User
+import com.jamali.eparenting.utils.Utility
+import com.jamali.eparenting.data.CommunityPost
+import com.jamali.eparenting.data.PostType
+import com.jamali.eparenting.data.User
 import com.jamali.eparenting.databinding.ActivityUploadPhotoBinding
 import com.yalantis.ucrop.UCrop
 import java.io.File

@@ -9,7 +9,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.jamali.eparenting.R
-import com.jamali.eparenting.application.Utility
+import com.jamali.eparenting.utils.Utility
 import com.jamali.eparenting.databinding.ActivityLoginBinding
 import com.jamali.eparenting.ui.home.MainActivity
 

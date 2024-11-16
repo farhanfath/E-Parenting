@@ -10,8 +10,8 @@ import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.jamali.eparenting.application.Utility
-import com.jamali.eparenting.data.entity.Comment
+import com.jamali.eparenting.utils.Utility
+import com.jamali.eparenting.data.Comment
 import com.jamali.eparenting.databinding.LayoutCommentDialogBinding
 import com.jamali.eparenting.ui.home.adapters.CommentAdapter
 

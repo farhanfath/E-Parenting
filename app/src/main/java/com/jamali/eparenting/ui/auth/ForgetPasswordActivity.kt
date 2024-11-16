@@ -1,12 +1,8 @@
 package com.jamali.eparenting.ui.auth
 
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
-import com.jamali.eparenting.R
-import com.jamali.eparenting.application.Utility
+import com.jamali.eparenting.utils.Utility
 import com.jamali.eparenting.databinding.ActivityForgetPasswordBinding
 
 class ForgetPasswordActivity : AppCompatActivity() {

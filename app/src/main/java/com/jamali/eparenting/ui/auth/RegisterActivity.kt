@@ -6,8 +6,8 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.jamali.eparenting.R
-import com.jamali.eparenting.application.Utility
-import com.jamali.eparenting.data.entity.User
+import com.jamali.eparenting.utils.Utility
+import com.jamali.eparenting.data.User
 import com.jamali.eparenting.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {

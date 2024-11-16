@@ -1,4 +1,4 @@
-package com.jamali.eparenting.data.entity
+package com.jamali.eparenting.data
 
 data class User(
     val uid : String = "",

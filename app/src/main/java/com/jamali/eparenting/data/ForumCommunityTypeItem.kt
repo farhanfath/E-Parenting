@@ -1,4 +1,4 @@
-package com.jamali.eparenting.data.entity
+package com.jamali.eparenting.data
 
 import com.jamali.eparenting.R
 

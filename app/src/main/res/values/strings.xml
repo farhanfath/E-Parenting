@@ -22,7 +22,7 @@
     <string name="title_profile">Profil</string>
     <string name="title_consultation_activity">Pesan</string>
     <string name="profileTxt">Profile</string>
-    <string name="chatTxt">Chat</string>
+    <string name="chatTxt">Consultation</string>
     <string name="forumTxt">Forum</string>
     <string name="homeTxt">Modul</string>
     <string name="failed_get_name">Gagal memuat nama pengguna</string>
