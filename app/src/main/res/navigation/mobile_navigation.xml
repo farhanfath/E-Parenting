@@ -7,25 +7,25 @@
 
     <fragment
         android:id="@+id/navigation_home"
-        android:name="com.jamali.eparenting.ui.home.fragments.home.HomeFragment"
+        android:name="com.jamali.eparenting.ui.customer.fragments.home.HomeFragment"
         android:label="@string/homeTxt"
         tools:layout="@layout/fragment_home" />
 
     <fragment
         android:id="@+id/navigation_forum"
-        android:name="com.jamali.eparenting.ui.home.fragments.forum.ForumFragment"
+        android:name="com.jamali.eparenting.ui.customer.fragments.forum.ForumFragment"
         android:label="@string/forumTxt"
         tools:layout="@layout/fragment_forum" />
 
     <fragment
         android:id="@+id/navigation_chat"
-        android:name="com.jamali.eparenting.ui.home.fragments.consultation.TawkToFragment"
+        android:name="com.jamali.eparenting.ui.customer.fragments.consultation.ConsultationFragment"
         android:label="@string/chatTxt"
-        tools:layout="@layout/fragment_tawk_to" />
+        tools:layout="@layout/fragment_consultation" />
 
     <fragment
         android:id="@+id/navigation_profile"
-        android:name="com.jamali.eparenting.ui.home.fragments.profile.ProfileFragment"
+        android:name="com.jamali.eparenting.ui.customer.fragments.profile.ProfileFragment"
         android:label="@string/profileTxt"
         tools:layout="@layout/fragment_profile" />
 </navigation>

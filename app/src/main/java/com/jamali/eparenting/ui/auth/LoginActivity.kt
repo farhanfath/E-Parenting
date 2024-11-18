@@ -11,7 +11,8 @@ import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.jamali.eparenting.R
 import com.jamali.eparenting.utils.Utility
 import com.jamali.eparenting.databinding.ActivityLoginBinding
-import com.jamali.eparenting.ui.home.MainActivity
+import com.jamali.eparenting.ui.admin.AdminMainActivity
+import com.jamali.eparenting.ui.customer.CustomerMainActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -126,14 +127,42 @@ class LoginActivity : AppCompatActivity() {
 
         Utility.auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
-                Utility.showLoading(binding.loadingBar, false)
-
                 if (task.isSuccessful) {
-                    // Reset login attempts jika berhasil
-                    loginAttempts = 0
-                    startActivity(Intent(this, MainActivity::class.java))
-                    finish()
+                    // Get current user's UID
+                    val currentUser = Utility.auth.currentUser
+                    currentUser?.let { user ->
+                        // Reference to users in Realtime Database
+                        val userRef = Utility.database.reference
+                            .child("users")
+                            .child(user.uid)
+
+                        userRef.child("role").get().addOnSuccessListener { snapshot ->
+                            Utility.showLoading(binding.loadingBar, false)
+
+                            // Reset login attempts if successful
+                            loginAttempts = 0
+
+                            // Check user role and navigate accordingly
+                            when (snapshot.value) {
+                                "admin" -> {
+                                    startActivity(Intent(this,AdminMainActivity::class.java))
+                                    finish()
+                                }
+                                "customer" -> {
+                                    startActivity(Intent(this, CustomerMainActivity::class.java))
+                                    finish()
+                                }
+                                else -> {
+                                    showError("Invalid user role")
+                                }
+                            }
+                        }.addOnFailureListener {
+                            Utility.showLoading(binding.loadingBar, false)
+                            showError("Failed to retrieve user role")
+                        }
+                    }
                 } else {
+                    Utility.showLoading(binding.loadingBar, false)
                     handleLoginError(task.exception)
                 }
             }

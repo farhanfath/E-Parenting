@@ -89,4 +89,7 @@ dependencies {
 
     // UCrop
     implementation ("com.github.yalantis:ucrop:2.2.9")
+
+    // chart
+    implementation ("com.github.PhilJay:MPAndroidChart:v3.1.0")
 }

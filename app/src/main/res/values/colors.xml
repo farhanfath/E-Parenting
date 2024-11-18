@@ -37,4 +37,8 @@
 
     <color name="gray_600">#757575</color>
     <color name="dark_transparent">#99000000</color>
+
+    <color name="user_color">#C8E6C9</color>
+    <color name="doctor_color">#BBDEFB</color>
+    <color name="admin_color">#FF5722</color>
 </resources>
