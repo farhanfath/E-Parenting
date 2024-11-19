@@ -13,6 +13,7 @@ import com.jamali.eparenting.utils.Utility
 import com.jamali.eparenting.databinding.ActivityLoginBinding
 import com.jamali.eparenting.ui.admin.AdminMainActivity
 import com.jamali.eparenting.ui.customer.CustomerMainActivity
+import com.jamali.eparenting.ui.doctor.DoctorMainActivity
 
 class LoginActivity : AppCompatActivity() {
 
@@ -150,6 +151,10 @@ class LoginActivity : AppCompatActivity() {
                                 }
                                 "customer" -> {
                                     startActivity(Intent(this, CustomerMainActivity::class.java))
+                                    finish()
+                                }
+                                "doctor" -> {
+                                    startActivity(Intent(this, DoctorMainActivity::class.java))
                                     finish()
                                 }
                                 else -> {

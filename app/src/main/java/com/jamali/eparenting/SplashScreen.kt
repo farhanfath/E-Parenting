@@ -8,6 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.jamali.eparenting.ui.admin.AdminMainActivity
 import com.jamali.eparenting.ui.auth.LoginActivity
 import com.jamali.eparenting.ui.customer.CustomerMainActivity
+import com.jamali.eparenting.ui.doctor.DoctorMainActivity
 import com.jamali.eparenting.utils.Utility
 import kotlinx.coroutines.MainScope
 import kotlinx.coroutines.launch
@@ -34,7 +35,7 @@ class SplashScreen : AppCompatActivity() {
                     val intent = when (userRole) {
                         "admin" -> Intent(this@SplashScreen, AdminMainActivity::class.java)
                         "customer" -> Intent(this@SplashScreen, CustomerMainActivity::class.java)
-//                        "doctor" -> Intent(this@SplashScreen, DoctorActivity::class.java) // Optional
+                        "doctor" -> Intent(this@SplashScreen, DoctorMainActivity::class.java)
                         else -> Intent(this@SplashScreen, LoginActivity::class.java)
                     }
 

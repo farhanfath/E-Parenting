@@ -46,4 +46,5 @@
     <string name="changePassword">Ganti Kata Sandi</string>
     <string name="forgetPassword">Lupa Kata Sandi</string>
     <string name="forget_pass">Lupa Kata Sandi?</string>
+    <string name="message_deleted">Pesan Telah Dihapus</string>
 </resources>

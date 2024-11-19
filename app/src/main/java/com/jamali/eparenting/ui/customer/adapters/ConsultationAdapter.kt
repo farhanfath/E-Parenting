@@ -1,5 +1,6 @@
 package com.jamali.eparenting.ui.customer.adapters
 
+import android.content.Intent
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
@@ -7,6 +8,7 @@ import com.bumptech.glide.Glide
 import com.jamali.eparenting.R
 import com.jamali.eparenting.data.User
 import com.jamali.eparenting.databinding.ItemConsultationExpertBinding
+import com.jamali.eparenting.ui.customer.fragments.consultation.ChatActivity
 
 class ConsultationAdapter(private val doctorList: List<User>) :
     RecyclerView.Adapter<ConsultationAdapter.ForumCommunityViewHolder>(){
@@ -34,7 +36,11 @@ class ConsultationAdapter(private val doctorList: List<User>) :
                 .into(ivImage)
         }
         holder.binding.root.setOnClickListener {
-            // TODO: intent ke chat activity
+            val intent = Intent(holder.itemView.context, ChatActivity::class.java)
+            intent.putExtra("name", doctor.username)
+            intent.putExtra("email", doctor.email)
+            intent.putExtra("uid", doctor.uid)
+            holder.itemView.context.startActivity(intent)
         }
     }
 }

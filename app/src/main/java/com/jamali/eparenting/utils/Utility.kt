@@ -23,13 +23,6 @@ object Utility {
         Snackbar.make(view, message, duration).show()
     }
 
-    fun isNetworkAvailable(context: Context): Boolean {
-        val connectivityManager = context.getSystemService(Context.CONNECTIVITY_SERVICE) as ConnectivityManager
-        val activeNetwork = connectivityManager.activeNetwork ?: return false
-        val networkCapabilities = connectivityManager.getNetworkCapabilities(activeNetwork) ?: return false
-        return networkCapabilities.hasCapability(NetworkCapabilities.NET_CAPABILITY_INTERNET)
-    }
-
     private var toast: Toast? = null
     fun showToast(context: Context, message: String, duration: Int = Toast.LENGTH_SHORT) {
         toast?.cancel() // Batalkan toast sebelumnya jika ada

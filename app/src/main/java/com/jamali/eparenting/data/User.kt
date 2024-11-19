@@ -6,7 +6,13 @@ data class User(
     val username : String = "",
     val profile : String = "",
     val phoneNumber : String = "",
-    val role : String = "", // "customer" or "admin"
-    val speciality : String = "", // keahlian untuk pakar
-    val activeDay: String = "" // untuk jadwal pakar
+    val role : String = "", // "customer" , "admin" , "doctor"
+    val speciality : String = "", // keahlian untuk doctor
+    val activeDay: String = "" // untuk jadwal doctor
+)
+
+data class UserWithLastMessage(
+    val user: User,
+    var lastMessage: String = "",
+    var lastMessageTime: Long = 0
 )
