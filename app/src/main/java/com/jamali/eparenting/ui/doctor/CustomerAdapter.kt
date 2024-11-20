@@ -8,9 +8,7 @@ import androidx.recyclerview.widget.RecyclerView
 import com.jamali.eparenting.data.UserWithLastMessage
 import com.jamali.eparenting.databinding.ItemConsultationCustomerBinding
 import com.jamali.eparenting.ui.customer.fragments.consultation.ChatActivity
-import java.text.SimpleDateFormat
-import java.util.Date
-import java.util.Locale
+import com.jamali.eparenting.utils.TimeUtils
 
 class CustomerAdapter(private val users: List<UserWithLastMessage>) :
     RecyclerView.Adapter<CustomerAdapter.ViewHolder>() {
@@ -41,7 +39,7 @@ class CustomerAdapter(private val users: List<UserWithLastMessage>) :
 
             // Set time
             if (userWithMessage.lastMessageTime > 0) {
-                lastMessageTime.text = getFormattedTime(userWithMessage.lastMessageTime)
+                lastMessageTime.text = TimeUtils.formatTimestamp(userWithMessage.lastMessageTime)
                 lastMessageTime.visibility = View.VISIBLE
             } else {
                 lastMessageTime.visibility = View.GONE
@@ -61,9 +59,4 @@ class CustomerAdapter(private val users: List<UserWithLastMessage>) :
     }
 
     override fun getItemCount() = users.size
-
-    private fun getFormattedTime(timestamp: Long): String {
-        val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
-        return sdf.format(Date(timestamp))
-    }
 }
