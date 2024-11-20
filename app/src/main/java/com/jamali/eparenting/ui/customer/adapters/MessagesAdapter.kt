@@ -9,7 +9,6 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import androidx.appcompat.app.AlertDialog
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jamali.eparenting.R
@@ -17,7 +16,7 @@ import com.jamali.eparenting.data.Message
 import com.jamali.eparenting.databinding.DialogFullscreenImageBinding
 import com.jamali.eparenting.databinding.ItemReceiveMsgBinding
 import com.jamali.eparenting.databinding.ItemSendMsgBinding
-import com.jamali.eparenting.databinding.LayoutDeleteBinding
+import com.jamali.eparenting.utils.TimeUtils
 import com.jamali.eparenting.utils.Utility
 
 class MessagesAdapter(
@@ -32,7 +31,6 @@ class MessagesAdapter(
     private val ITEM_RECEIVE = 2
     private val senderRoom: String
     private val receiverRoom: String
-    private val database = Utility.database.reference
 
     override fun onCreateViewHolder(parent: ViewGroup, viewType: Int): RecyclerView.ViewHolder {
         return if (viewType == ITEM_SENT) {
@@ -88,11 +86,7 @@ class MessagesAdapter(
             holder.binding.message.visibility = View.VISIBLE
             holder.binding.mLinear.visibility = View.VISIBLE
             holder.binding.message.text = message.message
-        }
-
-        holder.itemView.setOnLongClickListener {
-            showDeleteDialog(message, senderRoom, receiverRoom)
-            false
+            holder.binding.timestamp.text = TimeUtils.formatTimestamp(message.timestamp)
         }
     }
 
@@ -120,11 +114,7 @@ class MessagesAdapter(
             holder.binding.message.visibility = View.VISIBLE
             holder.binding.mLinear.visibility = View.VISIBLE
             holder.binding.message.text = message.message
-        }
-
-        holder.itemView.setOnLongClickListener {
-            showDeleteDialog(message, senderRoom, receiverRoom)
-            false
+            holder.binding.timestamp.text = TimeUtils.formatTimestamp(message.timestamp)
         }
     }
 
@@ -179,51 +169,6 @@ class MessagesAdapter(
         } catch (e: Exception) {
             Toast.makeText(context, "Failed to download image", Toast.LENGTH_SHORT).show()
         }
-    }
-
-    private fun showDeleteDialog(message: Message, senderRoom: String, receiverRoom: String) {
-        val view = LayoutInflater.from(context).inflate(R.layout.layout_delete, null, false)
-        val binding = LayoutDeleteBinding.bind(view)
-
-        val dialog = AlertDialog.Builder(context)
-            .setTitle("Delete Message")
-            .setView(binding.root)
-            .create()
-
-        binding.forEveryone.setOnClickListener {
-            message.messageId?.let { messageId ->
-                // If it's an image message, delete the image from storage first
-                if (message.imageUrl != null) {
-                    val storageRef = Utility.storage.getReferenceFromUrl(message.imageUrl!!)
-                    storageRef.delete().addOnSuccessListener {
-                        // After deleting image, update message
-                        message.message = "This message is removed"
-                        message.imageUrl = null
-                        database.child("chats").child(senderRoom).child("messages").child(messageId).setValue(message)
-                        database.child("chats").child(receiverRoom).child("messages").child(messageId).setValue(message)
-                    }
-                } else {
-                    // For text messages
-                    message.message = "This message is removed"
-                    database.child("chats").child(senderRoom).child("messages").child(messageId).setValue(message)
-                    database.child("chats").child(receiverRoom).child("messages").child(messageId).setValue(message)
-                }
-            }
-            dialog.dismiss()
-        }
-
-        binding.forMe.setOnClickListener {
-            message.messageId?.let {
-                database.child("chats").child(senderRoom).child("messages").child(it).removeValue()
-            }
-            dialog.dismiss()
-        }
-
-        binding.cancel.setOnClickListener {
-            dialog.dismiss()
-        }
-
-        dialog.show()
     }
 
     inner class SentMsgHolder(itemView: View) : RecyclerView.ViewHolder(itemView) {

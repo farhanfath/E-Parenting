@@ -68,4 +68,14 @@ object TimeUtils {
         return cal1.get(Calendar.DAY_OF_YEAR) == cal2.get(Calendar.DAY_OF_YEAR) &&
                 cal1.get(Calendar.YEAR) == cal2.get(Calendar.YEAR)
     }
+
+    fun formatTimestamp(timestamp: Long): String {
+        try {
+            val sdf = SimpleDateFormat("HH:mm", Locale.getDefault())
+            val netDate = Date(timestamp)
+            return sdf.format(netDate)
+        } catch (e: Exception) {
+            return "" // Return empty string if there's an error
+        }
+    }
 }
