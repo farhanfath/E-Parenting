@@ -10,6 +10,7 @@ import android.util.Log
 import android.view.View
 import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
@@ -22,6 +23,8 @@ import com.jamali.eparenting.data.Message
 import com.jamali.eparenting.databinding.ActivityChatBinding
 import com.jamali.eparenting.ui.customer.adapters.MessagesAdapter
 import com.jamali.eparenting.utils.Utility
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 import java.io.ByteArrayOutputStream
 import java.util.Date
 
@@ -40,6 +43,11 @@ class ChatActivity : AppCompatActivity() {
     private var dialog: ProgressDialog? = null
     private var senderUid: String? = null
     private var receiverUid: String? = null
+
+    private var chatEndListener: ValueEventListener? = null
+
+    // Tambahkan flag untuk status activity
+    private var isActivityActive = true
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -63,6 +71,10 @@ class ChatActivity : AppCompatActivity() {
 
         isDoctor { isDoctor ->
             binding.endChatBtn.visibility = if (isDoctor) View.VISIBLE else View.GONE
+            if (!isDoctor) {
+                // Hanya pasang listener untuk mengecek status chat jika user adalah customer
+                setupChatEndListener()
+            }
         }
 
         binding.endChatBtn.setOnClickListener {
@@ -252,24 +264,38 @@ class ChatActivity : AppCompatActivity() {
     }
 
     private fun endChat() {
-        // Tampilkan loading dialog
         val loadingDialog = ProgressDialog(this).apply {
             setMessage("Mengakhiri chat...")
             setCancelable(false)
             show()
         }
 
-        // First, get all messages to find images that need to be deleted
+        // Tambahkan flag untuk menandai chat diakhiri oleh dokter
+        val updates = hashMapOf<String, Any>()
+        updates["/chats/$senderRoom/ended"] = true
+        updates["/chats/$receiverRoom/ended"] = true
+
+        // Update status ended terlebih dahulu
+        database.updateChildren(updates)
+            .addOnSuccessListener {
+                // Lanjutkan dengan proses penghapusan gambar dan pesan
+                deleteImagesAndMessages(loadingDialog)
+            }
+            .addOnFailureListener { e ->
+                loadingDialog.dismiss()
+                Utility.showToast(this@ChatActivity, "Gagal mengakhiri chat: ${e.message}")
+            }
+    }
+
+    private fun deleteImagesAndMessages(loadingDialog: ProgressDialog) {
         database.child("chats").child(senderRoom!!).child("messages")
             .get()
             .addOnSuccessListener { snapshot ->
                 val imageDeletionTasks = mutableListOf<Task<Void>>()
 
-                // Collect all image URLs that need to be deleted
                 for (messageSnapshot in snapshot.children) {
                     val message = messageSnapshot.getValue(Message::class.java)
                     if (message?.imageUrl != null) {
-                        // Get the storage reference from the URL and add deletion task
                         try {
                             val imageRef = Firebase.storage.getReferenceFromUrl(message.imageUrl!!)
                             imageDeletionTasks.add(imageRef.delete())
@@ -279,20 +305,16 @@ class ChatActivity : AppCompatActivity() {
                     }
                 }
 
-                // If there are images to delete, delete them first
                 if (imageDeletionTasks.isNotEmpty()) {
                     Tasks.whenAll(imageDeletionTasks)
                         .addOnSuccessListener {
-                            // After all images are deleted, proceed with chat deletion
                             deleteChatRooms(loadingDialog)
                         }
                         .addOnFailureListener { exception ->
                             Log.e("ChatActivity", "Error deleting some images: ${exception.message}")
-                            // Proceed with chat deletion even if some images fail to delete
                             deleteChatRooms(loadingDialog)
                         }
                 } else {
-                    // If no images to delete, proceed directly with chat deletion
                     deleteChatRooms(loadingDialog)
                 }
             }
@@ -321,4 +343,85 @@ class ChatActivity : AppCompatActivity() {
                 Utility.showToast(this@ChatActivity, "Gagal mengakhiri chat: ${e.message}")
             }
     }
+
+    private fun setupChatEndListener() {
+        val chatStatusRef = database.child("chats").child(senderRoom!!).child("ended")
+
+        chatEndListener = chatStatusRef.addValueEventListener(object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                if (!isActivityActive) return // Check if activity is still active
+
+                try {
+                    if (snapshot.exists() && snapshot.getValue(Boolean::class.java) == true) {
+                        lifecycleScope.launch(Dispatchers.Main) {
+                            if (isActivityActive) {
+                                showChatEndedDialog()
+                            }
+                        }
+                    }
+                } catch (e: Exception) {
+                    Log.e("ChatActivity", "Error processing chat end status", e)
+                }
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                Log.e("ChatActivity", "Error listening for chat end: ${error.message}")
+            }
+        })
+    }
+
+    private fun showChatEndedDialog() {
+        if (!isActivityActive) return
+
+        try {
+            removeChatEndListener() // Hapus listener terlebih dahulu
+
+            if (!isFinishing && !isDestroyed) {
+                AlertDialog.Builder(this)
+                    .setTitle("Chat Berakhir")
+                    .setMessage("Percakapan telah diakhiri oleh dokter")
+                    .setPositiveButton("OK") { dialog, _ ->
+                        dialog.dismiss()
+                        if (isActivityActive) {
+                            finish()
+                        }
+                    }
+                    .setCancelable(false)
+                    .create()
+                    .apply {
+                        if (window != null && !isFinishing) {
+                            show()
+                        }
+                    }
+            }
+        } catch (e: Exception) {
+            Log.e("ChatActivity", "Error showing end chat dialog", e)
+            if (isActivityActive) {
+                finish()
+            }
+        }
+    }
+
+    private fun removeChatEndListener() {
+        chatEndListener?.let { listener ->
+            database.child("chats").child(senderRoom!!).removeEventListener(listener)
+        }
+    }
+
+    override fun onResume() {
+        super.onResume()
+        isActivityActive = true
+    }
+
+    override fun onPause() {
+        isActivityActive = false
+        super.onPause()
+    }
+
+    override fun onDestroy() {
+        removeChatEndListener()
+        isActivityActive = false
+        super.onDestroy()
+    }
+
 }

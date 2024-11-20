@@ -5,14 +5,18 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
+import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.data.User
 import com.jamali.eparenting.databinding.FragmentConsultationBinding
 import com.jamali.eparenting.ui.customer.adapters.ConsultationAdapter
 import com.jamali.eparenting.utils.Utility
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 class ConsultationFragment : Fragment() {
 
@@ -24,6 +28,9 @@ class ConsultationFragment : Fragment() {
      */
     private val consultationExpertList = mutableListOf<User>()
     private lateinit var consultationAdapter: ConsultationAdapter
+
+    private var valueEventListener: ValueEventListener? = null
+    private var databaseReference: DatabaseReference? = null
 
     override fun onCreateView(
         inflater: LayoutInflater,
@@ -41,7 +48,6 @@ class ConsultationFragment : Fragment() {
         super.onViewCreated(view, savedInstanceState)
 
         rvAdapterSetup()
-
         loadConsultationExpert()
     }
 
@@ -54,53 +60,60 @@ class ConsultationFragment : Fragment() {
     }
 
     private fun loadConsultationExpert() {
-        val databaseReference = Utility.database.getReference("users")
-        databaseReference.addValueEventListener(object : ValueEventListener {
-                override fun onDataChange(snapshot: DataSnapshot) {
-                    consultationExpertList.clear()
+        databaseReference = Utility.database.getReference("users")
 
-                    // Gunakan temporary list untuk menampung data sebelum difilter dan diurutkan
-                    val tempList = mutableListOf<User>()
+        valueEventListener = object : ValueEventListener {
+            override fun onDataChange(snapshot: DataSnapshot) {
+                // Periksa apakah Fragment masih terhubung ke Activity
+                if (!isAdded()) return
 
-                    // Iterasi snapshot dan filter berdasarkan type
-                    for (data in snapshot.children) {
-                        val post = data.getValue(User::class.java)
-                        if (post != null && post.role == "doctor") {
-                            tempList.add(post)
-                        }
-                    }
+                consultationExpertList.clear()
+                val tempList = mutableListOf<User>()
 
-                    // Urutkan dari yang terbaru (descending) dan tambahkan ke communityList
-                    consultationExpertList.addAll(tempList.reversed())
-
-                    // Update UI di main thread
-                    requireActivity().runOnUiThread {
-                        consultationAdapter.notifyDataSetChanged()
-
-                        // Optional: Tambahkan indikator jika list kosong
-                        when {
-                            consultationExpertList.isNotEmpty() -> {
-                                // Sembunyikan empty state jika ada
-                                binding.noExpertActive.visibility = View.GONE
-                            }
-                            else -> {
-                                // Tampilkan empty state jika ada
-                                binding.noExpertActive.visibility = View.VISIBLE
-                            }
-                        }
+                for (data in snapshot.children) {
+                    val post = data.getValue(User::class.java)
+                    if (post != null && post.role == "doctor") {
+                        tempList.add(post)
                     }
                 }
 
-                override fun onCancelled(error: DatabaseError) {
-                    requireActivity().runOnUiThread {
-                        Utility.showToast(requireContext(), error.message)
+                consultationExpertList.addAll(tempList.reversed())
+
+                // Gunakan view lifecycle owner untuk memastikan Fragment masih aktif
+                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                    consultationAdapter.notifyDataSetChanged()
+
+                    binding.noExpertActive.visibility = if (consultationExpertList.isEmpty()) {
+                        View.VISIBLE
+                    } else {
+                        View.GONE
                     }
                 }
-            })
+            }
+
+            override fun onCancelled(error: DatabaseError) {
+                if (!isAdded()) return
+
+                viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
+                    context?.let {
+                        Utility.showToast(it, error.message)
+                    }
+                }
+            }
+        }
+
+        // Tambahkan listener
+        valueEventListener?.let { listener ->
+            databaseReference?.addValueEventListener(listener)
+        }
     }
 
     override fun onDestroyView() {
-        super.onDestroyView()
+        // Hapus listener saat Fragment di-destroy
+        valueEventListener?.let { listener ->
+            databaseReference?.removeEventListener(listener)
+        }
         _binding = null
+        super.onDestroyView()
     }
 }
