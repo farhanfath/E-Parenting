@@ -6,6 +6,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_margin="8dp"
     app:cardCornerRadius="8dp"
+    app:cardBackgroundColor="@color/green_100"
     app:cardElevation="4dp">
 
     <LinearLayout
@@ -14,12 +15,13 @@
         android:orientation="horizontal"
         android:padding="16dp">
 
-        <ImageView
+        <de.hdodenhof.circleimageview.CircleImageView
             android:id="@+id/iv_image"
             android:layout_width="64dp"
             android:layout_height="64dp"
             android:contentDescription="Doctor Image"
-            tools:src="@tools:sample/avatars"/>
+            android:src="@drawable/ic_avatar"
+            tools:src="@tools:sample/avatars" />
 
         <LinearLayout
             android:layout_width="0dp"
@@ -32,22 +34,39 @@
                 android:id="@+id/tv_username"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Dr. Ahmad Jadiin"
-                android:textAppearance="@style/TextAppearance.AppCompat.Title" />
+                android:textAppearance="@style/TextAppearance.AppCompat.Title"
+                tools:text="Dr. Pawan" />
 
             <TextView
                 android:id="@+id/tv_speciality"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Dokter Anak"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body1" />
+                android:textColor="@color/gray_600"
+                android:textAppearance="@style/TextAppearance.AppCompat.Body1"
+                tools:text="Dokter Anak" />
 
-            <TextView
-                android:id="@+id/tv_schedule"
+            <LinearLayout
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                tools:text="Senin - Jumat"
-                android:textAppearance="@style/TextAppearance.AppCompat.Body2" />
+                android:orientation="horizontal"
+                android:layout_gravity="end"
+                android:paddingTop="10dp">
+
+                <ImageView
+                    android:layout_width="20dp"
+                    android:layout_height="20dp"
+                    android:contentDescription="Schedule Icon"
+                    android:src="@drawable/ic_schedule" />
+
+                <TextView
+                    android:id="@+id/tv_schedule"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="4dp"
+                    android:textAppearance="@style/TextAppearance.AppCompat.Body2"
+                    tools:text="Senin - Jumat" />
+
+            </LinearLayout>
 
         </LinearLayout>
 

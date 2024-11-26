@@ -1,5 +1,6 @@
 package com.jamali.eparenting.ui.doctor
 
+import android.content.Intent
 import android.os.Bundle
 import android.view.View
 import androidx.appcompat.app.AppCompatActivity
@@ -37,6 +38,10 @@ class DoctorMainActivity : AppCompatActivity() {
             val logoutFragment =
                 LogOutFragment()
             logoutFragment.show(supportFragmentManager, logoutFragment.tag)
+        }
+
+        binding.editProfileBtn.setOnClickListener {
+            startActivity(Intent(this, EditDoctorActivity::class.java))
         }
     }
 
@@ -133,47 +138,6 @@ class DoctorMainActivity : AppCompatActivity() {
             updateUI(activeChats)
         }
     }
-
-// old chat update
-//    private fun updateChatList() {
-//        val currentUserUid = Utility.auth.currentUser?.uid ?: return
-//
-//        chatsReference.get().addOnSuccessListener { chatSnapshot ->
-//            val activeChats = mutableListOf<UserWithLastMessage>()
-//
-//            for (chatRoom in chatSnapshot.children) {
-//                val chatRoomId = chatRoom.key ?: continue
-//
-//                // Cek apakah chat room melibatkan dokter saat ini
-//                if (!chatRoomId.contains(currentUserUid)) continue
-//
-//                // EkstrakUID customer dari chat room ID
-//                val customerUid = chatRoomId.replace(currentUserUid, "")
-//
-//                // Dapatkan data user dari map
-//                val user = userMap[customerUid] ?: continue
-//
-//                // Ambil pesan terakhir
-//                val lastMsgData = chatRoom.child("lastMsg").getValue(String::class.java) ?: ""
-//                val lastMsgTime = chatRoom.child("lastMsgTime").getValue(Long::class.java) ?: 0L
-//
-//                // Buat objek UserWithLastMessage
-//                val userWithMessage = UserWithLastMessage(
-//                    user = user,
-//                    lastMessage = lastMsgData,
-//                    lastMessageTime = lastMsgTime
-//                )
-//
-//                activeChats.add(userWithMessage)
-//            }
-//
-//            // Sort berdasarkan waktu pesan terakhir
-//            activeChats.sortByDescending { it.lastMessageTime }
-//
-//            // Update UI
-//            updateUI(activeChats)
-//        }
-//    }
 
     private fun updateUI(activeChats: List<UserWithLastMessage>) {
         runOnUiThread {

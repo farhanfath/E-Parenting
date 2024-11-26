@@ -12,6 +12,7 @@ import androidx.appcompat.app.AlertDialog
 import androidx.appcompat.app.AppCompatActivity
 import androidx.lifecycle.lifecycleScope
 import androidx.recyclerview.widget.LinearLayoutManager
+import com.bumptech.glide.Glide
 import com.google.android.gms.tasks.Task
 import com.google.android.gms.tasks.Tasks
 import com.google.firebase.Firebase
@@ -44,6 +45,8 @@ class ChatActivity : AppCompatActivity() {
     private var senderUid: String? = null
     private var receiverUid: String? = null
 
+    private lateinit var doctorId: String
+
     private var chatEndListener: ValueEventListener? = null
 
     // Tambahkan flag untuk status activity
@@ -61,9 +64,15 @@ class ChatActivity : AppCompatActivity() {
 
         val name = intent.getStringExtra("name")
         val email = intent.getStringExtra("email")
+        val profile = intent.getStringExtra("profile")
         receiverUid = intent.getStringExtra("uid")
+
+        doctorId = receiverUid ?: ""
         binding.userName.text = name
         binding.userEmail.text = email
+        Glide.with(this)
+            .load(profile)
+            .into(binding.avatarImg)
 
         binding.backBtn.setOnClickListener {
             finish()
@@ -423,5 +432,4 @@ class ChatActivity : AppCompatActivity() {
         isActivityActive = false
         super.onDestroy()
     }
-
 }

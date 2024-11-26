@@ -1,5 +1,9 @@
 package com.jamali.eparenting.data
 
+import android.os.Parcelable
+import kotlinx.parcelize.Parcelize
+
+@Parcelize
 data class User(
     val uid : String = "",
     val email : String = "",
@@ -8,8 +12,10 @@ data class User(
     val phoneNumber : String = "",
     val role : String = "", // "customer" , "admin" , "doctor"
     val speciality : String = "", // keahlian untuk doctor
-    val activeDay: String = "" // untuk jadwal doctor
-)
+    val activeDay: String = "", // untuk jadwal doctor
+    val status: Boolean = false,
+    val description: String = ""
+) : Parcelable
 
 data class UserWithLastMessage(
     val user: User,

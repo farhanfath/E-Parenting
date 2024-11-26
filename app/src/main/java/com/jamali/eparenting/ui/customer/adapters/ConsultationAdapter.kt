@@ -9,6 +9,7 @@ import com.jamali.eparenting.R
 import com.jamali.eparenting.data.User
 import com.jamali.eparenting.databinding.ItemConsultationExpertBinding
 import com.jamali.eparenting.ui.customer.fragments.consultation.ChatActivity
+import com.jamali.eparenting.ui.customer.fragments.consultation.DoctorDetailActivity
 
 class ConsultationAdapter(private val doctorList: List<User>) :
     RecyclerView.Adapter<ConsultationAdapter.ForumCommunityViewHolder>(){
@@ -36,10 +37,8 @@ class ConsultationAdapter(private val doctorList: List<User>) :
                 .into(ivImage)
         }
         holder.binding.root.setOnClickListener {
-            val intent = Intent(holder.itemView.context, ChatActivity::class.java)
-            intent.putExtra("name", doctor.username)
-            intent.putExtra("email", doctor.email)
-            intent.putExtra("uid", doctor.uid)
+            val intent = Intent(holder.itemView.context, DoctorDetailActivity::class.java)
+            intent.putExtra("doctor", doctor)
             holder.itemView.context.startActivity(intent)
         }
     }

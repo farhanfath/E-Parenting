@@ -71,9 +71,9 @@ class ConsultationFragment : Fragment() {
                 val tempList = mutableListOf<User>()
 
                 for (data in snapshot.children) {
-                    val post = data.getValue(User::class.java)
-                    if (post != null && post.role == "doctor") {
-                        tempList.add(post)
+                    val user = data.getValue(User::class.java)
+                    if (user != null && user.role == "doctor" && user.status) {
+                        tempList.add(user)
                     }
                 }
 

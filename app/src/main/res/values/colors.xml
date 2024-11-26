@@ -4,6 +4,11 @@
     <color name="white">#FFFFFFFF</color>
 
     <color name="green_500">#58AD93</color>
+    <color name="green_400">#74C5AA</color>
+    <color name="green_300">#90D5BF</color>
+    <color name="green_200">#AEE5D2</color>
+    <color name="green_100">#CBEFE2</color>
+
     <color name="accent">#F1FBF8</color>
     <color name="statusBar">#E5E5E5</color>
 
