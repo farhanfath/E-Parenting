@@ -1,17 +1,26 @@
 package com.jamali.eparenting.ui.customer.fragments.forum.comment
 
+import android.content.Intent
 import android.os.Bundle
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.FrameLayout
+import androidx.core.content.ContextCompat
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.jamali.eparenting.R
 import com.jamali.eparenting.data.Comment
 import com.jamali.eparenting.databinding.LayoutCommentDialogBinding
+import com.jamali.eparenting.ui.TermsAndConditionActivity
 import com.jamali.eparenting.ui.customer.adapters.CommentAdapter
 import com.jamali.eparenting.utils.Utility
 
@@ -56,6 +65,7 @@ class CommentFragment(
 
         loadComments()
         emptyCommentSetup()
+        termsConditionSetup()
 
         binding.btnSendComment.setOnClickListener {
             val newCommentText = binding.etComment.text.toString().trim()
@@ -64,6 +74,31 @@ class CommentFragment(
                 binding.etComment.text?.clear()
             }
         }
+    }
+
+    private fun termsConditionSetup() {
+        val text = getString(R.string.commentRules)
+        val spannableString = SpannableString(text)
+
+        val start = text.indexOf("aturan komunitas")
+        val end = start + "aturan komunitas".length
+
+        val clickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                startActivity(Intent(requireContext(), TermsAndConditionActivity::class.java))
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.isUnderlineText = true  // Tambahkan garis bawah
+                ds.color = ContextCompat.getColor(requireContext(), R.color.blue)
+            }
+        }
+
+        spannableString.setSpan(clickableSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        binding.tvCommunityRules.text = spannableString
+        binding.tvCommunityRules.movementMethod = LinkMovementMethod.getInstance()
     }
 
     private fun loadComments() {
@@ -98,9 +133,11 @@ class CommentFragment(
         if (comments.isEmpty()) {
             binding.rvCommentPostForum.visibility = View.GONE
             binding.noCommentText.visibility = View.VISIBLE
+            binding.tvCommunityRules.visibility = View.VISIBLE
         } else {
             binding.rvCommentPostForum.visibility = View.VISIBLE
             binding.noCommentText.visibility = View.GONE
+            binding.tvCommunityRules.visibility = View.GONE
         }
     }
 

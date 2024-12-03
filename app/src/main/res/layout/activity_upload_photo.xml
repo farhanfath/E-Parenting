@@ -181,14 +181,35 @@
                     android:padding="16dp" />
             </com.google.android.material.textfield.TextInputLayout>
 
+            <!-- Terms and Conditions Section -->
+            <LinearLayout
+                android:id="@+id/layout_terms_conditions"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:layout_marginTop="20dp"
+                android:layout_marginHorizontal="16dp"
+                app:layout_constraintTop_toBottomOf="@id/tl_desc_upload_forum"
+                android:orientation="horizontal">
+
+                <TextView
+                    android:id="@+id/tv_terms_conditions"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:gravity="start"
+                    android:text="@string/termsCondition"
+                    android:textColor="@color/gray_600"
+                    android:textSize="14sp" />
+
+            </LinearLayout>
+
             <!-- Action Buttons -->
             <LinearLayout
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginHorizontal="16dp"
-                android:layout_marginTop="24dp"
+                android:layout_marginTop="16dp"
                 android:orientation="vertical"
-                app:layout_constraintTop_toBottomOf="@id/tl_desc_upload_forum">
+                app:layout_constraintTop_toBottomOf="@id/layout_terms_conditions">
 
                 <com.google.android.material.button.MaterialButton
                     android:id="@+id/btn_accept_posting"
@@ -200,19 +221,6 @@
                     app:cornerRadius="12dp"
                     app:elevation="0dp" />
 
-                <com.google.android.material.button.MaterialButton
-                    android:id="@+id/btn_cancel_posting"
-                    style="@style/Widget.MaterialComponents.Button.OutlinedButton"
-                    android:layout_width="match_parent"
-                    android:layout_height="56dp"
-                    android:layout_marginTop="12dp"
-                    android:text="Batal"
-                    android:textAllCaps="false"
-                    android:textColor="@color/red"
-                    android:textSize="16sp"
-                    app:cornerRadius="12dp"
-                    app:strokeColor="#FF2424"
-                    app:strokeWidth="2dp" />
             </LinearLayout>
 
         </androidx.constraintlayout.widget.ConstraintLayout>

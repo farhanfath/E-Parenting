@@ -1,0 +1,55 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="terms_conditions_full_new">
+    <![CDATA[
+        <h1>Panduan Komunitas</h1>
+
+        <p class="highlight">Selamat datang di aplikasi e-Parenting!</p>
+
+        <p>Dengan mengunduh atau menggunakan aplikasi e-Parenting, Anda menyetujui syarat dan ketentuan berikut ini. Jika Anda tidak setuju dengan salah satu bagian dari syarat ini, Anda tidak diperkenankan untuk menggunakan aplikasi ini.</p>
+
+        <h2>1. Penggunaan Aplikasi</h2>
+        <ul>
+            <li>Aplikasi ini dirancang untuk membantu orang tua dalam berbagi pengetahuan, berdiskusi, dan berkonsultasi dengan profesional di bidang parenting.</li>
+            <li>Pengguna wajib menggunakan aplikasi ini untuk tujuan positif, sesuai dengan hukum yang berlaku, dan menghormati pengguna lainnya.</li>
+        </ul>
+
+        <h2>2. Fitur Komunitas</h2>
+        <ul>
+            <li>Pengguna dapat membuat postingan, berdiskusi, dan berbagi pengalaman terkait parenting.</li>
+            <li>Konten yang diunggah tidak boleh mengandung unsur diskriminasi, kebencian, pornografi, kekerasan, atau hal lain yang melanggar hukum.</li>
+            <li>e-Parenting berhak menghapus konten yang melanggar aturan ini.</li>
+        </ul>
+
+        <h2>3. Fitur Komentar Komunitas</h2>
+        <ul>
+            <li>Pengguna diperbolehkan memberikan komentar di forum dan komunitas, dengan syarat komentar harus sopan, relevan, dan tidak menyinggung pihak lain.</li>
+        </ul>
+
+        <h2>4. Fitur Konsultasi</h2>
+        <ul>
+            <li>Fitur konsultasi hanya diperuntukkan untuk keperluan diskusi profesional terkait parenting.</li>
+            <li>Informasi yang diberikan oleh dokter atau ahli parenting bersifat edukasi dan bukan sebagai pengganti saran medis langsung.</li>
+        </ul>
+
+        <h2>5. Kewajiban Pengguna</h2>
+        <ul>
+            <li>Pengguna wajib menjaga kerahasiaan akun masing-masing.</li>
+            <li>Pengguna bertanggung jawab atas semua aktivitas yang dilakukan menggunakan akun mereka.</li>
+        </ul>
+
+        <h2>6. Pembatasan Tanggung Jawab</h2>
+        <ul>
+            <li>e-Parenting tidak bertanggung jawab atas kesalahan informasi yang diberikan oleh pengguna lain di forum komunitas.</li>
+            <li>e-Parenting juga tidak bertanggung jawab atas keputusan yang diambil berdasarkan hasil konsultasi.</li>
+        </ul>
+
+        <h2>7. Perubahan Ketentuan</h2>
+        <ul>
+            <li>e-Parenting berhak mengubah syarat dan ketentuan sewaktu-waktu. Pengguna akan diberitahukan jika ada pembaruan.</li>
+        </ul>
+
+         <p class="highlight">Terima kasih telah menggunakan e-Parenting. Selamat bermasyarakat dan berbagi pengetahuan!</p>
+    ]]>
+    </string>
+</resources>

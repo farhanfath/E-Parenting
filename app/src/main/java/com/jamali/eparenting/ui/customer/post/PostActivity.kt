@@ -2,11 +2,18 @@ package com.jamali.eparenting.ui.customer.post
 
 import android.annotation.SuppressLint
 import android.app.Activity
+import android.content.Intent
 import android.content.pm.PackageManager
 import android.net.Uri
 import android.os.Bundle
 import android.os.Environment
+import android.text.SpannableString
+import android.text.Spanned
+import android.text.TextPaint
+import android.text.method.LinkMovementMethod
+import android.text.style.ClickableSpan
 import android.util.Log
+import android.view.View
 import android.widget.ArrayAdapter
 import android.widget.Toast
 import androidx.activity.result.ActivityResultLauncher
@@ -19,11 +26,12 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.R
-import com.jamali.eparenting.utils.Utility
 import com.jamali.eparenting.data.CommunityPost
 import com.jamali.eparenting.data.PostType
 import com.jamali.eparenting.data.User
 import com.jamali.eparenting.databinding.ActivityUploadPhotoBinding
+import com.jamali.eparenting.ui.TermsAndConditionActivity
+import com.jamali.eparenting.utils.Utility
 import com.yalantis.ucrop.UCrop
 import java.io.File
 import java.text.SimpleDateFormat
@@ -60,6 +68,8 @@ class PostActivity : AppCompatActivity() {
         setupImagePicker()
         setupSpinner()
 
+        setupTermsAndCondition()
+
         binding.btnGallery.setOnClickListener {
             selectImage()
         }
@@ -75,10 +85,31 @@ class PostActivity : AppCompatActivity() {
         binding.btnAcceptPosting.setOnClickListener {
             uploadPost()
         }
+    }
 
-        binding.btnCancelPosting.setOnClickListener {
-            finish()
+    private fun setupTermsAndCondition() {
+        val text = getString(R.string.termsCondition)
+        val spannableString = SpannableString(text)
+
+        val start = text.indexOf("aturan komunitas")
+        val end = start + "aturan komunitas".length
+
+        val clickableSpan = object : ClickableSpan() {
+            override fun onClick(widget: View) {
+                startActivity(Intent(this@PostActivity, TermsAndConditionActivity::class.java))
+            }
+
+            override fun updateDrawState(ds: TextPaint) {
+                super.updateDrawState(ds)
+                ds.isUnderlineText = true  // Tambahkan garis bawah
+                ds.color = ContextCompat.getColor(this@PostActivity, R.color.blue)
+            }
         }
+
+        spannableString.setSpan(clickableSpan, start, end, Spanned.SPAN_EXCLUSIVE_EXCLUSIVE)
+
+        binding.tvTermsConditions.text = spannableString
+        binding.tvTermsConditions.movementMethod = LinkMovementMethod.getInstance()
     }
 
     private fun startCrop(sourceUri: Uri) {

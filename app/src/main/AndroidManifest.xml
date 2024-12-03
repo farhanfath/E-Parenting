@@ -25,6 +25,9 @@
         android:theme="@style/Theme.EParenting"
         tools:targetApi="31">
         <activity
+            android:name=".ui.TermsAndConditionActivity"
+            android:exported="false" />
+        <activity
             android:name=".ui.customer.fragments.consultation.DoctorDetailActivity"
             android:exported="false" />
         <activity

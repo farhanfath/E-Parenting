@@ -47,4 +47,7 @@
     <string name="forgetPassword">Lupa Kata Sandi</string>
     <string name="forget_pass">Lupa Kata Sandi?</string>
     <string name="message_deleted">Pesan Telah Dihapus</string>
+    <string name="termsCondition">Pastikan untuk membuat postingan yang sopan dan santun dan mengikuti aturan komunitas kami</string>
+    <string name="communityRule">Aturan Komunitas E-Parenting</string>
+    <string name="commentRules">Harap berkomentar dengan sopan, tidak mengandung unsur sara, dan menghormati sesama pengguna mengikuti aturan komunitas kami.</string>
 </resources>

@@ -43,6 +43,20 @@
             android:textSize="20sp"
             android:textStyle="bold" />
 
+        <TextView
+            android:id="@+id/tv_community_rules"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginHorizontal="16dp"
+            android:layout_marginTop="8dp"
+            android:text="@string/commentRules"
+            android:textColor="@color/gray_600"
+            android:textSize="12sp"
+            android:textAlignment="center"
+            android:visibility="gone"
+            android:background="@drawable/background_light_gray_rounded"
+            android:padding="8dp"/>
+
         <!-- RecyclerView for comments -->
         <androidx.recyclerview.widget.RecyclerView
             android:id="@+id/rv_comment_post_forum"
