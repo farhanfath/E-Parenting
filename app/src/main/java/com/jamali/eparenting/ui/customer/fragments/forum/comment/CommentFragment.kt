@@ -20,7 +20,7 @@ import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.R
 import com.jamali.eparenting.data.Comment
 import com.jamali.eparenting.databinding.LayoutCommentDialogBinding
-import com.jamali.eparenting.ui.TermsAndConditionActivity
+import com.jamali.eparenting.ui.rules.CompleteRulesActivity
 import com.jamali.eparenting.ui.customer.adapters.CommentAdapter
 import com.jamali.eparenting.utils.Utility
 
@@ -85,7 +85,12 @@ class CommentFragment(
 
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
-                startActivity(Intent(requireContext(), TermsAndConditionActivity::class.java))
+                val intent = Intent(requireContext(), CompleteRulesActivity::class.java)
+                intent.putExtra(
+                    CompleteRulesActivity.EXTRA_RULES_TYPE,
+                    CompleteRulesActivity.RULES_TYPE_COMMUNITY
+                )
+                startActivity(intent)
             }
 
             override fun updateDrawState(ds: TextPaint) {

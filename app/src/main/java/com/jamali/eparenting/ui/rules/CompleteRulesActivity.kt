@@ -1,20 +1,29 @@
-package com.jamali.eparenting.ui
+package com.jamali.eparenting.ui.rules
 
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
 import com.jamali.eparenting.R
-import com.jamali.eparenting.databinding.ActivityTermsAndConditionBinding
+import com.jamali.eparenting.databinding.ActivityCommunityRulesBinding
 
-class TermsAndConditionActivity : AppCompatActivity() {
+class CompleteRulesActivity : AppCompatActivity() {
 
-    private lateinit var binding: ActivityTermsAndConditionBinding
+    private lateinit var binding: ActivityCommunityRulesBinding
+    private lateinit var contentRules : String
+
+    companion object {
+        const val EXTRA_RULES_TYPE = "RULES_TYPE"
+        const val RULES_TYPE_COMMUNITY = "COMMUNITY"
+        const val RULES_TYPE_PRIVACY = "PRIVACY"
+        const val RULES_TYPE_TERMSOFSERVICES = "TERMSOFSERVICES"
+    }
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
-        binding = ActivityTermsAndConditionBinding.inflate(layoutInflater)
+        binding = ActivityCommunityRulesBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        setupTermsAndConditions()
+        val rulesType = intent.getStringExtra(EXTRA_RULES_TYPE) ?: RULES_TYPE_COMMUNITY
+        setupRules(rulesType)
 
         binding.ivBack.setOnClickListener {
             finish()
@@ -22,10 +31,28 @@ class TermsAndConditionActivity : AppCompatActivity() {
 
     }
 
-    private fun setupTermsAndConditions() {
+    private fun setupRules(rulesType: String) {
+        contentRules = when (rulesType) {
+            RULES_TYPE_COMMUNITY -> getString(R.string.community_rules_full)
+            RULES_TYPE_PRIVACY -> getString(R.string.privacy_policy_full)
+            RULES_TYPE_TERMSOFSERVICES -> getString(R.string.terms_of_service_full)
+            else -> getString(R.string.community_rules_full)
+        }.replace("<![CDATA[", "").replace("]]>", "")
+
+        // Pilih judul berdasarkan tipe
+        binding.tvTitleRules.text = when (rulesType) {
+            RULES_TYPE_COMMUNITY -> "Aturan Komunitas"
+            RULES_TYPE_PRIVACY -> "Kebijakan Privasi"
+            RULES_TYPE_TERMSOFSERVICES -> "Ketentuan Layanan"
+            else -> "Aturan Komunitas"
+        }
+
+        setupCommunityRules()
+    }
+
+    private fun setupCommunityRules() {
 
         val webView = binding.webView
-        // Styling CSS untuk membuat tampilan lebih proporsional
         val htmlContent = """
         <html>
         <head>
@@ -69,7 +96,7 @@ class TermsAndConditionActivity : AppCompatActivity() {
             </style>
         </head>
         <body>
-            ${getString(R.string.terms_conditions_full_new).replace("<![CDATA[", "").replace("]]>", "")}
+            $contentRules
         </body>
         </html>
         """

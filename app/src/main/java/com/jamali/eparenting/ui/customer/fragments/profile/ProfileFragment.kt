@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.jamali.eparenting.R
 import com.jamali.eparenting.utils.Utility
 import com.jamali.eparenting.databinding.FragmentProfileBinding
+import com.jamali.eparenting.ui.rules.CompleteRulesActivity
 
 class ProfileFragment : Fragment() {
 
@@ -44,6 +45,24 @@ class ProfileFragment : Fragment() {
 
         binding.containerLayoutEditPassword.setOnClickListener {
             val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
+            startActivity(intent)
+        }
+
+        binding.btnPrivacyPolicy.setOnClickListener {
+            val intent = Intent(requireContext(), CompleteRulesActivity::class.java)
+            intent.putExtra(
+                CompleteRulesActivity.EXTRA_RULES_TYPE,
+                CompleteRulesActivity.RULES_TYPE_PRIVACY
+            )
+            startActivity(intent)
+        }
+
+        binding.btnTermsOfService.setOnClickListener {
+            val intent = Intent(requireContext(), CompleteRulesActivity::class.java)
+            intent.putExtra(
+                CompleteRulesActivity.EXTRA_RULES_TYPE,
+                CompleteRulesActivity.RULES_TYPE_TERMSOFSERVICES
+            )
             startActivity(intent)
         }
 

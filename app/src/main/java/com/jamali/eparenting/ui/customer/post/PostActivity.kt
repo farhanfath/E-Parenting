@@ -30,7 +30,7 @@ import com.jamali.eparenting.data.CommunityPost
 import com.jamali.eparenting.data.PostType
 import com.jamali.eparenting.data.User
 import com.jamali.eparenting.databinding.ActivityUploadPhotoBinding
-import com.jamali.eparenting.ui.TermsAndConditionActivity
+import com.jamali.eparenting.ui.rules.CompleteRulesActivity
 import com.jamali.eparenting.utils.Utility
 import com.yalantis.ucrop.UCrop
 import java.io.File
@@ -96,7 +96,12 @@ class PostActivity : AppCompatActivity() {
 
         val clickableSpan = object : ClickableSpan() {
             override fun onClick(widget: View) {
-                startActivity(Intent(this@PostActivity, TermsAndConditionActivity::class.java))
+                val intent = Intent(this@PostActivity, CompleteRulesActivity::class.java)
+                intent.putExtra(
+                    CompleteRulesActivity.EXTRA_RULES_TYPE,
+                    CompleteRulesActivity.RULES_TYPE_COMMUNITY
+                )
+                startActivity(intent)
             }
 
             override fun updateDrawState(ds: TextPaint) {
