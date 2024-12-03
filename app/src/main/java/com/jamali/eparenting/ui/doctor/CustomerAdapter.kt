@@ -52,6 +52,7 @@ class CustomerAdapter(private val users: List<UserWithLastMessage>) :
                     putExtra("name", user.username)
                     putExtra("email", user.email)
                     putExtra("uid", user.uid)
+                    putExtra("profile", user.profile)
                 }
                 context.startActivity(intent)
             }
