@@ -28,7 +28,6 @@ class ConsultationAdapter(private val doctorList: List<User>) :
         with(holder.binding) {
             tvUsername.text = doctor.username
             tvSpeciality.text = doctor.speciality
-            tvSchedule.text = doctor.activeDay
 
             Glide.with(holder.itemView.context)
                 .load(doctor.profile)
