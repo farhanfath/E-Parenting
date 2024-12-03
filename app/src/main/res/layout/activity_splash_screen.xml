@@ -7,4 +7,35 @@
     android:layout_height="match_parent"
     tools:context=".SplashScreen">
 
+    <ImageView
+        android:id="@+id/parentingLogo"
+        android:layout_width="180dp"
+        android:layout_height="180dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        android:src="@drawable/jamali_parenting_logo" />
+
+    <ImageView
+        android:id="@+id/jamaliLogo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toEndOf="@+id/gunadarmaLogo"
+        android:src="@drawable/jamali_cianjur_logo"/>
+
+    <ImageView
+        android:id="@+id/gunadarmaLogo"
+        android:layout_width="80dp"
+        android:layout_height="80dp"
+        android:layout_marginBottom="16dp"
+        android:layout_marginStart="16dp"
+        app:layout_constraintBottom_toBottomOf="parent"
+        app:layout_constraintStart_toStartOf="parent"
+        android:src="@drawable/jamali_gunadarma_logo" />
+
+
 </androidx.constraintlayout.widget.ConstraintLayout>
