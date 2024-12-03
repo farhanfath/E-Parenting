@@ -29,7 +29,7 @@ class ForumFragment : Fragment() {
         TabLayoutMediator(binding.tabsLayoutForum, binding.vpForum) { tab, position ->
             when (position) {
                 0 -> tab.text = "Personal"
-                1 -> tab.text = "Community"
+                1 -> tab.text = "Kategori"
             }
         }.attach()
 

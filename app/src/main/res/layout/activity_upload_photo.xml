@@ -215,7 +215,7 @@
                     android:id="@+id/btn_accept_posting"
                     android:layout_width="match_parent"
                     android:layout_height="56dp"
-                    android:text="Upload Forum"
+                    android:text="@string/postforum"
                     android:textAllCaps="false"
                     android:textSize="16sp"
                     app:cornerRadius="12dp"

@@ -4,13 +4,12 @@
     <string name="username">Username</string>
     <string name="password">Kata Sandi</string>
     <string name="register">Register</string>
-    <string name="have_account">Already Have Account?</string>
-    <string name="to_login"><u>Register</u></string>
-    <string name="not_account">Sudah memiliki akun?</string>
+    <string name="to_login"><u>Daftar</u></string>
+    <string name="not_account">Belum memiliki akun?</string>
     <string name="to_register"><u>Masuk</u></string>
     <string name="title_register">Registrasi</string>
     <string name="title_login">Masuk</string>
-    <string name="login">Login</string>
+    <string name="login">Masuk</string>
     <string name="required">Tidak Boleh Kosong</string>
     <string name="title">Judul Postingan</string>
     <string name="desc">Deskripsi Potingan</string>
@@ -21,8 +20,8 @@
     <string name="menu_profile">Profil</string>
     <string name="title_profile">Profil</string>
     <string name="title_consultation_activity">Pesan</string>
-    <string name="profileTxt">Profile</string>
-    <string name="chatTxt">Consultation</string>
+    <string name="profileTxt">Profil</string>
+    <string name="chatTxt">Konsultasi</string>
     <string name="forumTxt">Forum</string>
     <string name="homeTxt">Modul</string>
     <string name="failed_get_name">Gagal memuat nama pengguna</string>
@@ -43,13 +42,16 @@
 
     <string name="insert_comment">Tambahkan sebuah komentar</string>
     <string name="changeProfile">Ubah Profil</string>
-    <string name="changePassword">Ganti Kata Sandi</string>
+    <string name="changePassword">Ubah Kata Sandi</string>
     <string name="forgetPassword">Lupa Kata Sandi</string>
     <string name="forget_pass">Lupa Kata Sandi?</string>
     <string name="message_deleted">Pesan Telah Dihapus</string>
     <string name="termsCondition">Pastikan untuk membuat postingan yang sopan dan santun dan mengikuti aturan komunitas kami</string>
-    <string name="communityRule">Aturan Komunitas E-Parenting</string>
+    <string name="communityRule">Aturan Komunitas</string>
     <string name="commentRules">Harap berkomentar dengan sopan, tidak mengandung unsur sara, dan menghormati sesama pengguna mengikuti aturan komunitas kami.</string>
-    <string name="privacyPolicy">Kebijakan Privasi E-Parenting</string>
+    <string name="privacyPolicy">Kebijakan Privasi</string>
     <string name="consultationRule">Pastikan untuk melakukan konsultasi yang sopan dan santun sesuai dengan aturan komunitas kami</string>
+    <string name="privacyPolicyText">Kebijakan Privasi</string>
+    <string name="termsOfServiceText">Ketentuan Layanan</string>
+    <string name="postforum">Unggah Forum</string>
 </resources>
