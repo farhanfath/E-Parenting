@@ -54,4 +54,6 @@
     <string name="privacyPolicyText">Kebijakan Privasi</string>
     <string name="termsOfServiceText">Ketentuan Layanan</string>
     <string name="postforum">Unggah Forum</string>
+    <string name="placeholder_desc_doctor">Pakar belum mengatur deskripsi tentang dirinya</string>
+    <string name="placeholder_schedule_doctor">Pakar belum mengatur jadwal aktif</string>
 </resources>
