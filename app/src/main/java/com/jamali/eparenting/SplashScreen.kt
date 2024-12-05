@@ -5,6 +5,7 @@ import android.content.Intent
 import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
+import com.jamali.eparenting.ui.WelcomeActivity
 import com.jamali.eparenting.ui.admin.AdminMainActivity
 import com.jamali.eparenting.ui.auth.LoginActivity
 import com.jamali.eparenting.ui.customer.CustomerMainActivity
@@ -36,18 +37,18 @@ class SplashScreen : AppCompatActivity() {
                         "admin" -> Intent(this@SplashScreen, AdminMainActivity::class.java)
                         "customer" -> Intent(this@SplashScreen, CustomerMainActivity::class.java)
                         "doctor" -> Intent(this@SplashScreen, DoctorMainActivity::class.java)
-                        else -> Intent(this@SplashScreen, LoginActivity::class.java)
+                        else -> Intent(this@SplashScreen, WelcomeActivity::class.java)
                     }
 
                     startActivity(intent)
                     finish()
                 }.addOnFailureListener {
                     // If role retrieval fails, default to login
-                    startActivity(Intent(this@SplashScreen, LoginActivity::class.java))
+                    startActivity(Intent(this@SplashScreen, WelcomeActivity::class.java))
                     finish()
                 }
             } else {
-                startActivity(Intent(this@SplashScreen, LoginActivity::class.java))
+                startActivity(Intent(this@SplashScreen, WelcomeActivity::class.java))
                 finish()
             }
         }

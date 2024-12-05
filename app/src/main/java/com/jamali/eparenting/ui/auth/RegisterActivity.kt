@@ -23,6 +23,10 @@ class RegisterActivity : AppCompatActivity() {
         binding.toLoginText.setOnClickListener {
             finish()
         }
+
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
     }
 
     private fun registerController() {

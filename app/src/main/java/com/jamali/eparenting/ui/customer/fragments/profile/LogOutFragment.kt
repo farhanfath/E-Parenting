@@ -8,6 +8,7 @@ import android.view.ViewGroup
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 import com.jamali.eparenting.utils.Utility
 import com.jamali.eparenting.databinding.LayoutLogoutDialogBinding
+import com.jamali.eparenting.ui.WelcomeActivity
 import com.jamali.eparenting.ui.auth.LoginActivity
 
 class LogOutFragment : BottomSheetDialogFragment() {
@@ -30,7 +31,7 @@ class LogOutFragment : BottomSheetDialogFragment() {
 
         binding.logoutBtn.setOnClickListener {
             Utility.auth.signOut()
-            startActivity(Intent(requireContext(), LoginActivity::class.java))
+            startActivity(Intent(requireContext(), WelcomeActivity::class.java))
             requireActivity().finish()
         }
 

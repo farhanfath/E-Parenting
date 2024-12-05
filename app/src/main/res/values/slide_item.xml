@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <!-- Array for animation resources -->
+    <integer-array name="slide_animations">
+        <item>@raw/anim_parenting</item>
+        <item>@raw/anim_community</item>
+        <item>@raw/anim_consultation</item>
+    </integer-array>
+
+    <!-- Array for titles -->
+    <string-array name="slide_titles">
+        <item>Selamat Datang di Jamali Parenting, Panduan Parenting Modern Anda!</item>
+        <item>Jelajahi Komunitas Parenting untuk Berbagi dan Belajar Bersama!</item>
+        <item>Konsultasikan Tantangan Parenting Anda dengan Ahli Terpercaya!</item>
+    </string-array>
+
+    <!-- Array for descriptions -->
+    <string-array name="slide_descriptions">
+        <item>Ketahui cara memahami dan mengenali anak Anda dengan lebih baik melalui bantuan  Jamali parenting.</item>
+        <item>Bergabunglah dengan komunitas orang tua lainnya untuk berbagi pengalaman dan mendapatkan wawasan baru.</item>
+        <item>Dapatkan solusi dan saran dari para ahli parenting untuk membantu Anda menghadapi berbagai tantangan.</item>
+    </string-array>
+</resources>

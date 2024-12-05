@@ -95,4 +95,10 @@ dependencies {
 
     // image viewer
     implementation ("com.github.chrisbanes:PhotoView:2.3.0")
+
+    // lottiefiles
+    implementation ("com.airbnb.android:lottie:6.6.1")
+
+    //circle indicator
+    implementation ("me.relex:circleindicator:2.1.6")
 }

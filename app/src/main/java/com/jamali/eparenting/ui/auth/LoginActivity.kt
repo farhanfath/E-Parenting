@@ -41,6 +41,10 @@ class LoginActivity : AppCompatActivity() {
             startActivity(Intent(this, ForgetPasswordActivity::class.java))
         }
 
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
+
         setupTextWatchers()
     }
 
