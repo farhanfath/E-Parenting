@@ -23,6 +23,10 @@ class ForgetPasswordActivity : AppCompatActivity() {
                 sendPasswordResetEmail(email)
             }
         }
+
+        binding.backBtn.setOnClickListener {
+            finish()
+        }
     }
 
     private fun sendPasswordResetEmail(email: String) {
