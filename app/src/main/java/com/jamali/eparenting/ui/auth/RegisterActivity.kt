@@ -96,7 +96,8 @@ class RegisterActivity : AppCompatActivity() {
                 if (task.isSuccessful) {
                     val userId = Utility.auth.currentUser?.uid
                     val user = userId?.let { uid ->
-                        User(uid, email, username)
+                        val role = "customer"
+                        User(uid, email, username, role = role)
                     }
 
                     userId?.let {
