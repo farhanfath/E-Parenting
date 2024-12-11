@@ -1,0 +1,98 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:orientation="vertical"
+    android:padding="16dp"
+    android:background="#FFFFFF">
+
+    <com.airbnb.lottie.LottieAnimationView
+        android:id="@+id/imageVerification"
+        android:layout_width="200dp"
+        android:layout_height="200dp"
+        android:layout_gravity="center_horizontal"
+        android:layout_marginTop="32dp"
+        app:lottie_rawRes="@raw/anim_otp"
+        app:lottie_autoPlay="true"
+        app:lottie_loop="true"/>
+
+    <TextView
+        android:id="@+id/textVerificationTitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        android:text="Verifikasi Kode OTP"
+        android:textAlignment="center"
+        android:textSize="24sp"
+        android:textStyle="bold"
+        android:textColor="#333333"/>
+
+    <TextView
+        android:id="@+id/textVerificationSubtitle"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="8dp"
+        android:text="Masukkan kode 6 digit yang dikirim ke nomor telepon Anda"
+        android:textAlignment="center"
+        android:textSize="16sp"
+        android:textColor="#666666"/>
+
+    <com.goodiebag.pinview.Pinview
+        android:id="@+id/otpPinView"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="24dp"
+        app:pinWidth="38dp"
+        app:inputType="number"
+        app:pinLength="6"
+        app:pinHeight="48dp"
+        app:pinBackground="@drawable/otp_pin_background"/>
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingVertical="12dp">
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/buttonVerifyOTP"
+            android:layout_width="match_parent"
+            android:layout_height="64dp"
+            app:cornerRadius="16dp"
+            android:backgroundTint="@color/green_500"
+            android:text="@string/verifikasi_text"
+            android:textColor="#FFFFFF"
+            android:fontFamily="@font/dm_sans"
+            android:textSize="18sp"
+            app:layout_constraintEnd_toEndOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent" />
+
+        <ProgressBar
+            android:id="@+id/progressBarOTP"
+            android:layout_width="24dp"
+            android:layout_height="24dp"
+            android:layout_gravity="center"
+            android:elevation="4dp"
+            android:visibility="gone"
+            android:indeterminateTint="@android:color/white"
+            app:layout_constraintBottom_toBottomOf="@+id/buttonVerifyOTP"
+            app:layout_constraintEnd_toEndOf="@+id/buttonVerifyOTP"
+            app:layout_constraintStart_toStartOf="@+id/buttonVerifyOTP"
+            app:layout_constraintTop_toTopOf="@+id/buttonVerifyOTP" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+    <TextView
+        android:id="@+id/textResendOTP"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_marginTop="16dp"
+        android:text="Kirim Ulang Kode"
+        android:textAlignment="center"
+        android:textColor="@color/green_400"
+        android:textSize="16sp"
+        android:clickable="true"
+        android:focusable="true"/>
+
+</LinearLayout>

@@ -51,6 +51,7 @@
         app:cardCornerRadius="10dp"
         app:cardBackgroundColor="@color/green_400"
         app:strokeWidth="1dp"
+        app:strokeColor="@color/white"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintStart_toStartOf="parent">
@@ -59,46 +60,47 @@
             android:id="@+id/loginDesc"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
+            android:padding="4dp"
             app:layout_constraintBottom_toBottomOf="parent"
             app:layout_constraintEnd_toEndOf="parent"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent">
 
-            <androidx.cardview.widget.CardView
-                android:id="@+id/registerCvBtn"
-                android:layout_width="0dp"
-                android:layout_height="40dp"
-                app:cardCornerRadius="10dp"
-                android:elevation="10dp"
-                app:layout_constraintBottom_toBottomOf="parent"
-                app:layout_constraintEnd_toStartOf="@+id/toLoginText"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent">
-
-                <TextView
-                    android:layout_width="match_parent"
-                    android:layout_height="wrap_content"
-                    android:layout_gravity="center"
-                    android:fontFamily="@font/poppins_semibold"
-                    android:text="@string/register"
-                    android:textAlignment="center"
-                    android:textColor="@color/darkGreen" />
-            </androidx.cardview.widget.CardView>
-
-            <TextView
-                android:id="@+id/toLoginText"
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_login_email"
                 android:layout_width="0dp"
                 android:layout_height="40dp"
                 android:fontFamily="@font/poppins_semibold"
-                android:gravity="center"
-                android:text="@string/login"
-                android:textAlignment="center"
-                android:textColor="@color/darkGreen"
-                android:textSize="16sp"
+                android:text="@string/login_email_text"
+                app:icon="@drawable/ic_email"
+                app:iconGravity="textStart"
+                android:layout_margin="4dp"
+                android:backgroundTint="@color/white"
+                app:cornerRadius="10dp"
+                app:iconTint="@color/green_400"
+                android:textColor="@color/green_400"
+                app:layout_constraintBottom_toBottomOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/btn_login_phone"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent"/>
+
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btn_login_phone"
+                android:layout_width="0dp"
+                android:layout_height="40dp"
+                android:fontFamily="@font/poppins_semibold"
+                android:text="@string/login_phone_text"
+                app:icon="@drawable/ic_phone"
+                app:iconGravity="textStart"
+                android:layout_margin="4dp"
+                android:backgroundTint="@color/green_400"
+                app:cornerRadius="10dp"
+                app:iconTint="@color/white"
+                android:textColor="@color/white"
                 app:layout_constraintBottom_toBottomOf="parent"
                 app:layout_constraintEnd_toEndOf="parent"
-                app:layout_constraintStart_toEndOf="@+id/registerCvBtn"
-                app:layout_constraintTop_toTopOf="parent" />
+                app:layout_constraintStart_toEndOf="@+id/btn_login_email"
+                app:layout_constraintTop_toTopOf="parent"/>
 
         </androidx.constraintlayout.widget.ConstraintLayout>
 

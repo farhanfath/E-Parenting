@@ -101,4 +101,7 @@ dependencies {
 
     //circle indicator
     implementation ("me.relex:circleindicator:2.1.6")
+
+    // pinview
+    implementation ("com.github.GoodieBag:Pinview:v1.5")
 }

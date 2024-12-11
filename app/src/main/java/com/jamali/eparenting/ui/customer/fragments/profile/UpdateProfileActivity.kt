@@ -2,6 +2,8 @@ package com.jamali.eparenting.ui.customer.fragments.profile
 
 import android.net.Uri
 import android.os.Bundle
+import android.view.View
+import android.widget.ArrayAdapter
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
@@ -9,13 +11,12 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.R
-import com.jamali.eparenting.utils.Utility.auth
-import com.jamali.eparenting.utils.Utility.database
-import com.jamali.eparenting.utils.Utility.showLoading
-import com.jamali.eparenting.utils.Utility.showToast
-import com.jamali.eparenting.utils.Utility.storage
 import com.jamali.eparenting.data.User
 import com.jamali.eparenting.databinding.ActivityUpdateProfileBinding
+import com.jamali.eparenting.utils.Utility.auth
+import com.jamali.eparenting.utils.Utility.database
+import com.jamali.eparenting.utils.Utility.showToast
+import com.jamali.eparenting.utils.Utility.storage
 
 class UpdateProfileActivity : AppCompatActivity() {
 
@@ -23,6 +24,9 @@ class UpdateProfileActivity : AppCompatActivity() {
     private var selectedImageUri: Uri? = null
     private var currentUser: User? = null
     private var oldImageUrl: String? = null
+    private var userGender: String = ""
+
+    private var genderOptions = arrayOf("Laki-laki", "Perempuan")
 
     private val getContent = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
         uri?.let {
@@ -49,24 +53,25 @@ class UpdateProfileActivity : AppCompatActivity() {
         binding.backBtn.setOnClickListener {
             finish()
         }
+        spinnerSetup()
     }
 
     private fun loadUserData() {
         val userId = auth.currentUser?.uid
         if (userId != null) {
-            showLoading(binding.progressFrame,true)
+            setLoadingState(true)
             database.getReference("users")
                 .child(userId)
                 .addListenerForSingleValueEvent(object : ValueEventListener {
                     override fun onDataChange(snapshot: DataSnapshot) {
-                        showLoading(binding.progressFrame, false)
+                        setLoadingState(false)
                         currentUser = snapshot.getValue(User::class.java)
                         currentUser?.let { user ->
                             binding.apply {
                                 edtName.setText(user.username)
-                                edtEmail.setText(user.email)
                                 oldImageUrl = user.profile
-                                edtPhone.setText(user.phoneNumber)
+                                setupEmailAndPhoneNumber(user)
+                                setupGender(user.gender)
 
                                 // Load profile picture
                                 if (user.profile.isNotEmpty()) {
@@ -81,17 +86,28 @@ class UpdateProfileActivity : AppCompatActivity() {
                     }
 
                     override fun onCancelled(error: DatabaseError) {
-                        showLoading(binding.progressFrame,false)
-                        showToast(this@UpdateProfileActivity, "Failed to load user data")
+                        setLoadingState(false)
+                        showToast(this@UpdateProfileActivity, "Gagal mendapatkan data pengguna")
                     }
                 })
+        }
+    }
+
+    private fun setupEmailAndPhoneNumber(user: User) {
+        when {
+            user.phoneNumber.isNotEmpty() -> {
+                binding.edtPhone.setText(user.phoneNumber)
+            }
+            user.email.isNotEmpty() -> {
+                binding.edtEmail.setText(user.email)
+            }
         }
     }
 
     private fun updateProfile() {
         if (!validateInput()) return
 
-        showLoading(binding.progressFrame, true)
+        setLoadingState(true)
         val userId = auth.currentUser?.uid ?: return
 
         if (selectedImageUri != null) {
@@ -118,8 +134,8 @@ class UpdateProfileActivity : AppCompatActivity() {
                     saveUserData(userId, uri.toString())
                 }
                 .addOnFailureListener {
-                    showLoading(binding.progressFrame,false)
-                    showToast(this@UpdateProfileActivity, "Failed to upload image")
+                    setLoadingState(false)
+                    showToast(this@UpdateProfileActivity, "Gagal Mengunggah Gambar")
                 }
         } else {
             // Update without changing image
@@ -131,38 +147,76 @@ class UpdateProfileActivity : AppCompatActivity() {
         val updatedUser = User(
             uid = userId,
             username = binding.edtName.text.toString(),
-            email = binding.edtEmail.text.toString(),
             profile = imageUrl,
-            phoneNumber = binding.edtPhone.text.toString(),
-            role = currentUser?.role ?: "customer"
+            email = currentUser?.email.toString(),
+            phoneNumber = currentUser?.phoneNumber.toString(),
+            role = currentUser?.role ?: "customer",
+            gender = userGender
         )
 
         database.getReference("users")
             .child(userId)
             .setValue(updatedUser)
             .addOnSuccessListener {
-                showLoading(binding.progressFrame,false)
-                showToast(this, "Profile updated successfully")
+                setLoadingState(false)
+                showToast(this, "Berhasil Mengubah Profil")
                 finish()
             }
             .addOnFailureListener {
-                showLoading(binding.progressFrame,false)
-                showToast(this, "Failed to update profile")
+                setLoadingState(false)
+                showToast(this, "Gagal Mengubah Profil")
             }
+    }
+
+    private fun setupGender(gender: String) {
+        if (gender.isNotEmpty()) {
+            val position = genderOptions.indexOf(gender)
+            if (position >= 0) {
+                binding.genderType.setText(genderOptions[position], false)
+                userGender = genderOptions[position]
+            }
+        }
+    }
+
+    private fun spinnerSetup() {
+        val adapter = ArrayAdapter(this, R.layout.item_forum_type, genderOptions)
+        binding.genderType.setAdapter(adapter)
+        binding.genderType.setOnItemClickListener { _, _, position, _ ->
+            val selectedGender = genderOptions[position]
+            userGender = selectedGender
+        }
     }
 
     private fun validateInput(): Boolean {
         val name = binding.edtName.text.toString()
-        val email = binding.edtEmail.text.toString()
 
         if (name.isEmpty()) {
-            binding.edtName.error = "Name is required"
-            return false
-        }
-        if (email.isEmpty()) {
-            binding.edtEmail.error = "Email is required"
+            binding.edtName.error = "Harap isi bagian yang kosong"
             return false
         }
         return true
+    }
+
+    private fun setLoadingState(isLoading: Boolean) {
+        if (isLoading) {
+            // Sembunyikan teks dan ikon
+            binding.btnUpdateProfile.text = ""
+            binding.btnUpdateProfile.icon = null
+
+            // Tampilkan progress bar
+            binding.progressFrame.visibility = View.VISIBLE
+
+            // Nonaktifkan button
+            binding.btnUpdateProfile.isEnabled = false
+        } else {
+            // Kembalikan teks dan ikon
+            binding.btnUpdateProfile.text = getString(R.string.changeProfile)
+
+            // Sembunyikan progress bar
+            binding.progressFrame.visibility = View.GONE
+
+            // Aktifkan kembali button
+            binding.btnUpdateProfile.isEnabled = true
+        }
     }
 }

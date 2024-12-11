@@ -44,7 +44,7 @@
     <string name="changeProfile">Ubah Profil</string>
     <string name="changePassword">Ubah Kata Sandi</string>
     <string name="forgetPassword">Lupa Kata Sandi</string>
-    <string name="forget_pass">Lupa Kata Sandi?</string>
+    <string name="forget_pass"><u>Lupa Kata Sandi?</u></string>
     <string name="message_deleted">Pesan Telah Dihapus</string>
     <string name="termsCondition">Pastikan untuk membuat postingan yang sopan dan santun dan mengikuti aturan komunitas kami</string>
     <string name="communityRule">Aturan Komunitas</string>
@@ -56,4 +56,21 @@
     <string name="postforum">Unggah Forum</string>
     <string name="placeholder_desc_doctor">Pakar belum mengatur deskripsi tentang dirinya</string>
     <string name="placeholder_schedule_doctor">Pakar belum mengatur jadwal aktif</string>
+    <string name="sendVerifText">Kami akan mengirimkan kode verifikasi ke ponsel Anda</string>
+    <string name="login_phone_text">No.Telp</string>
+
+    <string name="user_login">Masuk sebagai Pengguna</string>
+    <string name="expert_login">Masuk sebagai Pakar</string>
+    <string name="send_verif_text">Kirim Kode Verifikasi</string>
+    <string name="verifikasi_text">Verifikasi</string>
+    <string name="nomor_telepon_text">Nomor Telepon</string>
+
+    <string name="phone_number_prefix">+62%1$s</string>
+    <string name="resend_otp_countdown">Kirim Ulang Kode (%1$ds)</string>
+    <string name="resendCodeText">Kirim Ulang Kode</string>
+    <string name="default_number">+62</string>
+    <string name="login_email_text">Email</string>
+    <string name="login_phone_title">Masuk dengan Nomor Telepon</string>
+    <string name="have_account">Sudah Memiliki Akun?</string>
+    <string name="not_registered">Tidak terdaftar</string>
 </resources>

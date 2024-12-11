@@ -2,6 +2,7 @@ package com.jamali.eparenting.ui.auth
 
 import android.content.Intent
 import android.os.Bundle
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
@@ -58,7 +59,7 @@ class RegisterActivity : AppCompatActivity() {
                 return
             }
             else -> {
-                Utility.showLoading(binding.loadingBar, true)
+                setLoadingState(true)
 
                 // Cek apakah username sudah terdaftar
                 Utility.database.reference.child("users").get()
@@ -75,7 +76,7 @@ class RegisterActivity : AppCompatActivity() {
                         }
 
                         if (isUsernameTaken) {
-                            Utility.showLoading(binding.loadingBar, false)
+                            setLoadingState(false)
                             binding.usernameEtLayout.error = "Username sudah digunakan"
                         } else {
                             // Username unik, lanjutkan proses registrasi
@@ -83,7 +84,7 @@ class RegisterActivity : AppCompatActivity() {
                         }
                     }
                     .addOnFailureListener {
-                        Utility.showLoading(binding.loadingBar, false)
+                        setLoadingState(false)
                         Toast.makeText(this, "Gagal memvalidasi username", Toast.LENGTH_SHORT).show()
                     }
             }
@@ -105,7 +106,7 @@ class RegisterActivity : AppCompatActivity() {
                         Utility.database.reference.child("users").child(it)
                             .setValue(user)
                             .addOnCompleteListener { userTask ->
-                                Utility.showLoading(binding.loadingBar, false)
+                                setLoadingState(false)
                                 if (userTask.isSuccessful) {
                                     Toast.makeText(this, "Registrasi berhasil", Toast.LENGTH_SHORT).show()
                                     startActivity(Intent(this, LoginActivity::class.java))
@@ -116,7 +117,7 @@ class RegisterActivity : AppCompatActivity() {
                             }
                     }
                 } else {
-                    Utility.showLoading(binding.loadingBar, false)
+                    setLoadingState(false)
                     // Tangani error Firebase Authentication
                     when (task.exception) {
                         is FirebaseAuthUserCollisionException -> {
@@ -128,5 +129,28 @@ class RegisterActivity : AppCompatActivity() {
                     }
                 }
             }
+    }
+
+    private fun setLoadingState(isLoading: Boolean) {
+        if (isLoading) {
+            // Sembunyikan teks dan ikon
+            binding.registerBtn.text = ""
+            binding.registerBtn.icon = null
+
+            // Tampilkan progress bar
+            binding.loadingBar.visibility = View.VISIBLE
+
+            // Nonaktifkan button
+            binding.registerBtn.isEnabled = false
+        } else {
+            // Kembalikan teks dan ikon
+            binding.registerBtn.text = getString(R.string.register)
+
+            // Sembunyikan progress bar
+            binding.loadingBar.visibility = View.GONE
+
+            // Aktifkan kembali button
+            binding.registerBtn.isEnabled = true
+        }
     }
 }

@@ -15,7 +15,7 @@
         app:layout_constraintTop_toTopOf="parent"
         tools:srcCompat="@tools:sample/avatars"
         app:lottie_autoPlay="true"
-        app:lottie_loop="true"/>
+        app:lottie_loop="false"/>
 
     <TextView
         android:id="@+id/titleText"
@@ -27,6 +27,7 @@
         android:gravity="center"
         android:textAlignment="center"
         android:textSize="18sp"
+        android:textColor="#F0F4F8"
         app:layout_constraintEnd_toEndOf="@+id/welcomeImage"
         app:layout_constraintStart_toStartOf="@+id/welcomeImage"
         app:layout_constraintTop_toBottomOf="@+id/welcomeImage"
@@ -41,6 +42,7 @@
         android:textAlignment="center"
         android:textSize="16sp"
         android:fontFamily="@font/dm_sans"
+        android:textColor="#F0F4F8"
         android:gravity="center"
         tools:text="Unlock Your Skin’s Potential and Discover Your Glow"
         app:layout_constraintEnd_toEndOf="@+id/titleText"

@@ -5,6 +5,7 @@
         <item>@raw/anim_parenting</item>
         <item>@raw/anim_community</item>
         <item>@raw/anim_consultation</item>
+        <item>@raw/anim_komunitas</item>
     </integer-array>
 
     <!-- Array for titles -->
@@ -12,12 +13,13 @@
         <item>Selamat Datang di Jamali Parenting, Panduan Parenting Modern Anda!</item>
         <item>Jelajahi Komunitas Parenting untuk Berbagi dan Belajar Bersama!</item>
         <item>Konsultasikan Tantangan Parenting Anda dengan Ahli Terpercaya!</item>
+        <item>Bersama Kita Bangun Generasi yang Lebih Baik!</item>
     </string-array>
 
-    <!-- Array for descriptions -->
     <string-array name="slide_descriptions">
-        <item>Ketahui cara memahami dan mengenali anak Anda dengan lebih baik melalui bantuan  Jamali parenting.</item>
+        <item>Ketahui cara memahami dan mengenali anak Anda dengan lebih baik melalui bantuan Jamali Parenting.</item>
         <item>Bergabunglah dengan komunitas orang tua lainnya untuk berbagi pengalaman dan mendapatkan wawasan baru.</item>
         <item>Dapatkan solusi dan saran dari para ahli parenting untuk membantu Anda menghadapi berbagai tantangan.</item>
+        <item>Bergabunglah sekarang dan jadilah bagian dari komunitas yang peduli terhadap perkembangan anak-anak kita!</item>
     </string-array>
 </resources>

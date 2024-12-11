@@ -5,7 +5,7 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="#F5F5F5"
+    android:background="#F0F4F8"
     tools:context=".ui.auth.LoginActivity">
 
     <ImageButton
@@ -98,15 +98,37 @@
                 android:textColor="#666666"
                 android:textSize="14sp" />
 
-            <com.google.android.material.button.MaterialButton
-                android:id="@+id/loginBtn"
+            <androidx.constraintlayout.widget.ConstraintLayout
                 android:layout_width="match_parent"
-                android:layout_height="56dp"
-                android:layout_marginTop="24dp"
-                android:backgroundTint="@color/green_500"
-                android:text="@string/login"
-                android:textSize="16sp"
-                app:cornerRadius="12dp" />
+                android:layout_height="wrap_content">
+
+                <com.google.android.material.button.MaterialButton
+                    android:id="@+id/loginBtn"
+                    android:layout_width="match_parent"
+                    android:layout_height="56dp"
+                    android:layout_marginTop="24dp"
+                    android:backgroundTint="@color/green_500"
+                    android:text="@string/login"
+                    android:textSize="16sp"
+                    app:cornerRadius="12dp"
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintStart_toStartOf="parent"
+                    app:layout_constraintTop_toTopOf="parent" />
+
+                <ProgressBar
+                    android:id="@+id/loadingBar"
+                    android:layout_width="24dp"
+                    android:layout_height="24dp"
+                    android:layout_gravity="center"
+                    android:elevation="20dp"
+                    android:visibility="gone"
+                    android:indeterminateTint="@android:color/white"
+                    app:layout_constraintBottom_toBottomOf="@+id/loginBtn"
+                    app:layout_constraintEnd_toEndOf="@+id/loginBtn"
+                    app:layout_constraintStart_toStartOf="@+id/loginBtn"
+                    app:layout_constraintTop_toTopOf="@+id/loginBtn" />
+
+            </androidx.constraintlayout.widget.ConstraintLayout>
 
             <LinearLayout
                 android:id="@+id/loginDesc"
@@ -136,17 +158,5 @@
             </LinearLayout>
         </LinearLayout>
     </androidx.cardview.widget.CardView>
-
-    <ProgressBar
-        android:id="@+id/loadingBar"
-        android:layout_width="wrap_content"
-        android:layout_height="wrap_content"
-        android:layout_gravity="center"
-        android:elevation="10dp"
-        android:visibility="gone"
-        app:layout_constraintBottom_toBottomOf="parent"
-        app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

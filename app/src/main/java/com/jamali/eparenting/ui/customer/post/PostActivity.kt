@@ -55,7 +55,7 @@ class PostActivity : AppCompatActivity() {
             }
         } else if (result.resultCode == UCrop.RESULT_ERROR) {
             val cropError = UCrop.getError(result.data!!)
-            Toast.makeText(this, "Error cropping image: ${cropError?.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "gagal mengedit gambar: ${cropError?.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -137,7 +137,7 @@ class PostActivity : AppCompatActivity() {
             cropLauncher.launch(uCrop.getIntent(this))
         } catch (e: Exception) {
             e.printStackTrace()
-            Toast.makeText(this, "Error starting crop: ${e.message}", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "gagal mengedit gambar: ${e.message}", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -146,7 +146,7 @@ class PostActivity : AppCompatActivity() {
             if (isGranted) {
                 openCamera()
             } else {
-                Toast.makeText(this, "Camera permission is required to take pictures.", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "Izin kamera diperlukan untuk mengambil gambar", Toast.LENGTH_SHORT).show()
             }
         }
 
@@ -211,7 +211,7 @@ class PostActivity : AppCompatActivity() {
     private fun uploadPost() {
         val description = binding.edtAddDescStory.text.toString()
         if (description.isEmpty()) {
-            binding.edtAddDescStory.error = "Description is required"
+            binding.edtAddDescStory.error = "Harap isi postingan anda"
             return
         }
 
@@ -220,7 +220,7 @@ class PostActivity : AppCompatActivity() {
         val currentUid = Utility.auth.currentUser?.uid
         if (currentUid == null) {
             Utility.showLoading(binding.progressFrame, false)
-            Toast.makeText(this, "User not authenticated", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "Pengguna belum masuk", Toast.LENGTH_SHORT).show()
             return
         }
 
@@ -248,13 +248,13 @@ class PostActivity : AppCompatActivity() {
                         }
                     } else {
                         Utility.showLoading(binding.progressFrame, false)
-                        Toast.makeText(baseContext, "Failed to get user data", Toast.LENGTH_SHORT).show()
+                        Toast.makeText(baseContext, "gagal mengunggah postingan", Toast.LENGTH_SHORT).show()
                     }
                 }
 
                 override fun onCancelled(error: DatabaseError) {
                     Utility.showLoading(binding.progressFrame, false)
-                    Toast.makeText(baseContext, "Failed to get user data: ${error.message}", Toast.LENGTH_SHORT).show()
+                    Toast.makeText(baseContext, "gagal mengunggah postingan: ${error.message}", Toast.LENGTH_SHORT).show()
                     Log.e("UserDataError", "Failed to fetch user data", error.toException())
                 }
             })
@@ -277,7 +277,7 @@ class PostActivity : AppCompatActivity() {
             }
         }.addOnFailureListener {
             Utility.showLoading(binding.progressFrame,false)
-            Toast.makeText(this, "Failed to upload image", Toast.LENGTH_SHORT).show()
+            Toast.makeText(this, "gagal mengunggah postingan", Toast.LENGTH_SHORT).show()
         }
     }
 
@@ -285,13 +285,13 @@ class PostActivity : AppCompatActivity() {
         val databaseReference = Utility.database.getReference("communityposts")
         databaseReference.child(community.id).setValue(community).addOnCompleteListener { task ->
             if (task.isSuccessful) {
-                Toast.makeText(this, "Post added successfully", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "berhasil mengunggah postingan", Toast.LENGTH_SHORT).show()
                 Utility.showLoading(binding.progressFrame,false)
                 setResult(Activity.RESULT_OK)
                 finish()
                 resetInputData()
             } else {
-                Toast.makeText(this, "Failed to add Post", Toast.LENGTH_SHORT).show()
+                Toast.makeText(this, "gagal mengunggah postingan", Toast.LENGTH_SHORT).show()
                 Utility.showLoading(binding.progressFrame,false)
             }
         }

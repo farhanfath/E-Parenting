@@ -4,6 +4,7 @@ import android.content.Intent
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
+import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
@@ -128,7 +129,7 @@ class LoginActivity : AppCompatActivity() {
     }
 
     private fun attemptLogin(email: String, password: String) {
-        Utility.showLoading(binding.loadingBar, true)
+        setLoadingState(true)
 
         Utility.auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
@@ -142,7 +143,7 @@ class LoginActivity : AppCompatActivity() {
                             .child(user.uid)
 
                         userRef.child("role").get().addOnSuccessListener { snapshot ->
-                            Utility.showLoading(binding.loadingBar, false)
+                            setLoadingState(false)
 
                             // Reset login attempts if successful
                             loginAttempts = 0
@@ -166,12 +167,12 @@ class LoginActivity : AppCompatActivity() {
                                 }
                             }
                         }.addOnFailureListener {
-                            Utility.showLoading(binding.loadingBar, false)
+                            setLoadingState(false)
                             showError("Failed to retrieve user role")
                         }
                     }
                 } else {
-                    Utility.showLoading(binding.loadingBar, false)
+                    setLoadingState(false)
                     handleLoginError(task.exception)
                 }
             }
@@ -213,5 +214,28 @@ class LoginActivity : AppCompatActivity() {
 
     private fun showError(message: String) {
         Toast.makeText(this, message, Toast.LENGTH_LONG).show()
+    }
+
+    private fun setLoadingState(isLoading: Boolean) {
+        if (isLoading) {
+            // Sembunyikan teks dan ikon
+            binding.loginBtn.text = ""
+            binding.loginBtn.icon = null
+
+            // Tampilkan progress bar
+            binding.loadingBar.visibility = View.VISIBLE
+
+            // Nonaktifkan button
+            binding.loginBtn.isEnabled = false
+        } else {
+            // Kembalikan teks dan ikon
+            binding.loginBtn.text = getString(R.string.login)
+
+            // Sembunyikan progress bar
+            binding.loadingBar.visibility = View.GONE
+
+            // Aktifkan kembali button
+            binding.loginBtn.isEnabled = true
+        }
     }
 }

@@ -1,8 +1,6 @@
 package com.jamali.eparenting.utils
 
 import android.content.Context
-import android.net.ConnectivityManager
-import android.net.NetworkCapabilities
 import android.view.View
 import android.widget.Toast
 import com.google.android.material.snackbar.Snackbar
@@ -29,4 +27,13 @@ object Utility {
         toast = Toast.makeText(context, message, duration)
         toast?.show()
     }
+
+    fun generateRandomUsername(): String {
+        val chars = "1234567890"
+        val randomString = (1..6) // Panjang string acak
+            .map { chars.random() }
+            .joinToString("")
+        return "user$randomString"
+    }
 }
+

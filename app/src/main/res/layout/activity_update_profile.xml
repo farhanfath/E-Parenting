@@ -76,7 +76,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="24dp"
-            android:hint="Name">
+            android:hint="Nama">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtName"
@@ -86,54 +86,102 @@
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/spinnerGender"
+            style="@style/Widget.Material3.TextInputLayout.OutlinedBox.ExposedDropdownMenu"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:backgroundTint="@color/white"
+            android:layout_marginTop="16dp">
+
+            <AutoCompleteTextView
+                android:id="@+id/genderType"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/white"
+                android:hint="Jenis Kelamin"
+                android:inputType="none"
+                android:padding="16dp"
+                android:textSize="16sp" />
+        </com.google.android.material.textfield.TextInputLayout>
+
+        <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/emailBorder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
+            app:startIconDrawable="@drawable/ic_email"
+            app:startIconTint="@color/green_500"
             android:hint="Email">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtEmail"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="textEmailAddress"
-                android:focusable="false"
-                tools:text="user@example.com"
                 android:clickable="false"
                 android:textColorHint="@android:color/darker_gray"
-                android:textColor="@android:color/darker_gray" />
+                android:textColor="@android:color/darker_gray"
+                android:focusable="false"
+                android:text="@string/not_registered"
+                android:focusableInTouchMode="false"
+                android:inputType="textEmailAddress" />
         </com.google.android.material.textfield.TextInputLayout>
 
         <com.google.android.material.textfield.TextInputLayout
+            android:id="@+id/phoneBorder"
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:layout_marginTop="16dp"
-            android:hint="Phone Number">
+            app:startIconDrawable="@drawable/ic_phone"
+            app:startIconTint="@color/green_500"
+            android:hint="Nomor Telepon">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edtPhone"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
+                android:textColorHint="@android:color/darker_gray"
+                android:textColor="@android:color/darker_gray"
+                android:clickable="false"
+                android:focusable="false"
+                android:text="@string/not_registered"
+                android:focusableInTouchMode="false"
                 android:inputType="phone" />
         </com.google.android.material.textfield.TextInputLayout>
 
-        <Button
-            android:id="@+id/btnUpdateProfile"
+        <androidx.constraintlayout.widget.ConstraintLayout
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
-            android:layout_marginTop="32dp"
-            android:text="Update Profile" />
+            android:layout_marginTop="32dp">
 
-        <FrameLayout
-            android:id="@+id/progressFrame"
-            android:layout_width="match_parent"
-            android:layout_height="match_parent"
-            android:visibility="gone">
+            <com.google.android.material.button.MaterialButton
+                android:id="@+id/btnUpdateProfile"
+                android:layout_width="match_parent"
+                android:layout_height="wrap_content"
+                android:backgroundTint="@color/green_500"
+                android:fontFamily="@font/dm_sans"
+                android:text="Ubah Profil"
+                android:textAllCaps="false"
+                android:textSize="16sp"
+                app:cornerRadius="16dp"
+                app:elevation="6dp"
+                app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                app:layout_constraintTop_toTopOf="parent" />
 
             <ProgressBar
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_gravity="center" />
-        </FrameLayout>
+                android:id="@+id/progressFrame"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_gravity="center"
+                android:elevation="20dp"
+                android:visibility="gone"
+                android:indeterminateTint="@android:color/white"
+                app:layout_constraintBottom_toBottomOf="@+id/btnUpdateProfile"
+                app:layout_constraintEnd_toEndOf="@+id/btnUpdateProfile"
+                app:layout_constraintStart_toStartOf="@+id/btnUpdateProfile"
+                app:layout_constraintTop_toTopOf="@+id/btnUpdateProfile" />
+
+        </androidx.constraintlayout.widget.ConstraintLayout>
 
     </LinearLayout>
 </ScrollView>
