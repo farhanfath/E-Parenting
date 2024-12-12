@@ -56,7 +56,8 @@ class CommentFragment(
 
         commentAdapter =
             CommentAdapter(
-                comments
+                comments,
+                communityId
             )
         binding.rvCommentPostForum.apply {
             layoutManager = LinearLayoutManager(context)

@@ -1,12 +1,15 @@
 package com.jamali.eparenting.ui.customer.adapters
 
+import android.annotation.SuppressLint
 import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import android.widget.PopupMenu
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -21,7 +24,7 @@ import com.jamali.eparenting.databinding.ItemForumPersonalBinding
 import com.jamali.eparenting.ui.customer.fragments.forum.comment.CommentFragment
 import com.jamali.eparenting.utils.TimeUtils
 import com.jamali.eparenting.utils.Utility
-
+@SuppressLint("SetTextI18n")
 class CommunityAdapter(
     private val communityList: List<CommunityPost>,
     private val supportFragmentManager: FragmentManager
@@ -53,7 +56,6 @@ class CommunityAdapter(
             tvAuthorName.text = community.username
             tvPostTitle.text = getPostTitle(community.type)
             tvLikes.text = community.likeCount.toString()
-            tvDislikes.text = community.dislikeCount.toString()
             tvComments.text = community.commentCount.toString()
 
             tvPostDate.text = TimeUtils.getTimeAgo(community.timestamp)
@@ -73,14 +75,8 @@ class CommunityAdapter(
             if (currentUserId != null) {
                 // Set initial like button state
                 ivLike.setImageResource(
-                    if (currentUserId in community.likedBy) R.drawable.ic_like_true
-                    else R.drawable.ic_like
-                )
-
-                // Set initial dislike button state
-                ivDislike.setImageResource(
-                    if (currentUserId in community.dislikedBy) R.drawable.ic_dislike_true
-                    else R.drawable.ic_dislike
+                    if (currentUserId in community.likedBy) R.drawable.ic_love_fill
+                    else R.drawable.ic_love_unfill
                 )
             }
         }
@@ -119,58 +115,112 @@ class CommunityAdapter(
                         if (userId in post.dislikedBy) {
                             post.dislikeCount--
                             post.dislikedBy.remove(userId)
-                            holder.binding.ivDislike.setImageResource(R.drawable.ic_dislike)
                         }
 
-                        holder.binding.ivLike.setImageResource(R.drawable.ic_like_true)
+                        holder.binding.ivLike.setImageResource(R.drawable.ic_love_fill)
                     } else {
                         // Remove like
                         post.likeCount--
                         post.likedBy.remove(userId)
-                        holder.binding.ivLike.setImageResource(R.drawable.ic_like)
+                        holder.binding.ivLike.setImageResource(R.drawable.ic_love_unfill)
                     }
 
                     // Update UI
                     holder.binding.tvLikes.text = post.likeCount.toString()
-                    holder.binding.tvDislikes.text = post.dislikeCount.toString()
 
                     updatePostInRealtime(post)
                 }
                 .start()
         }
 
-        holder.binding.ivDislike.setOnClickListener {
-            val userId = Utility.auth.currentUser?.uid ?: return@setOnClickListener
-            val post = communityList[holder.adapterPosition]
-
-            if (userId !in post.dislikedBy) {
-                // Add dislike
-                post.dislikeCount++
-                post.dislikedBy.add(userId)
-
-                // Remove like if exists
-                if (userId in post.likedBy) {
-                    post.likeCount--
-                    post.likedBy.remove(userId)
-                    holder.binding.ivLike.setImageResource(R.drawable.ic_like)
-                }
-
-                holder.binding.ivDislike.setImageResource(R.drawable.ic_dislike_true)
-            } else {
-                // Remove dislike
-                post.dislikeCount--
-                post.dislikedBy.remove(userId)
-                holder.binding.ivDislike.setImageResource(R.drawable.ic_dislike)
-            }
-
-            // Update UI
-            holder.binding.tvLikes.text = post.likeCount.toString()
-            holder.binding.tvDislikes.text = post.dislikeCount.toString()
-
-            updatePostInRealtime(post)
+        holder.binding.ivMoreOptions.setOnClickListener { view ->
+            showPostOptionsMenu(view, community, holder)
         }
     }
 
+    /**
+     * setup more option for report post
+     */
+    private fun showPostOptionsMenu(
+        view: View,
+        community: CommunityPost,
+        holder: CommunityViewHolder
+    ) {
+        val popupMenu = PopupMenu(view.context, view)
+        popupMenu.menuInflater.inflate(R.menu.option_more_menu, popupMenu.menu)
+        popupMenu.menu.findItem(R.id.action_report)?.title = "Laporkan Postingan"
+        popupMenu.setOnMenuItemClickListener { menuItem ->
+            when (menuItem.itemId) {
+                R.id.action_report -> {
+                    reportPost(community, holder)
+                    true
+                }
+                else -> false
+            }
+        }
+        popupMenu.show()
+    }
+
+    private fun reportPost(community: CommunityPost, holder: CommunityViewHolder) {
+        val currentUserId = Utility.auth.currentUser?.uid ?: return
+
+        // Buat dialog untuk memilih alasan report
+        val reportReasons = arrayOf(
+            "Konten tidak pantas",
+            "Spam",
+            "Kekerasan",
+            "Informasi palsu",
+            "Lainnya"
+        )
+
+        MaterialAlertDialogBuilder(holder.itemView.context)
+            .setTitle("Laporkan Postingan")
+            .setItems(reportReasons) { _, which ->
+                val selectedReason = reportReasons[which]
+                submitReport(community, currentUserId, selectedReason, holder)
+            }
+            .show()
+    }
+
+    private fun submitReport(
+        community: CommunityPost,
+        reporterId: String,
+        reason: String,
+        holder: CommunityViewHolder
+    ) {
+        val reportsRef = Utility.database.getReference("post_reports")
+
+        // Buat objek report
+        val reportData = hashMapOf(
+            "postId" to community.id,
+            "reporterId" to reporterId,
+            "authorId" to community.userId,
+            "reason" to reason,
+            "timestamp" to ServerValue.TIMESTAMP,
+            "postContent" to community.description,
+            "postType" to community.type.name
+        )
+
+        // Push report ke database
+        reportsRef.push().setValue(reportData)
+            .addOnSuccessListener {
+                Utility.showToast(
+                    holder.itemView.context,
+                    "Postingan telah dilaporkan. Terima kasih atas laporan Anda."
+                )
+            }
+            .addOnFailureListener { exception ->
+                Utility.showToast(
+                    holder.itemView.context,
+                    "Gagal melaporkan postingan: ${exception.localizedMessage}"
+                )
+                Log.e("CommunityAdapter", "Report submission failed", exception)
+            }
+    }
+
+    /**
+     * setup gambar profile dari firebase storage
+     */
     private fun setupUserProfileImg(userRef: DatabaseReference, community: CommunityPost, holder: CommunityViewHolder) {
         // Cek cache terlebih dahulu
         userCache[community.userId]?.let { user ->

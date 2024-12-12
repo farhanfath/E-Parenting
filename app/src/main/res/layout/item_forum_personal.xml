@@ -64,6 +64,15 @@
 
             </LinearLayout>
 
+            <ImageView
+                android:id="@+id/ivMoreOptions"
+                android:layout_width="24dp"
+                android:layout_height="24dp"
+                android:layout_alignParentEnd="true"
+                android:layout_centerVertical="true"
+                android:src="@drawable/ic_more_vert"
+                android:contentDescription="More Options" />
+
         </RelativeLayout>
 
         <FrameLayout
@@ -128,7 +137,7 @@
                     android:layout_width="18dp"
                     android:layout_height="18dp"
                     android:contentDescription="Likes"
-                    app:srcCompat="@drawable/ic_like" />
+                    app:srcCompat="@drawable/ic_love_unfill" />
 
                 <TextView
                     android:id="@+id/tvLikes"
@@ -138,23 +147,6 @@
                     android:textColor="@color/text_secondary"
                     android:textSize="14sp"
                     tools:text="12" />
-
-                <ImageView
-                    android:id="@+id/iv_dislike"
-                    android:layout_width="18dp"
-                    android:layout_height="18dp"
-                    android:layout_marginStart="12dp"
-                    android:contentDescription="Dislikes"
-                    app:srcCompat="@drawable/ic_dislike" />
-
-                <TextView
-                    android:id="@+id/tvDislikes"
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_marginStart="4dp"
-                    android:textColor="@color/text_secondary"
-                    android:textSize="14sp"
-                    tools:text="3" />
 
             </LinearLayout>
 
