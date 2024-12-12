@@ -151,15 +151,24 @@ class LoginActivity : AppCompatActivity() {
                             // Check user role and navigate accordingly
                             when (snapshot.value) {
                                 "admin" -> {
-                                    startActivity(Intent(this,AdminMainActivity::class.java))
+                                    val intent = Intent(this, AdminMainActivity::class.java).apply {
+                                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                    }
+                                    startActivity(intent)
                                     finish()
                                 }
                                 "customer" -> {
-                                    startActivity(Intent(this, CustomerMainActivity::class.java))
+                                    val intent = Intent(this, CustomerMainActivity::class.java).apply {
+                                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                    }
+                                    startActivity(intent)
                                     finish()
                                 }
                                 "doctor" -> {
-                                    startActivity(Intent(this, DoctorMainActivity::class.java))
+                                    val intent = Intent(this, DoctorMainActivity::class.java).apply {
+                                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                    }
+                                    startActivity(intent)
                                     finish()
                                 }
                                 else -> {
