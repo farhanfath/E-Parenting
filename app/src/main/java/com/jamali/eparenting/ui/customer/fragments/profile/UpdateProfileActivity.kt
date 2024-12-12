@@ -72,6 +72,7 @@ class UpdateProfileActivity : AppCompatActivity() {
                                 oldImageUrl = user.profile
                                 setupEmailAndPhoneNumber(user)
                                 setupGender(user.gender)
+                                edtBio.setText(user.description)
 
                                 // Load profile picture
                                 if (user.profile.isNotEmpty()) {
@@ -151,7 +152,8 @@ class UpdateProfileActivity : AppCompatActivity() {
             email = currentUser?.email.toString(),
             phoneNumber = currentUser?.phoneNumber.toString(),
             role = currentUser?.role ?: "customer",
-            gender = userGender
+            gender = userGender,
+            description = binding.edtBio.text.toString()
         )
 
         database.getReference("users")

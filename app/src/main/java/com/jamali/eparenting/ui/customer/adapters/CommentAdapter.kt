@@ -18,6 +18,7 @@ import com.jamali.eparenting.R
 import com.jamali.eparenting.data.Comment
 import com.jamali.eparenting.data.User
 import com.jamali.eparenting.databinding.ItemCommentDetailPostForumBinding
+import com.jamali.eparenting.ui.customer.user.UserProfileActivity
 import com.jamali.eparenting.utils.TimeUtils
 import com.jamali.eparenting.utils.Utility
 
@@ -91,6 +92,10 @@ class CommentAdapter(
              */
             ivMoreOptions.setOnClickListener { view ->
                 showCommentOptionsMenu(view, commentList, holder)
+            }
+
+            ivProfile.setOnClickListener {
+                UserProfileActivity.startActivity(it.context, commentList.userId)
             }
         }
     }

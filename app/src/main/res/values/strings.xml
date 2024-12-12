@@ -73,4 +73,5 @@
     <string name="login_phone_title">Masuk dengan Nomor Telepon</string>
     <string name="have_account">Sudah Memiliki Akun?</string>
     <string name="not_registered">Tidak terdaftar</string>
+    <string name="jumlah_posting">%1$s Postingan</string>
 </resources>

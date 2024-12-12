@@ -10,6 +10,7 @@ import com.bumptech.glide.Glide
 import com.jamali.eparenting.R
 import com.jamali.eparenting.utils.Utility
 import com.jamali.eparenting.databinding.FragmentProfileBinding
+import com.jamali.eparenting.ui.customer.user.UserProfileActivity
 import com.jamali.eparenting.ui.rules.CompleteRulesActivity
 
 class ProfileFragment : Fragment() {
@@ -36,6 +37,10 @@ class ProfileFragment : Fragment() {
             val logoutFragment =
                 LogOutFragment()
             logoutFragment.show(childFragmentManager, logoutFragment.tag)
+        }
+
+        binding.ivProfilePicture.setOnClickListener {
+            UserProfileActivity.startActivity(requireContext(), userId = Utility.auth.currentUser?.uid.toString())
         }
 
         binding.containerLayoutEditProfile.setOnClickListener{
