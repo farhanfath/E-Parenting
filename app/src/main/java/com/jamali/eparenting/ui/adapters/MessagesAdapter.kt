@@ -1,4 +1,4 @@
-package com.jamali.eparenting.ui.customer.adapters
+package com.jamali.eparenting.ui.adapters
 
 import android.app.Dialog
 import android.app.DownloadManager

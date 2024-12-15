@@ -9,7 +9,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.jamali.eparenting.data.ModulTemplateData
 import com.jamali.eparenting.databinding.FragmentHomeBinding
-import com.jamali.eparenting.ui.customer.adapters.ModulAdapter
+import com.jamali.eparenting.ui.adapters.ModulAdapter
 
 class HomeFragment : Fragment() {
 

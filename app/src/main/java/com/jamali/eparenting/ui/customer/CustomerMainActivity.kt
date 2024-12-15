@@ -23,7 +23,6 @@ class CustomerMainActivity : AppCompatActivity() {
 
         onBackPressedDispatcher.addCallback(this, object : OnBackPressedCallback(true) {
             override fun handleOnBackPressed() {
-                // TODO: Buat alert dialog sebelum keluar aplikasi
                 finish()
             }
         })
@@ -38,6 +37,8 @@ class CustomerMainActivity : AppCompatActivity() {
         val menu = binding.navView
         menu.setMenuOrientation(ChipNavigationBar.MenuOrientation.HORIZONTAL)
         menu.setMenuResource(R.menu.bottom_nav_menu)
+
+        menu.setItemSelected(R.id.navigation_home)
         menu.setOnItemSelectedListener {
             val navOptions = NavOptions.Builder()
                 .setEnterAnim(R.anim.fade_in)

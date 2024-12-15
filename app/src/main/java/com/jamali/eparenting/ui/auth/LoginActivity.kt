@@ -7,14 +7,16 @@ import android.text.TextWatcher
 import android.view.View
 import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
+import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.jamali.eparenting.R
-import com.jamali.eparenting.utils.Utility
+import com.jamali.eparenting.data.User
 import com.jamali.eparenting.databinding.ActivityLoginBinding
-import com.jamali.eparenting.ui.admin.AdminMainActivity
+import com.jamali.eparenting.ui.admin.AdminHomeActivity
 import com.jamali.eparenting.ui.customer.CustomerMainActivity
 import com.jamali.eparenting.ui.doctor.DoctorMainActivity
+import com.jamali.eparenting.utils.Utility
 
 class LoginActivity : AppCompatActivity() {
 
@@ -134,50 +136,48 @@ class LoginActivity : AppCompatActivity() {
         Utility.auth.signInWithEmailAndPassword(email, password)
             .addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-                    // Get current user's UID
                     val currentUser = Utility.auth.currentUser
                     currentUser?.let { user ->
-                        // Reference to users in Realtime Database
                         val userRef = Utility.database.reference
                             .child("users")
                             .child(user.uid)
 
-                        userRef.child("role").get().addOnSuccessListener { snapshot ->
+                        userRef.get().addOnSuccessListener { snapshot ->
                             setLoadingState(false)
 
-                            // Reset login attempts if successful
-                            loginAttempts = 0
+                            val userData = snapshot.getValue(User::class.java)
 
-                            // Check user role and navigate accordingly
-                            when (snapshot.value) {
-                                "admin" -> {
-                                    val intent = Intent(this, AdminMainActivity::class.java).apply {
-                                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                    }
-                                    startActivity(intent)
-                                    finish()
+                            // Tambahkan pengecekan status akun
+                            when (userData?.accountStatus) {
+                                "blocked" -> {
+                                    // Tampilkan dialog akun diblokir
+                                    showBlockedAccountDialog()
+                                    // Sign out user
+                                    Utility.auth.signOut()
                                 }
-                                "customer" -> {
-                                    val intent = Intent(this, CustomerMainActivity::class.java).apply {
-                                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+                                "active" -> {
+                                    loginAttempts = 0 // Reset login attempts
+
+                                    when (userData.role) {
+                                        "admin" -> navigateTo(AdminHomeActivity::class.java)
+                                        "customer" -> navigateTo(CustomerMainActivity::class.java)
+                                        "doctor" -> navigateTo(DoctorMainActivity::class.java)
+                                        else -> showError("Invalid user role")
                                     }
-                                    startActivity(intent)
-                                    finish()
-                                }
-                                "doctor" -> {
-                                    val intent = Intent(this, DoctorMainActivity::class.java).apply {
-                                        flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
-                                    }
-                                    startActivity(intent)
-                                    finish()
                                 }
                                 else -> {
-                                    showError("Invalid user role")
+                                    // Default ke active jika status tidak didefinisikan
+                                    when (userData?.role) {
+                                        "admin" -> navigateTo(AdminHomeActivity::class.java)
+                                        "customer" -> navigateTo(CustomerMainActivity::class.java)
+                                        "doctor" -> navigateTo(DoctorMainActivity::class.java)
+                                        else -> showError("Invalid user role")
+                                    }
                                 }
                             }
                         }.addOnFailureListener {
                             setLoadingState(false)
-                            showError("Failed to retrieve user role")
+                            showError("Failed to retrieve user data")
                         }
                     }
                 } else {
@@ -185,6 +185,25 @@ class LoginActivity : AppCompatActivity() {
                     handleLoginError(task.exception)
                 }
             }
+    }
+
+    private fun showBlockedAccountDialog() {
+        MaterialAlertDialogBuilder(this)
+            .setTitle("Akun Diblokir")
+            .setMessage("Akun Anda telah diblokir. Silakan hubungi administrator untuk informasi lebih lanjut.")
+            .setPositiveButton("OK") { dialog, _ ->
+                dialog.dismiss()
+            }
+            .setCancelable(false)
+            .show()
+    }
+
+    private fun navigateTo(activityClass: Class<*>) {
+        val intent = Intent(this, activityClass).apply {
+            flags = Intent.FLAG_ACTIVITY_NEW_TASK or Intent.FLAG_ACTIVITY_CLEAR_TASK
+        }
+        startActivity(intent)
+        finish()
     }
 
     private fun handleLoginError(exception: Exception?) {

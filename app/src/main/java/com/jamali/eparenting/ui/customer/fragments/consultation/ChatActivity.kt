@@ -22,7 +22,7 @@ import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.storage
 import com.jamali.eparenting.data.Message
 import com.jamali.eparenting.databinding.ActivityChatBinding
-import com.jamali.eparenting.ui.customer.adapters.MessagesAdapter
+import com.jamali.eparenting.ui.adapters.MessagesAdapter
 import com.jamali.eparenting.utils.Utility
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

@@ -1,4 +1,4 @@
-package com.jamali.eparenting.ui.customer.adapters
+package com.jamali.eparenting.ui.adapters
 
 import android.view.LayoutInflater
 import android.view.ViewGroup

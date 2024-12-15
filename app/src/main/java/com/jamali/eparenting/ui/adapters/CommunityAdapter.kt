@@ -1,4 +1,4 @@
-package com.jamali.eparenting.ui.customer.adapters
+package com.jamali.eparenting.ui.adapters
 
 import android.annotation.SuppressLint
 import android.util.Log
@@ -9,7 +9,6 @@ import android.widget.PopupMenu
 import androidx.fragment.app.FragmentManager
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
@@ -23,8 +22,10 @@ import com.jamali.eparenting.data.User
 import com.jamali.eparenting.databinding.ItemForumPersonalBinding
 import com.jamali.eparenting.ui.customer.fragments.forum.comment.CommentFragment
 import com.jamali.eparenting.ui.customer.user.UserProfileActivity
+import com.jamali.eparenting.utils.ReportManager
 import com.jamali.eparenting.utils.TimeUtils
 import com.jamali.eparenting.utils.Utility
+
 @SuppressLint("SetTextI18n")
 class CommunityAdapter(
     private val communityList: List<CommunityPost>,
@@ -54,7 +55,6 @@ class CommunityAdapter(
 
         with(holder.binding) {
             tvPostContent.text = community.description
-            tvAuthorName.text = community.username
             tvPostTitle.text = getPostTitle(community.type)
             tvLikes.text = community.likeCount.toString()
             tvComments.text = community.commentCount.toString()
@@ -157,70 +157,13 @@ class CommunityAdapter(
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_report -> {
-                    reportPost(community, holder)
+                    ReportManager.reportPost(holder.itemView.context, community)
                     true
                 }
                 else -> false
             }
         }
         popupMenu.show()
-    }
-
-    private fun reportPost(community: CommunityPost, holder: CommunityViewHolder) {
-        val currentUserId = Utility.auth.currentUser?.uid ?: return
-
-        // Buat dialog untuk memilih alasan report
-        val reportReasons = arrayOf(
-            "Konten tidak pantas",
-            "Spam",
-            "Kekerasan",
-            "Informasi palsu",
-            "Lainnya"
-        )
-
-        MaterialAlertDialogBuilder(holder.itemView.context)
-            .setTitle("Laporkan Postingan")
-            .setItems(reportReasons) { _, which ->
-                val selectedReason = reportReasons[which]
-                submitReport(community, currentUserId, selectedReason, holder)
-            }
-            .show()
-    }
-
-    private fun submitReport(
-        community: CommunityPost,
-        reporterId: String,
-        reason: String,
-        holder: CommunityViewHolder
-    ) {
-        val reportsRef = Utility.database.getReference("post_reports")
-
-        // Buat objek report
-        val reportData = hashMapOf(
-            "postId" to community.id,
-            "reporterId" to reporterId,
-            "authorId" to community.userId,
-            "reason" to reason,
-            "timestamp" to ServerValue.TIMESTAMP,
-            "postContent" to community.description,
-            "postType" to community.type.name
-        )
-
-        // Push report ke database
-        reportsRef.push().setValue(reportData)
-            .addOnSuccessListener {
-                Utility.showToast(
-                    holder.itemView.context,
-                    "Postingan telah dilaporkan. Terima kasih atas laporan Anda."
-                )
-            }
-            .addOnFailureListener { exception ->
-                Utility.showToast(
-                    holder.itemView.context,
-                    "Gagal melaporkan postingan: ${exception.localizedMessage}"
-                )
-                Log.e("CommunityAdapter", "Report submission failed", exception)
-            }
     }
 
     /**
@@ -235,6 +178,8 @@ class CommunityAdapter(
                 .error(R.drawable.ic_avatar)
                 .circleCrop()
                 .into(holder.binding.ivAuthorAvatar)
+
+            holder.binding.tvAuthorName.text = user.username
             return
         }
 
@@ -252,6 +197,8 @@ class CommunityAdapter(
                         .error(R.drawable.ic_avatar)
                         .circleCrop()
                         .into(holder.binding.ivAuthorAvatar)
+
+                    holder.binding.tvAuthorName.text = user.username
                 }
             }
 

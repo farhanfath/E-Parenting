@@ -21,7 +21,7 @@ import com.jamali.eparenting.R
 import com.jamali.eparenting.data.Comment
 import com.jamali.eparenting.databinding.LayoutCommentDialogBinding
 import com.jamali.eparenting.ui.rules.CompleteRulesActivity
-import com.jamali.eparenting.ui.customer.adapters.CommentAdapter
+import com.jamali.eparenting.ui.adapters.CommentAdapter
 import com.jamali.eparenting.utils.Utility
 
 class CommentFragment(

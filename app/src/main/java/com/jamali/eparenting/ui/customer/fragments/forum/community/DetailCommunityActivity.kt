@@ -12,7 +12,7 @@ import com.jamali.eparenting.utils.Utility
 import com.jamali.eparenting.data.CommunityPost
 import com.jamali.eparenting.data.PostType
 import com.jamali.eparenting.databinding.ActivityDetailCommunityBinding
-import com.jamali.eparenting.ui.customer.adapters.CommunityAdapter
+import com.jamali.eparenting.ui.adapters.CommunityAdapter
 
 class DetailCommunityActivity : AppCompatActivity() {
 

@@ -14,6 +14,7 @@ data class CommunityPost(
     val userId: String = "",
     val description: String = "",
     val thumbnail: String = "",
+    val thumbnailFileName : String = "",
     val type: PostType = PostType.UMUM,
     val timestamp: Long = 0L,
     var likeCount: Int = 0,

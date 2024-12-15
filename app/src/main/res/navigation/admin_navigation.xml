@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/admin_navigation"
+    app:startDestination="@+id/nav_monitor">
+    <fragment
+        android:id="@+id/nav_monitor"
+        android:name="com.jamali.eparenting.ui.admin.management.monitoring.MonitoringFragment"
+        android:label="Monitoring Pengguna"
+        tools:layout="@layout/fragment_monitoring"/>
+    <fragment
+        android:id="@+id/nav_reports"
+        android:name="com.jamali.eparenting.ui.admin.management.reports.ParentReportsFragment"
+        android:label="Manajemen Laporan"
+        tools:layout="@layout/fragment_reports"/>
+    <fragment
+        android:id="@+id/nav_management_doctor"
+        android:name="com.jamali.eparenting.ui.admin.management.doctormanagement.DoctorManagementFragment"
+        android:label="Manajemen Pakar"
+        tools:layout="@layout/fragment_management_doctor"/>
+</navigation>

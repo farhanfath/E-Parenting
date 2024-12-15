@@ -14,8 +14,8 @@ import com.jamali.eparenting.R
 import com.jamali.eparenting.databinding.ActivityWelcomeBinding
 import com.jamali.eparenting.ui.auth.LoginActivity
 import com.jamali.eparenting.ui.auth.PhoneAuthActivity
-import com.jamali.eparenting.ui.customer.adapters.WelcomeAdapter
-import com.jamali.eparenting.ui.customer.adapters.WelcomeSlide
+import com.jamali.eparenting.ui.adapters.WelcomeAdapter
+import com.jamali.eparenting.ui.adapters.WelcomeSlide
 
 class WelcomeActivity : AppCompatActivity() {
 

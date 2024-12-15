@@ -16,7 +16,7 @@ import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.data.CommunityPost
 import com.jamali.eparenting.databinding.FragmentSubForumPersonalBinding
-import com.jamali.eparenting.ui.customer.adapters.CommunityAdapter
+import com.jamali.eparenting.ui.adapters.CommunityAdapter
 import com.jamali.eparenting.ui.customer.post.PostActivity
 import com.jamali.eparenting.utils.Utility
 

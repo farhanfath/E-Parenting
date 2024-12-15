@@ -7,7 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.google.android.material.tabs.TabLayoutMediator
 import com.jamali.eparenting.databinding.FragmentForumBinding
-import com.jamali.eparenting.ui.customer.adapters.ForumViewPagerAdapter
+import com.jamali.eparenting.ui.adapters.ForumViewPagerAdapter
 
 class ForumFragment : Fragment() {
 

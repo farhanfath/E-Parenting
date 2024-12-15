@@ -6,6 +6,7 @@ import android.os.Bundle
 import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
 import com.jamali.eparenting.ui.WelcomeActivity
+import com.jamali.eparenting.ui.admin.AdminHomeActivity
 import com.jamali.eparenting.ui.admin.AdminMainActivity
 import com.jamali.eparenting.ui.auth.LoginActivity
 import com.jamali.eparenting.ui.customer.CustomerMainActivity
@@ -34,7 +35,7 @@ class SplashScreen : AppCompatActivity() {
                     val userRole = snapshot.value as? String
 
                     val intent = when (userRole) {
-                        "admin" -> Intent(this@SplashScreen, AdminMainActivity::class.java)
+                        "admin" -> Intent(this@SplashScreen, AdminHomeActivity::class.java)
                         "customer" -> Intent(this@SplashScreen, CustomerMainActivity::class.java)
                         "doctor" -> Intent(this@SplashScreen, DoctorMainActivity::class.java)
                         else -> Intent(this@SplashScreen, WelcomeActivity::class.java)

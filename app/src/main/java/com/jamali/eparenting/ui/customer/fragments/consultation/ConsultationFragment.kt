@@ -13,7 +13,7 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.data.User
 import com.jamali.eparenting.databinding.FragmentConsultationBinding
-import com.jamali.eparenting.ui.customer.adapters.ConsultationAdapter
+import com.jamali.eparenting.ui.adapters.ConsultationAdapter
 import com.jamali.eparenting.utils.Utility
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch

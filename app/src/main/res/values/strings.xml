@@ -74,4 +74,24 @@
     <string name="have_account">Sudah Memiliki Akun?</string>
     <string name="not_registered">Tidak terdaftar</string>
     <string name="jumlah_posting">%1$s Postingan</string>
+    <string name="title_activity_admin_home">AdminHomeActivity</string>
+    <string name="navigation_drawer_open">Open navigation drawer</string>
+    <string name="navigation_drawer_close">Close navigation drawer</string>
+    <string name="nav_header_title">Android Studio</string>
+    <string name="nav_header_subtitle">android.studio@android.com</string>
+    <string name="nav_header_desc">Navigation header</string>
+    <string name="action_settings">Settings</string>
+    <string name="menu_gallery">Gallery</string>
+    <string name="menu_slideshow">Slideshow</string>
+    <string name="menu_report">Manajemen Laporan</string>
+    <string name="menu_monitor">Monitoring Pengguna</string>
+    <string name="menu_add_doctor">Manajemen Pakar</string>
+    <string name="jumlah_laporan_text">Jumlah Laporan: %1$s</string>
+    <string name="delete_post_text">Hapus Postingan</string>
+    <string name="delete_comment_text">Hapus Komentar</string>
+    <string name="delete_user_text">Hapus Pengguna</string>
+    <string name="reported_content_text">konten yang di laporkan :\n%1$s</string>
+    <string name="show_content_reported"><u>Lihat Konten yang Dilaporkan</u></string>
+    <string name="detail_post_reported">Postingan yang Dilaporkan</string>
+    <string name="detail_comment_reported">Komentar yang Dilaporkan</string>
 </resources>

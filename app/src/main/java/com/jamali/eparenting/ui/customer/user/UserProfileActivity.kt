@@ -11,17 +11,15 @@ import android.widget.Toast
 import androidx.appcompat.app.AppCompatActivity
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.bumptech.glide.Glide
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ServerValue
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.R
 import com.jamali.eparenting.data.CommunityPost
 import com.jamali.eparenting.data.User
 import com.jamali.eparenting.databinding.ActivityUserProfileBinding
-import com.jamali.eparenting.ui.customer.adapters.CommunityAdapter
+import com.jamali.eparenting.ui.adapters.CommunityAdapter
+import com.jamali.eparenting.utils.ReportManager
 import com.jamali.eparenting.utils.Utility
 
 @SuppressLint("SetTextI18n")
@@ -71,72 +69,12 @@ class UserProfileActivity : AppCompatActivity() {
     override fun onOptionsItemSelected(item: MenuItem): Boolean {
         return when (item.itemId) {
             R.id.action_report -> {
-                showReportUserDialog()
+                ReportManager.reportUser(this, userId)
                 true
             }
             else -> {
                 false
             }
-        }
-    }
-
-    /**
-     * report user function
-     */
-    private fun showReportUserDialog() {
-        val reasons = arrayOf(
-            "Konten tidak pantas",
-            "Spam",
-            "Pelecehan",
-            "Informasi palsu",
-            "Lainnya"
-        )
-
-        MaterialAlertDialogBuilder(this)
-            .setTitle("Laporkan Pengguna")
-            .setItems(reasons) { _, which ->
-                val selectedReason = reasons[which]
-                reportUser(userId, selectedReason)
-            }
-            .setNegativeButton("Batal", null)
-            .show()
-    }
-
-    private fun reportUser(reportedUserId: String, reason: String) {
-        // Dapatkan ID pengguna saat ini (misalnya dari Firebase Authentication)
-        val currentUserId = FirebaseAuth.getInstance().currentUser?.uid
-
-        if (currentUserId == null) {
-            Toast.makeText(this, "Anda harus login untuk melaporkan pengguna", Toast.LENGTH_SHORT).show()
-            return
-        }
-
-        // Referensi ke node reports di database
-        val reportsRef = Utility.database.getReference("user_reports")
-
-        // Buat objek laporan
-        val reportData = hashMapOf(
-            "reportedUserId" to reportedUserId,
-            "reportingUserId" to currentUserId,
-            "reason" to reason,
-            "timestamp" to ServerValue.TIMESTAMP
-        )
-
-        // Generate unique key untuk setiap laporan
-        val reportKey = reportsRef.push().key
-
-        if (reportKey != null) {
-            reportsRef.child(reportKey).setValue(reportData)
-                .addOnSuccessListener {
-                    Toast.makeText(this, "Pengguna berhasil dilaporkan", Toast.LENGTH_SHORT).show()
-                }
-                .addOnFailureListener { exception ->
-                    Toast.makeText(
-                        this,
-                        "Gagal melaporkan pengguna: ${exception.message}",
-                        Toast.LENGTH_SHORT
-                    ).show()
-                }
         }
     }
 

@@ -1,4 +1,4 @@
-package com.jamali.eparenting.ui.customer.adapters
+package com.jamali.eparenting.ui.adapters
 
 import android.os.Handler
 import android.os.Looper
@@ -19,6 +19,7 @@ import com.jamali.eparenting.data.Comment
 import com.jamali.eparenting.data.User
 import com.jamali.eparenting.databinding.ItemCommentDetailPostForumBinding
 import com.jamali.eparenting.ui.customer.user.UserProfileActivity
+import com.jamali.eparenting.utils.ReportManager
 import com.jamali.eparenting.utils.TimeUtils
 import com.jamali.eparenting.utils.Utility
 
@@ -111,7 +112,7 @@ class CommentAdapter(
         popupMenu.setOnMenuItemClickListener { menuItem ->
             when (menuItem.itemId) {
                 R.id.action_report -> {
-                    reportComment(comment, holder)
+                    ReportManager.reportComment(holder.itemView.context, comment, communityPostId)
                     true
                 }
                 else -> false
@@ -119,63 +120,6 @@ class CommentAdapter(
         }
 
         popupMenu.show()
-    }
-
-    private fun reportComment(comment: Comment, holder: CommentViewHolder) {
-        val currentUserId = Utility.auth.currentUser?.uid ?: return
-
-        // Buat dialog untuk memilih alasan report
-        val reportReasons = arrayOf(
-            "Konten tidak pantas",
-            "Spam",
-            "Kekerasan",
-            "Informasi palsu",
-            "Lainnya"
-        )
-
-        MaterialAlertDialogBuilder(holder.itemView.context)
-            .setTitle("Laporkan Komentar")
-            .setItems(reportReasons) { _, which ->
-                val selectedReason = reportReasons[which]
-                submitCommentReport(comment, currentUserId, selectedReason, holder)
-            }
-            .show()
-    }
-
-    private fun submitCommentReport(
-        comment: Comment,
-        reporterId: String,
-        reason: String,
-        holder: CommentViewHolder
-    ) {
-        val commentsReportsRef = Utility.database.getReference("comment_reports")
-        // Buat objek report untuk komentar
-        val reportData = hashMapOf(
-            "commentId" to comment.id,
-            "postId" to communityPostId, // ID post induk
-            "reporterId" to reporterId,
-            "commentAuthorId" to comment.userId,
-            "commentText" to comment.text,
-            "reason" to reason,
-            "timestamp" to ServerValue.TIMESTAMP,
-            "username" to comment.username
-        )
-
-        // Push report ke database
-        commentsReportsRef.push().setValue(reportData)
-            .addOnSuccessListener {
-                Utility.showToast(
-                    holder.itemView.context,
-                    "Komentar telah dilaporkan. Terima kasih atas laporan Anda."
-                )
-            }
-            .addOnFailureListener { exception ->
-                Utility.showToast(
-                    holder.itemView.context,
-                    "Gagal melaporkan komentar: ${exception.localizedMessage}"
-                )
-                Log.e("CommentAdapter", "Comment report submission failed", exception)
-            }
     }
 
     private val handler = Handler(Looper.getMainLooper())

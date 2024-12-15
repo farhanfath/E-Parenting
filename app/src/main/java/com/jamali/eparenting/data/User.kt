@@ -15,7 +15,8 @@ data class User(
     val activeDay: String = "", // untuk jadwal doctor
     val status: Boolean = false,
     val description: String = "",
-    val gender : String = ""
+    val gender : String = "",
+    val accountStatus : String = "active"
 ) : Parcelable
 
 data class UserWithLastMessage(
