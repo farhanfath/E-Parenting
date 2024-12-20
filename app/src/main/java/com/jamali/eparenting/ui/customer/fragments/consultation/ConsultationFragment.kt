@@ -11,6 +11,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ValueEventListener
+import com.jamali.eparenting.R
 import com.jamali.eparenting.data.User
 import com.jamali.eparenting.databinding.FragmentConsultationBinding
 import com.jamali.eparenting.ui.adapters.ConsultationAdapter
@@ -47,8 +48,16 @@ class ConsultationFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        setupView()
         rvAdapterSetup()
         loadConsultationExpert()
+    }
+
+    private fun setupView() {
+        binding.apply {
+            tvTitle.text = getString(R.string.konsultasi_text)
+            noRvConsultationData.text = getString(R.string.empty_rv_consultation_customer)
+        }
     }
 
     private fun rvAdapterSetup() {
@@ -83,7 +92,7 @@ class ConsultationFragment : Fragment() {
                 viewLifecycleOwner.lifecycleScope.launch(Dispatchers.Main) {
                     consultationAdapter.notifyDataSetChanged()
 
-                    binding.noExpertActive.visibility = if (consultationExpertList.isEmpty()) {
+                    binding.noRvConsultationData.visibility = if (consultationExpertList.isEmpty()) {
                         View.VISIBLE
                     } else {
                         View.GONE

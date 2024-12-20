@@ -40,6 +40,10 @@ class UserProfileActivity : AppCompatActivity() {
 
     private lateinit var userId: String
 
+    private var isDescriptionExpanded = false
+    private var fullDescription = ""
+    private val maxWords = 20
+
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityUserProfileBinding.inflate(layoutInflater)
@@ -58,7 +62,14 @@ class UserProfileActivity : AppCompatActivity() {
                 return
             }
 
+        setupDescText()
         loadUserProfile()
+    }
+
+    private fun setupDescText() {
+        binding.tvShowMore.setOnClickListener {
+            toggleDescription()
+        }
     }
 
     override fun onCreateOptionsMenu(menu: Menu?): Boolean {
@@ -111,7 +122,12 @@ class UserProfileActivity : AppCompatActivity() {
         // Tampilkan informasi pengguna
         binding.tvUsername.text = user.username
         setupEmailAndPhone(user)
-        binding.tvDescription.text = user.description.ifEmpty { "Tidak ada deskripsi" }
+
+        /**
+         * setup description Text
+         */
+        fullDescription = user.description.ifEmpty { "Tidak ada deskripsi" }
+        updateDescriptionText()
 
         // Tampilkan informasi tambahan berdasarkan peran
         when (user.role) {
@@ -127,6 +143,42 @@ class UserProfileActivity : AppCompatActivity() {
 
         // Muat posting pengguna
         loadUserPosts(userId)
+    }
+
+    /**
+     * description text setup
+     */
+    private fun toggleDescription() {
+        isDescriptionExpanded = !isDescriptionExpanded
+        updateDescriptionText()
+    }
+
+    /**
+     * description text setup
+     */
+    private fun updateDescriptionText() {
+        if (fullDescription.isEmpty()) {
+            binding.tvShowMore.visibility = View.GONE
+            return
+        }
+
+        val words = fullDescription.split("\\s+".toRegex())
+
+        if (words.size <= maxWords) {
+            binding.tvDescription.text = fullDescription
+            binding.tvShowMore.visibility = View.GONE
+            return
+        }
+
+        if (isDescriptionExpanded) {
+            binding.tvDescription.text = fullDescription
+            binding.tvShowMore.text = "Tampilkan Lebih Sedikit"
+        } else {
+            val truncatedText = words.take(maxWords).joinToString(" ") + "..."
+            binding.tvDescription.text = truncatedText
+            binding.tvShowMore.text = "Tampilkan Lebih Banyak"
+        }
+        binding.tvShowMore.visibility = View.VISIBLE
     }
 
     private fun setupEmailAndPhone(user: User) {

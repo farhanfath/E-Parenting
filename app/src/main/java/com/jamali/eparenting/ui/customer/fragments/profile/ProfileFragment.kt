@@ -7,10 +7,12 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import com.bumptech.glide.Glide
+import com.google.firebase.database.DataSnapshot
 import com.jamali.eparenting.R
 import com.jamali.eparenting.utils.Utility
 import com.jamali.eparenting.databinding.FragmentProfileBinding
 import com.jamali.eparenting.ui.customer.user.UserProfileActivity
+import com.jamali.eparenting.ui.doctor.EditDoctorActivity
 import com.jamali.eparenting.ui.rules.CompleteRulesActivity
 
 class ProfileFragment : Fragment() {
@@ -43,10 +45,10 @@ class ProfileFragment : Fragment() {
             UserProfileActivity.startActivity(requireContext(), userId = Utility.auth.currentUser?.uid.toString())
         }
 
-        binding.containerLayoutEditProfile.setOnClickListener{
-            val intent = Intent(requireContext(), UpdateProfileActivity::class.java)
-            startActivity(intent)
-        }
+//        binding.containerLayoutEditProfile.setOnClickListener{
+//            val intent = Intent(requireContext(), UpdateProfileActivity::class.java)
+//            startActivity(intent)
+//        }
 
         binding.containerLayoutEditPassword.setOnClickListener {
             val intent = Intent(requireContext(), ChangePasswordActivity::class.java)
@@ -91,11 +93,32 @@ class ProfileFragment : Fragment() {
                     .error(R.drawable.ic_avatar)
                     .into(binding.ivProfilePicture)
             }
+
+            val role = data.child("role").value.toString()
+
+            binding.containerLayoutEditProfile.setOnClickListener {
+                setupEditProfileNavigation(role)
+            }
+
         }.addOnFailureListener {
             showLoading(false)
             binding.tvUsername.text = getString(R.string.failed_get_name)
         }
     }
+
+    private fun setupEditProfileNavigation(role: String) {
+        when(role) {
+            "customer" -> {
+                val intent = Intent(requireContext(), UpdateProfileActivity::class.java)
+                startActivity(intent)
+            }
+            "doctor" -> {
+                val intent = Intent(requireContext(), EditDoctorActivity::class.java)
+                startActivity(intent)
+            }
+        }
+    }
+
 
     private fun showLoading(isLoading: Boolean) {
         if (isLoading) {

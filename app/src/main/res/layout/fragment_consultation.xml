@@ -10,7 +10,7 @@
         style="@style/TextAppearance.MaterialComponents.Headline5"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:text="Konsultasi"
+        tools:text="Konsultasi"
         android:textStyle="bold"
         android:layout_margin="20dp"
         app:layout_constraintEnd_toEndOf="parent"
@@ -27,15 +27,14 @@
         app:layout_constraintTop_toBottomOf="@id/tv_title"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintStart_toStartOf="parent"
-        tools:listitem="@layout/item_consultation_expert" />
+        app:layout_constraintStart_toStartOf="parent" />
 
     <TextView
-        android:id="@+id/no_expert_active"
+        android:id="@+id/no_rv_consultation_data"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_gravity="center"
-        android:text="Belum Ada Ahli yang Aktif"
+        tools:text="Belum Ada Ahli yang Aktif"
         android:textSize="20sp"
         android:textStyle="bold"
         android:visibility="invisible"

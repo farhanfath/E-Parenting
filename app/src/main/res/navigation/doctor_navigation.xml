@@ -1,0 +1,24 @@
+<?xml version="1.0" encoding="utf-8"?>
+<navigation xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/doctor_navigation"
+    app:startDestination="@id/nav_doctor_consultation_menu">
+
+    <fragment
+        android:id="@+id/nav_doctor_consultation_menu"
+        android:name="com.jamali.eparenting.ui.doctor.DoctorConsultationFragment"
+        android:label="Konsultasi Pengguna"
+        tools:layout="@layout/fragment_consultation"/>
+    <fragment
+        android:id="@+id/nav_doctor_community_menu"
+        android:name="com.jamali.eparenting.ui.customer.fragments.forum.ForumFragment"
+        android:label="Komunitas"
+        tools:layout="@layout/fragment_forum"/>
+
+    <fragment
+        android:id="@+id/nav_doctor_profile_menu"
+        android:name="com.jamali.eparenting.ui.customer.fragments.profile.ProfileFragment"
+        android:label="Profil"
+        tools:layout="@layout/fragment_profile"/>
+</navigation>

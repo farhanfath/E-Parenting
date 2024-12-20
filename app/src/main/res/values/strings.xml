@@ -94,4 +94,9 @@
     <string name="show_content_reported"><u>Lihat Konten yang Dilaporkan</u></string>
     <string name="detail_post_reported">Postingan yang Dilaporkan</string>
     <string name="detail_comment_reported">Komentar yang Dilaporkan</string>
+    <string name="konsultasi_text">Konsultasi</string>
+    <string name="empty_rv_consultation_customer">Belum Ada Ahli yang Aktif</string>
+    <string name="konsultasi_doctor_text">Konsultasi Pengguna</string>
+    <string name="empty_rv_consultation_doctor">Belum Ada Pelanggan yang melakukan konsultasi</string>
+    <string name="note_change_password">*Catatan: Fitur ubah kata sandi hanya tersedia untuk pengguna yang masuk menggunakan email</string>
 </resources>

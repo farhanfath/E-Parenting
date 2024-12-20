@@ -1,22 +1,24 @@
 package com.jamali.eparenting.ui.doctor
 
-import android.content.Intent
 import android.os.Bundle
+import android.view.LayoutInflater
 import android.view.View
-import androidx.appcompat.app.AppCompatActivity
+import android.view.ViewGroup
+import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
+import com.jamali.eparenting.R
 import com.jamali.eparenting.data.User
 import com.jamali.eparenting.data.UserWithLastMessage
-import com.jamali.eparenting.databinding.ActivityDoctorMainBinding
-import com.jamali.eparenting.ui.customer.fragments.profile.LogOutFragment
+import com.jamali.eparenting.databinding.FragmentConsultationBinding
 import com.jamali.eparenting.utils.Utility
 
-class DoctorMainActivity : AppCompatActivity() {
+class DoctorConsultationFragment : Fragment() {
 
-    private lateinit var binding: ActivityDoctorMainBinding
+    private var _binding: FragmentConsultationBinding? = null
+    private val binding get() = _binding!!
 
     private val consultationCustomerList = mutableListOf<UserWithLastMessage>()
     private lateinit var consultationAdapter: CustomerAdapter
@@ -26,29 +28,37 @@ class DoctorMainActivity : AppCompatActivity() {
 
     private val userMap = mutableMapOf<String, User>()
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-        binding = ActivityDoctorMainBinding.inflate(layoutInflater)
-        setContentView(binding.root)
+    override fun onCreateView(
+        inflater: LayoutInflater,
+        container: ViewGroup?,
+        savedInstanceState: Bundle?
+    ): View {
+
+        _binding = FragmentConsultationBinding.inflate(inflater, container, false)
+        val root: View = binding.root
+
+        return root
+    }
+
+    override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        super.onViewCreated(view, savedInstanceState)
 
         rvAdapterSetup()
         setupRealtimeUpdates()
+        setupView()
+    }
 
-        binding.logoutBtn.setOnClickListener {
-            val logoutFragment =
-                LogOutFragment()
-            logoutFragment.show(supportFragmentManager, logoutFragment.tag)
-        }
-
-        binding.editProfileBtn.setOnClickListener {
-            startActivity(Intent(this, EditDoctorActivity::class.java))
+    private fun setupView() {
+        binding.apply {
+            tvTitle.text = getString(R.string.konsultasi_doctor_text)
+            noRvConsultationData.text = getString(R.string.empty_rv_consultation_doctor)
         }
     }
 
     private fun rvAdapterSetup() {
         consultationAdapter = CustomerAdapter(consultationCustomerList)
-        binding.rvCustomerConsultation.apply {
-            layoutManager = LinearLayoutManager(this@DoctorMainActivity)
+        binding.rvConsultation.apply {
+            layoutManager = LinearLayoutManager(requireContext())
             adapter = consultationAdapter
         }
     }
@@ -78,8 +88,8 @@ class DoctorMainActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                runOnUiThread {
-                    Utility.showToast(this@DoctorMainActivity, error.message)
+                activity?.runOnUiThread {
+                    Utility.showToast(requireContext(), error.message)
                 }
             }
         })
@@ -92,8 +102,8 @@ class DoctorMainActivity : AppCompatActivity() {
             }
 
             override fun onCancelled(error: DatabaseError) {
-                runOnUiThread {
-                    Utility.showToast(this@DoctorMainActivity, error.message)
+                activity?.runOnUiThread {
+                    Utility.showToast(requireContext(), error.message)
                 }
             }
         })
@@ -140,14 +150,19 @@ class DoctorMainActivity : AppCompatActivity() {
     }
 
     private fun updateUI(activeChats: List<UserWithLastMessage>) {
-        runOnUiThread {
+        activity?.runOnUiThread {
             consultationCustomerList.clear()
             consultationCustomerList.addAll(activeChats)
             consultationAdapter.notifyDataSetChanged()
 
             // Update visibility of empty state
-            binding.noCustomerActive.visibility =
+            binding.noRvConsultationData.visibility =
                 if (consultationCustomerList.isNotEmpty()) View.GONE else View.VISIBLE
         }
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
     }
 }

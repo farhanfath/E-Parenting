@@ -15,7 +15,7 @@ import com.jamali.eparenting.data.User
 import com.jamali.eparenting.databinding.ActivityLoginBinding
 import com.jamali.eparenting.ui.admin.AdminHomeActivity
 import com.jamali.eparenting.ui.customer.CustomerMainActivity
-import com.jamali.eparenting.ui.doctor.DoctorMainActivity
+import com.jamali.eparenting.ui.doctor.DoctorHomeActivity
 import com.jamali.eparenting.utils.Utility
 
 class LoginActivity : AppCompatActivity() {
@@ -161,7 +161,7 @@ class LoginActivity : AppCompatActivity() {
                                     when (userData.role) {
                                         "admin" -> navigateTo(AdminHomeActivity::class.java)
                                         "customer" -> navigateTo(CustomerMainActivity::class.java)
-                                        "doctor" -> navigateTo(DoctorMainActivity::class.java)
+                                        "doctor" -> navigateTo(DoctorHomeActivity::class.java)
                                         else -> showError("Invalid user role")
                                     }
                                 }
@@ -170,7 +170,7 @@ class LoginActivity : AppCompatActivity() {
                                     when (userData?.role) {
                                         "admin" -> navigateTo(AdminHomeActivity::class.java)
                                         "customer" -> navigateTo(CustomerMainActivity::class.java)
-                                        "doctor" -> navigateTo(DoctorMainActivity::class.java)
+                                        "doctor" -> navigateTo(DoctorHomeActivity::class.java)
                                         else -> showError("Invalid user role")
                                     }
                                 }

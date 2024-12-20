@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<menu xmlns:android="http://schemas.android.com/apk/res/android">
+    <item
+        android:id="@+id/nav_doctor_consultation_menu"
+        android:title="Konsultasi"
+        android:icon="@drawable/ic_chat"/>
+    <item
+        android:id="@+id/nav_doctor_community_menu"
+        android:title="Komunitas"
+        android:icon="@drawable/ic_people_alt"/>
+    <item
+        android:id="@+id/nav_doctor_profile_menu"
+        android:title="Profil"
+        android:icon="@drawable/ic_profile"/>
+</menu>
