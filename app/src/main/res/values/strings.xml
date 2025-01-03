@@ -99,4 +99,5 @@
     <string name="konsultasi_doctor_text">Konsultasi Pengguna</string>
     <string name="empty_rv_consultation_doctor">Belum Ada Pelanggan yang melakukan konsultasi</string>
     <string name="note_change_password">*Catatan: Fitur ubah kata sandi hanya tersedia untuk pengguna yang masuk menggunakan email</string>
+    <string name="no_file_selected">Belum Ada File Terpilih</string>
 </resources>
