@@ -11,7 +11,7 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.auth.FirebaseAuthInvalidCredentialsException
 import com.google.firebase.auth.FirebaseAuthInvalidUserException
 import com.jamali.eparenting.R
-import com.jamali.eparenting.data.User
+import com.jamali.eparenting.data.model.User
 import com.jamali.eparenting.databinding.ActivityLoginBinding
 import com.jamali.eparenting.ui.admin.AdminHomeActivity
 import com.jamali.eparenting.ui.customer.CustomerMainActivity

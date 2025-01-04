@@ -1,4 +1,4 @@
-package com.jamali.eparenting.data.reports
+package com.jamali.eparenting.data.model.reports
 
 // Data class untuk item yang dilaporkan
 data class ReportItem(

@@ -20,7 +20,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.google.firebase.storage.storage
-import com.jamali.eparenting.data.Message
+import com.jamali.eparenting.data.model.Message
 import com.jamali.eparenting.databinding.ActivityChatBinding
 import com.jamali.eparenting.ui.adapters.MessagesAdapter
 import com.jamali.eparenting.utils.Utility

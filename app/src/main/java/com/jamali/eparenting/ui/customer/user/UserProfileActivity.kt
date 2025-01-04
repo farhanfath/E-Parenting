@@ -15,8 +15,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.R
-import com.jamali.eparenting.data.CommunityPost
-import com.jamali.eparenting.data.User
+import com.jamali.eparenting.data.model.CommunityPost
+import com.jamali.eparenting.data.model.User
 import com.jamali.eparenting.databinding.ActivityUserProfileBinding
 import com.jamali.eparenting.ui.adapters.CommunityAdapter
 import com.jamali.eparenting.utils.ReportManager

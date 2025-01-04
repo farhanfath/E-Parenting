@@ -100,4 +100,9 @@
     <string name="empty_rv_consultation_doctor">Belum Ada Pelanggan yang melakukan konsultasi</string>
     <string name="note_change_password">*Catatan: Fitur ubah kata sandi hanya tersedia untuk pengguna yang masuk menggunakan email</string>
     <string name="no_file_selected">Belum Ada File Terpilih</string>
+    <string name="menu_management_module">Manajemen Modul</string>
+    <string name="no_module_text">Belum Ada Modul Untuk Saat Ini</string>
+    <string name="tanggal_modul">Edisi : %1$s</string>
+    <string name="add_module_text">Mengunggah Modul…</string>
+    <string name="loading_module_text">Memuat Modul…</string>
 </resources>

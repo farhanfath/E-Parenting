@@ -5,8 +5,8 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import com.bumptech.glide.Glide
 import com.jamali.eparenting.R
-import com.jamali.eparenting.data.Comment
-import com.jamali.eparenting.data.CommunityPost
+import com.jamali.eparenting.data.model.Comment
+import com.jamali.eparenting.data.model.CommunityPost
 import com.jamali.eparenting.databinding.ActivityDetailReportedBinding
 import com.jamali.eparenting.utils.Utility
 

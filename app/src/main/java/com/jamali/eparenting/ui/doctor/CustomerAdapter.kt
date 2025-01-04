@@ -5,7 +5,7 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
-import com.jamali.eparenting.data.UserWithLastMessage
+import com.jamali.eparenting.data.model.UserWithLastMessage
 import com.jamali.eparenting.databinding.ItemConsultationCustomerBinding
 import com.jamali.eparenting.ui.customer.fragments.consultation.ChatActivity
 import com.jamali.eparenting.utils.TimeUtils

@@ -16,6 +16,10 @@
             android:id="@+id/nav_management_doctor"
             android:icon="@drawable/ic_person_add"
             android:title="@string/menu_add_doctor" />
+        <item
+            android:id="@+id/nav_management_module_list"
+            android:icon="@drawable/ic_module"
+            android:title="@string/menu_management_module" />
 
     </group>
 </menu>

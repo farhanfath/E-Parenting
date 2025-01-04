@@ -12,7 +12,7 @@ import androidx.appcompat.app.AppCompatActivity
 import androidx.core.content.ContextCompat
 import com.bumptech.glide.Glide
 import com.jamali.eparenting.R
-import com.jamali.eparenting.data.User
+import com.jamali.eparenting.data.model.User
 import com.jamali.eparenting.databinding.ActivityDoctorDetailBinding
 import com.jamali.eparenting.ui.rules.CompleteRulesActivity
 

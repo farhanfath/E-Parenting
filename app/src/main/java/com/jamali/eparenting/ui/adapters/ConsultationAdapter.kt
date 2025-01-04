@@ -6,9 +6,8 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jamali.eparenting.R
-import com.jamali.eparenting.data.User
+import com.jamali.eparenting.data.model.User
 import com.jamali.eparenting.databinding.ItemConsultationExpertBinding
-import com.jamali.eparenting.ui.customer.fragments.consultation.ChatActivity
 import com.jamali.eparenting.ui.customer.fragments.consultation.DoctorDetailActivity
 
 class ConsultationAdapter(private val doctorList: List<User>) :

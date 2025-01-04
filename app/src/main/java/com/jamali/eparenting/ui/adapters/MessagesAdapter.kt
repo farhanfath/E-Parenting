@@ -12,7 +12,7 @@ import android.widget.Toast
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.jamali.eparenting.R
-import com.jamali.eparenting.data.Message
+import com.jamali.eparenting.data.model.Message
 import com.jamali.eparenting.databinding.DialogFullscreenImageBinding
 import com.jamali.eparenting.databinding.ItemReceiveMsgBinding
 import com.jamali.eparenting.databinding.ItemSendMsgBinding

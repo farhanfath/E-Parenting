@@ -6,7 +6,7 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.recyclerview.widget.LinearLayoutManager
-import com.jamali.eparenting.data.ForumCommunityData
+import com.jamali.eparenting.data.model.ForumCommunityData
 import com.jamali.eparenting.databinding.FragmentSubForumCommunityBinding
 import com.jamali.eparenting.ui.adapters.ForumCommunityAdapter
 

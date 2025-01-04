@@ -5,8 +5,8 @@ import android.util.Log
 import android.widget.Toast
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.ServerValue
-import com.jamali.eparenting.data.Comment
-import com.jamali.eparenting.data.CommunityPost
+import com.jamali.eparenting.data.model.Comment
+import com.jamali.eparenting.data.model.CommunityPost
 import com.jamali.eparenting.utils.Utility.auth
 import com.jamali.eparenting.utils.Utility.database
 

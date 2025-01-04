@@ -8,7 +8,7 @@ import androidx.appcompat.app.AppCompatActivity
 import com.google.firebase.auth.FirebaseAuthUserCollisionException
 import com.jamali.eparenting.R
 import com.jamali.eparenting.utils.Utility
-import com.jamali.eparenting.data.User
+import com.jamali.eparenting.data.model.User
 import com.jamali.eparenting.databinding.ActivityRegisterBinding
 
 class RegisterActivity : AppCompatActivity() {

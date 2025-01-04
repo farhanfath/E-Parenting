@@ -1,4 +1,4 @@
-package com.jamali.eparenting.data
+package com.jamali.eparenting.data.model
 
 import android.os.Parcelable
 import kotlinx.parcelize.Parcelize

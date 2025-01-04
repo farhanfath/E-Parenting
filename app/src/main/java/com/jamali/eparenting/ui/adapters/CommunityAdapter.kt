@@ -15,10 +15,10 @@ import com.google.firebase.database.DatabaseReference
 import com.google.firebase.database.ServerValue
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.R
-import com.jamali.eparenting.data.Comment
-import com.jamali.eparenting.data.CommunityPost
-import com.jamali.eparenting.data.PostType
-import com.jamali.eparenting.data.User
+import com.jamali.eparenting.data.model.Comment
+import com.jamali.eparenting.data.model.CommunityPost
+import com.jamali.eparenting.data.model.PostType
+import com.jamali.eparenting.data.model.User
 import com.jamali.eparenting.databinding.ItemForumPersonalBinding
 import com.jamali.eparenting.ui.customer.fragments.forum.comment.CommentFragment
 import com.jamali.eparenting.ui.customer.user.UserProfileActivity

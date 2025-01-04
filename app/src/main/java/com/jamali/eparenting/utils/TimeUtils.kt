@@ -78,4 +78,20 @@ object TimeUtils {
             return "" // Return empty string if there's an error
         }
     }
+
+    fun String.formatDateToReadable(): String {
+        val parts = this.split("-")
+        if (parts.size != 3) return this
+
+        val months = arrayOf(
+            "Januari", "Februari", "Maret", "April", "Mei", "Juni",
+            "Juli", "Agustus", "September", "Oktober", "November", "Desember"
+        )
+
+        val day = parts[0].toIntOrNull() ?: return this
+        val month = parts[1].toIntOrNull()?.minus(1) ?: return this
+        val year = parts[2]
+
+        return "$day ${months[month]} $year"
+    }
 }

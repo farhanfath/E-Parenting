@@ -11,7 +11,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.R
-import com.jamali.eparenting.data.User
+import com.jamali.eparenting.data.model.User
 import com.jamali.eparenting.databinding.ActivityUpdateProfileBinding
 import com.jamali.eparenting.utils.Utility.auth
 import com.jamali.eparenting.utils.Utility.database

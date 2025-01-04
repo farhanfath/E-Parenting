@@ -12,7 +12,7 @@ import com.google.firebase.auth.PhoneAuthCredential
 import com.google.firebase.auth.PhoneAuthOptions
 import com.google.firebase.auth.PhoneAuthProvider
 import com.jamali.eparenting.R
-import com.jamali.eparenting.data.User
+import com.jamali.eparenting.data.model.User
 import com.jamali.eparenting.databinding.ActivityPhoneAuthBinding
 import com.jamali.eparenting.utils.Utility
 import com.jamali.eparenting.utils.Utility.auth

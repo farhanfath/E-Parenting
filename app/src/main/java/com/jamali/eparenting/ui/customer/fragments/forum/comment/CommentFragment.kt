@@ -18,7 +18,7 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.R
-import com.jamali.eparenting.data.Comment
+import com.jamali.eparenting.data.model.Comment
 import com.jamali.eparenting.databinding.LayoutCommentDialogBinding
 import com.jamali.eparenting.ui.rules.CompleteRulesActivity
 import com.jamali.eparenting.ui.adapters.CommentAdapter

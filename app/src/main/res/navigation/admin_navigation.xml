@@ -19,4 +19,18 @@
         android:name="com.jamali.eparenting.ui.admin.management.doctormanagement.DoctorManagementFragment"
         android:label="Manajemen Pakar"
         tools:layout="@layout/fragment_management_doctor"/>
+    <fragment
+        android:id="@+id/nav_management_module_list"
+        android:name="com.jamali.eparenting.ui.admin.management.modulemanagement.ModuleListFragment"
+        android:label="Manajemen Modul"
+        tools:layout="@layout/fragment_module_management_list">
+        <action
+            android:id="@+id/action_nav_management_module_list_to_nav_management_module_add"
+            app:destination="@id/nav_management_module_add" />
+    </fragment>
+    <fragment
+        android:id="@+id/nav_management_module_add"
+        android:name="com.jamali.eparenting.ui.admin.management.modulemanagement.ModuleAddFragment"
+        android:label="Tambah Modul"
+        tools:layout="@layout/fragment_module_management_add"/>
 </navigation>

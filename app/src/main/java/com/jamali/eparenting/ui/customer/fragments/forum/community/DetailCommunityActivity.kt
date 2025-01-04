@@ -9,8 +9,8 @@ import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.utils.Utility
-import com.jamali.eparenting.data.CommunityPost
-import com.jamali.eparenting.data.PostType
+import com.jamali.eparenting.data.model.CommunityPost
+import com.jamali.eparenting.data.model.PostType
 import com.jamali.eparenting.databinding.ActivityDetailCommunityBinding
 import com.jamali.eparenting.ui.adapters.CommunityAdapter
 

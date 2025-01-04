@@ -9,14 +9,12 @@ import android.view.ViewGroup
 import android.widget.PopupMenu
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
-import com.google.firebase.database.ServerValue
 import com.google.firebase.database.ValueEventListener
 import com.jamali.eparenting.R
-import com.jamali.eparenting.data.Comment
-import com.jamali.eparenting.data.User
+import com.jamali.eparenting.data.model.Comment
+import com.jamali.eparenting.data.model.User
 import com.jamali.eparenting.databinding.ItemCommentDetailPostForumBinding
 import com.jamali.eparenting.ui.customer.user.UserProfileActivity
 import com.jamali.eparenting.utils.ReportManager

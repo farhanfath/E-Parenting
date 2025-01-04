@@ -14,7 +14,7 @@ import androidx.recyclerview.widget.LinearLayoutManager
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.jamali.eparenting.data.CommunityPost
+import com.jamali.eparenting.data.model.CommunityPost
 import com.jamali.eparenting.databinding.FragmentSubForumPersonalBinding
 import com.jamali.eparenting.ui.adapters.CommunityAdapter
 import com.jamali.eparenting.ui.customer.post.PostActivity

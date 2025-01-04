@@ -11,8 +11,8 @@ import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import com.google.firebase.database.DataSnapshot
 import com.google.firebase.database.DatabaseError
 import com.google.firebase.database.ValueEventListener
-import com.jamali.eparenting.data.reports.Report
-import com.jamali.eparenting.data.reports.ReportItem
+import com.jamali.eparenting.data.model.reports.Report
+import com.jamali.eparenting.data.model.reports.ReportItem
 import com.jamali.eparenting.databinding.FragmentReportsBinding
 import com.jamali.eparenting.ui.adapters.ReportDataAdapter
 import com.jamali.eparenting.ui.admin.management.reports.DetailReportedActivity

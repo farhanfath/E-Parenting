@@ -1,4 +1,4 @@
-package com.jamali.eparenting.data
+package com.jamali.eparenting.data.model
 
 data class Comment(
     val id: String = "",

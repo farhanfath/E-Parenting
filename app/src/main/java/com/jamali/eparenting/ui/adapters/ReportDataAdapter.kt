@@ -7,7 +7,7 @@ import androidx.recyclerview.widget.DiffUtil
 import androidx.recyclerview.widget.ListAdapter
 import androidx.recyclerview.widget.RecyclerView
 import com.jamali.eparenting.R
-import com.jamali.eparenting.data.reports.ReportItem
+import com.jamali.eparenting.data.model.reports.ReportItem
 import com.jamali.eparenting.databinding.ItemReportContentBinding
 
 class ReportDataAdapter(
