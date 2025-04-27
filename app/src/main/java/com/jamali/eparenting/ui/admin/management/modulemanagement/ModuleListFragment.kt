@@ -69,8 +69,16 @@ open class ModuleListFragment : Fragment() {
             findNavController().navigate(R.id.action_nav_management_module_list_to_nav_management_module_add)
         }
         when(hideAdminFunction) {
-            true -> binding.fabAdd.visibility = View.GONE
-            false -> binding.fabAdd.visibility = View.VISIBLE
+            true -> binding.apply {
+                titleText.visibility = View.VISIBLE
+                fabAdd.visibility = View.GONE
+            }
+            false -> {
+                binding.apply {
+                    titleText.visibility = View.GONE
+                    fabAdd.visibility = View.VISIBLE
+                }
+            }
         }
     }
 
@@ -123,7 +131,7 @@ open class ModuleListFragment : Fragment() {
 
     private fun showDeleteBuletinDialog(modul: Module) {
         MaterialAlertDialogBuilder(requireContext())
-            .setTitle("Hapus Buletin")
+            .setTitle("Hapus Modul")
             .setMessage("Apakah Anda yakin ingin menghapus modul ini beserta seluruh isinya?")
             .setPositiveButton("Hapus") { _, _ ->
                 showLoadingState(true, "Menghapus Modul...")
